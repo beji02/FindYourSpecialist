@@ -7,5 +7,3 @@ Modern time people are specializing in one single domain, but their needs cover 
 @author [Diana Stancu] (https://github.com/DianaElenaStancu)
 @author [Victor Zarzu] (https://github.com/victorzarzu)
 @author [Alexandru Sîrbu] (https://github.com/AlexandruPaul21)
-
-
