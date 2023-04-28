@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="users")
+@Table(name="anouncements")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Announcement extends Identifiable<Integer> {
     private Float rate;

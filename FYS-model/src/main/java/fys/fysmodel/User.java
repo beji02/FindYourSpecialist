@@ -2,7 +2,10 @@ package fys.fysmodel;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -19,13 +22,35 @@ public class User extends Identifiable<Integer> {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Rating> ratingsUser = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Specialist> recentlyVisitedSpecialists = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    // new fields
+    @ElementCollection
+    @CollectionTable(name="user_recently_visited_specialists", joinColumns=@JoinColumn(name="user_id"))
+    @MapKeyJoinColumn(name="specialist_id")
+    @Column(name="timestamp")
+    private Map<Specialist, LocalDateTime> recentlyVisitedSpecialists = new HashMap<>();
+
+    @ElementCollection
+    @CollectionTable(name="user_recently_visited_announcements", joinColumns=@JoinColumn(name="user_id"))
+    @MapKeyJoinColumn(name="announcement_id")
+    @Column(name="timestamp")
+    private Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements = new HashMap<>();
+
+    public void addRecentlyVisitedSpecialist(Specialist specialist) {
+        LocalDateTime timestamp = LocalDateTime.now();
+        recentlyVisitedSpecialists.put(specialist, timestamp);
+    }
+
+    public void addRecentlyVisitedAnnouncement(Announcement announcement) {
+        LocalDateTime timestamp = LocalDateTime.now();
+        recentlyVisitedAnnouncements.put(announcement, timestamp);
+    }
+
+    @CollectionTable(name="user_favorite_specialists", joinColumns=@JoinColumn(name="user_id"))
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Specialist> favoriteSpecialists = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Announcement> recentlyVisitedAnnouncements = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @CollectionTable(name="user_favorite_announcements", joinColumns=@JoinColumn(name="user_id"))
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Announcement> favoriteAnnouncements = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Message> messages = new HashSet<>();
@@ -106,28 +131,12 @@ public class User extends Identifiable<Integer> {
         this.ratingsUser = ratingsUser;
     }
 
-    public Set<Specialist> getRecentlyVisitedSpecialists() {
-        return recentlyVisitedSpecialists;
-    }
-
-    public void setRecentlyVisitedSpecialists(Set<Specialist> recentlyVisitedSpecialists) {
-        this.recentlyVisitedSpecialists = recentlyVisitedSpecialists;
-    }
-
     public Set<Specialist> getFavoriteSpecialists() {
         return favoriteSpecialists;
     }
 
     public void setFavoriteSpecialists(Set<Specialist> favoriteSpecialists) {
         this.favoriteSpecialists = favoriteSpecialists;
-    }
-
-    public Set<Announcement> getRecentlyVisitedAnnouncements() {
-        return recentlyVisitedAnnouncements;
-    }
-
-    public void setRecentlyVisitedAnnouncements(Set<Announcement> recentlyVisitedAnnouncements) {
-        this.recentlyVisitedAnnouncements = recentlyVisitedAnnouncements;
     }
 
     public Set<Announcement> getFavoriteAnnouncements() {
