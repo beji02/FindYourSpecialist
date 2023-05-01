@@ -1,6 +1,0 @@
-rootProject.name = 'FindYourSpcialist'
-include 'FYS-server'
-include 'FYS-model'
-include 'FYS-model'
-include 'FYS-persistance'
-

@@ -1,4 +1,0 @@
-2023-05-02 00:48:07,639 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
-2023-05-02 00:48:07,725 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-05-02 00:48:07,888 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-05-02 00:48:08,309 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
