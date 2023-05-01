@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+
+
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
@@ -36,5 +39,13 @@
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="UsersRepository" class="fys.fyspersistance.users.UsersDbRepository">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="AnnouncementsRepository" class="fys.fyspersistance.announcements.AnnouncementsDbRepository">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 </beans>
