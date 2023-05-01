@@ -96,4 +96,36 @@ public class Specialist extends User {
     public void setMessages(Set<Message> messages) {
         this.messages = messages;
     }
+
+    public void addRating(Rating rating) {
+        this.ratingsSpecialist.add(rating);
+    }
+
+    public void removeRating(Rating rating) {
+        this.ratingsSpecialist.remove(rating);
+    }
+
+    public void addField(Field field) {
+        this.fields.add(field);
+    }
+
+    public void removeField(Field field) {
+        this.fields.remove(field);
+    }
+
+    public void addAnnouncement(Announcement announcement) {
+        this.announcements.add(announcement);
+    }
+
+    public void removeAnnouncement(Announcement announcement) {
+        this.announcements.remove(announcement);
+    }
+
+    public void addMessage(Message message) {
+        this.messages.add(message);
+    }
+
+    public void removeMessage(Message message) {
+        this.messages.remove(message);
+    }
 }

@@ -36,16 +36,6 @@ public class User extends Identifiable<Integer> {
     @Column(name="timestamp")
     private Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements = new HashMap<>();
 
-    public void addRecentlyVisitedSpecialist(Specialist specialist) {
-        LocalDateTime timestamp = LocalDateTime.now();
-        recentlyVisitedSpecialists.put(specialist, timestamp);
-    }
-
-    public void addRecentlyVisitedAnnouncement(Announcement announcement) {
-        LocalDateTime timestamp = LocalDateTime.now();
-        recentlyVisitedAnnouncements.put(announcement, timestamp);
-    }
-
     @CollectionTable(name="user_favorite_specialists", joinColumns=@JoinColumn(name="user_id"))
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Specialist> favoriteSpecialists = new HashSet<>();
@@ -153,5 +143,55 @@ public class User extends Identifiable<Integer> {
 
     public void setMessages(Set<Message> messages) {
         this.messages = messages;
+    }
+
+    public void addFavouriteSpecialist(Specialist specialist) {
+        this.favoriteSpecialists.add(specialist);
+    }
+
+    public void removeFavouriteSpecialist(Specialist specialist) {
+        this.favoriteSpecialists.remove(specialist);
+    }
+
+    public void addFavouriteAnnouncement(Announcement announcement) {
+        this.favoriteAnnouncements.add(announcement);
+    }
+
+    public void removeFavouriteAnnouncement(Announcement announcement) {
+        this.favoriteAnnouncements.remove(announcement);
+    }
+
+    public void addMessage(Message message) {
+        this.messages.add(message);
+    }
+
+    public void removeMessage(Message message) {
+        this.messages.remove(message);
+    }
+
+    public void addRating(Rating rating) {
+        this.ratingsUser.add(rating);
+    }
+
+    public void removeRating(Rating rating) {
+        this.ratingsUser.remove(rating);
+    }
+
+    public void addRecentlyVisitedSpecialist(Specialist specialist) {
+        LocalDateTime timestamp = LocalDateTime.now();
+        recentlyVisitedSpecialists.put(specialist, timestamp);
+    }
+
+    public void removeRecentlyVisitedSpecialist(Specialist specialist) {
+        recentlyVisitedSpecialists.remove(specialist);
+    }
+
+    public void addRecentlyVisitedAnnouncement(Announcement announcement) {
+        LocalDateTime timestamp = LocalDateTime.now();
+        recentlyVisitedAnnouncements.put(announcement, timestamp);
+    }
+
+    public void removeRecentlyVisitedAnnouncement(Announcement announcement) {
+        recentlyVisitedAnnouncements.remove(announcement);
     }
 }
