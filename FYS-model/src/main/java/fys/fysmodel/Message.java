@@ -1,9 +1,6 @@
 package fys.fysmodel;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,17 +12,27 @@ public class Message extends Identifiable<Integer> {
     private LocalDateTime dateTime;
     private String text;
 
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Specialist specialist;
+
     public Message() {}
 
-    public Message(LocalDateTime dateTime, String text) {
+    public Message(LocalDateTime dateTime, String text, User user, Specialist specialist) {
         this.dateTime = dateTime;
         this.text = text;
+        this.user = user;
+        this.specialist = specialist;
     }
 
-    public Message(Integer integer, LocalDateTime dateTime, String text) {
+    public Message(Integer integer, LocalDateTime dateTime, String text, User user, Specialist specialist) {
         super(integer);
         this.dateTime = dateTime;
         this.text = text;
+        this.user = user;
+        this.specialist = specialist;
     }
 
     public LocalDateTime getDateTime() {
@@ -42,5 +49,21 @@ public class Message extends Identifiable<Integer> {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
     }
 }

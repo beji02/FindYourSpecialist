@@ -42,8 +42,6 @@ public class User extends Identifiable<Integer> {
     @CollectionTable(name="user_favorite_announcements", joinColumns=@JoinColumn(name="user_id"))
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Announcement> favoriteAnnouncements = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Message> messages = new HashSet<>();
 
     public User() {}
 
@@ -137,14 +135,6 @@ public class User extends Identifiable<Integer> {
         this.favoriteAnnouncements = favoriteAnnouncements;
     }
 
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
-    }
-
     public void addFavouriteSpecialist(Specialist specialist) {
         this.favoriteSpecialists.add(specialist);
     }
@@ -159,14 +149,6 @@ public class User extends Identifiable<Integer> {
 
     public void removeFavouriteAnnouncement(Announcement announcement) {
         this.favoriteAnnouncements.remove(announcement);
-    }
-
-    public void addMessage(Message message) {
-        this.messages.add(message);
-    }
-
-    public void removeMessage(Message message) {
-        this.messages.remove(message);
     }
 
     public void addRating(Rating rating) {

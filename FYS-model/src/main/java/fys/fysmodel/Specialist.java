@@ -23,8 +23,6 @@ public class Specialist extends User {
     private Set<Field> fields = new HashSet<>();
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Announcement> announcements = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Message> messages = new HashSet<>();
 
     public Specialist(Integer area, String location, String description) {
         this.area = area;
@@ -87,16 +85,6 @@ public class Specialist extends User {
         this.announcements = announcements;
     }
 
-    @Override
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    @Override
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
-    }
-
     public void addRating(Rating rating) {
         this.ratingsSpecialist.add(rating);
     }
@@ -119,13 +107,5 @@ public class Specialist extends User {
 
     public void removeAnnouncement(Announcement announcement) {
         this.announcements.remove(announcement);
-    }
-
-    public void addMessage(Message message) {
-        this.messages.add(message);
-    }
-
-    public void removeMessage(Message message) {
-        this.messages.remove(message);
     }
 }
