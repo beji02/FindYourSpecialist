@@ -23,6 +23,14 @@ function App() {
         >
             Signup
         </a>
+          <a
+              className="App-link"
+              href="/home"
+              target="_blank"
+              rel="noopener noreferrer"
+          >
+              Home
+          </a>
       </header>
     </div>
   );
