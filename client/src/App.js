@@ -7,7 +7,6 @@ function App() {
         <p>
           Welcome to Find Your Specialist page!
         </p>
-        {/*insert a link to login page*/}
         <a
             className="App-link"
             href="/login"
@@ -16,7 +15,6 @@ function App() {
         >
             Login
         </a>
-        {/*insert a link to signup page*/}
         <a
             className="App-link"
             href="/signup"
