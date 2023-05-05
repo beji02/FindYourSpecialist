@@ -45,7 +45,9 @@ function Home() {
     ];
     return (
         <Container>
-            <NavbarHome />
+            <Container className="fixed-top">
+                <NavbarHome />
+            </Container>
             <SearchBar announcements={announcements} />
 
             <Container className="fixed-bottom">
