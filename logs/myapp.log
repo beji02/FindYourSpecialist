@@ -2,3 +2,106 @@
 2023-05-02 00:48:07,725 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
 2023-05-02 00:48:07,888 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
 2023-05-02 00:48:08,309 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 20:06:18,132 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 20:06:18,745 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 20:06:19,955 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 20:06:22,601 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 20:55:28,475 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 20:55:28,720 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 20:55:29,287 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 20:55:31,315 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 20:57:39,556 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 20:57:39,739 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 20:57:40,112 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 20:57:41,310 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:09:09,312 WARN o.s.b.f.x.ResourceEntityResolver [main] DTD/XSD XML entity [http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd] not found, falling back to remote https resolution
+2023-05-04 22:09:42,638 WARN o.s.b.f.x.ResourceEntityResolver [main] DTD/XSD XML entity [http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd] not found, falling back to remote https resolution
+2023-05-04 22:12:00,216 WARN o.s.b.f.x.ResourceEntityResolver [main] DTD/XSD XML entity [http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd] not found, falling back to remote https resolution
+2023-05-04 22:18:34,396 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:18:37,755 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:18:43,817 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:18:49,232 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:20:09,098 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:20:09,640 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:20:10,722 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:20:13,352 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:20:27,985 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:20:28,480 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:20:29,602 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:20:31,855 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:20:46,552 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:20:46,977 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:20:47,867 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:20:50,135 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:21:10,490 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:21:10,960 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:21:11,909 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:21:14,655 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:21:55,005 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:21:56,150 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:21:59,028 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:22:03,283 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:22:12,176 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:22:12,645 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:22:13,749 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:22:16,350 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:23:39,606 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:23:40,102 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:23:41,157 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:23:43,987 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:24:29,193 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:24:30,302 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:24:32,570 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:24:36,825 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:24:50,884 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:24:51,369 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:24:52,441 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:24:54,920 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:25:16,846 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:25:17,331 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:25:18,410 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:25:20,903 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:26:26,049 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:26:26,515 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:26:27,553 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:26:31,680 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:26:47,532 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:26:48,059 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:26:49,189 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:26:51,620 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:26:59,507 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:27:00,025 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:27:01,151 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:27:04,165 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:27:26,853 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:27:27,354 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:27:28,372 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:27:30,776 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:47:23,804 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:47:24,562 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:47:26,089 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:47:29,427 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:48:02,160 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 22:48:02,766 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:48:04,067 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 22:48:06,864 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 23:45:27,332 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 23:45:27,884 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 23:45:29,149 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 23:45:31,894 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 23:46:09,101 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-04 23:46:09,508 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 23:46:10,324 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-04 23:46:12,460 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 07:29:23,765 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-05 07:29:25,426 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 07:29:28,180 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-05 07:29:32,405 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 08:17:14,534 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-05 08:17:14,984 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 08:17:16,043 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-05 08:17:17,967 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 08:26:08,950 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.1.Final
+2023-05-05 08:26:09,287 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 08:26:10,033 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-05 08:26:11,784 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
