@@ -26,6 +26,11 @@ function Signup() {
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="lastName">
+                    <Form.Control type="text" name={'lastName'} placeholder="Enter Last Name" value={registerForm.lastName}
+                                  onChange={handleUpdate}
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="username">
                     <Form.Control type="text" name={'username'} placeholder="Enter Username" value={registerForm.username}
                         onChange={handleUpdate}
                     />
@@ -45,7 +50,7 @@ function Signup() {
                 <Button variant="primary" type="submit" onClick={
                     async (event) => {
                         event.preventDefault();
-                        if (registerForm.firstName === "" || registerForm.username === "" || registerForm.password === "") {
+                        if (registerForm.firstName === "" || registerForm.lastName === "" || registerForm.username === "" || registerForm.password === "") {
                             setError("Please fill all the details");
                         } else if (registerForm.password !== password) {
                             setError("Passwords do not match");
