@@ -1,5 +1,7 @@
 package fys.fysserver.api.model;
 
+import java.io.Serializable;
+
 public class LoginRequest {
     private String username;
     private String password;
