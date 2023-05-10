@@ -9,6 +9,7 @@ import fys.fysserver.api.model.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
 public class UserController {
 
     private UserService userService;
@@ -16,6 +17,7 @@ public class UserController {
     public UserController() {
     }
 
+    @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
@@ -33,13 +35,13 @@ public class UserController {
 
     @PostMapping("/register")
     public RegisterResponse register(@RequestBody RegisterRequest registerRequest) {
-        try {
+       // try {
             User user = userService.register(registerRequest.getUsername(), registerRequest.getPassword(), registerRequest.getFirstName(), registerRequest.getLastName());
             return new RegisterResponse(user, true, null);
-        }
-        catch(Exception e) {
-            return new RegisterResponse(null, false, e.getMessage());
-        }
+        //}
+        //catch(Exception e) {
+         //   return new RegisterResponse(null, false, e.getMessage());
+        //}
     }
 
 }
