@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import LoginPage from './LoginPage';
-import Signup from './Signup';
+import Register from './Register';
 import Home from './Home';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -17,7 +17,7 @@ root.render(
           <Routes>
               <Route path="/" element={<App />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<Signup />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<ProfilePage />} />
           </Routes>

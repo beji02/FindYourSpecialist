@@ -10,23 +10,20 @@ function App() {
         <a
             className="App-link"
             href="/login"
-            target="_blank"
             rel="noopener noreferrer"
         >
             Login
         </a>
         <a
             className="App-link"
-            href="/signup"
-            target="_blank"
+            href="/register"
             rel="noopener noreferrer"
         >
-            Signup
+            Register
         </a>
           <a
               className="App-link"
               href="/home"
-              target="_blank"
               rel="noopener noreferrer"
           >
               Home

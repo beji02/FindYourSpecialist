@@ -3,10 +3,14 @@ export class RegisterFormDto {
     username;
     password;
     lastName;
-    constructor(firstName, lastName, username, password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
+    birthDate;
+    phoneNumber;
+    constructor(firstName, lastName, username, password, birthDate, phoneNumber) {
+        this.firstName = firstName || '';
+        this.lastName = lastName || '';
+        this.username = username || '';
+        this.password = password || '';
+        this.birthDate = birthDate || '';
+        this.phoneNumber = phoneNumber || '';
     }
 }

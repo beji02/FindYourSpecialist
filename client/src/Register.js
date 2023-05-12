@@ -2,8 +2,8 @@ import React from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
-import { RegisterFormDto } from "./domain/dto/registerFormDto";
-function Signup() {
+import { RegisterFormDto } from "./domain/dto/registerFormDto.js";
+function Register() {
     const [registerForm, setRegisterForm] = React.useState(new RegisterFormDto());
     const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState('');
@@ -47,16 +47,30 @@ function Signup() {
                         }}
                     />
                 </Form.Group>
+                <Form.Group className="mb-3" controlId="birthDate">
+                    <Form.Control
+                        type="date"
+                        name={'birthDate'}
+                        placeholder="Enter Birth Date"
+                        value={registerForm.birthDate}
+                        max={new Date().toISOString().split('T')[0]}
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="phoneNumber">
+                    <Form.Control type="text" name={'phoneNumber'} placeholder="Enter Phone Number" value={registerForm.phoneNumber}
+                                  onChange={handleUpdate}
+                    />
+                </Form.Group>
                 <Button variant="primary" type="submit" onClick={
                     async (event) => {
                         event.preventDefault();
-                        if (registerForm.firstName === "" || registerForm.lastName === "" || registerForm.username === "" || registerForm.password === "") {
+                        if (registerForm.firstName === "" || registerForm.lastName === "" || registerForm.username === "" || registerForm.password === "" || registerForm.birthDate === null || registerForm.phoneNumber === "") {
                             setError("Please fill all the details");
                         } else if (registerForm.password !== password) {
                             setError("Passwords do not match");
                             console.log(registerForm.password, password);
                         } else {
-                            await fetch('signup', {
+                            await fetch('register', {
                                 method: 'POST',
                                 headers: {
                                     'Accept': 'application/json',
@@ -72,6 +86,7 @@ function Signup() {
                             });
                         }
                     }
+
                 }
 
                 >
@@ -82,4 +97,4 @@ function Signup() {
     );
 }
 
-export default Signup;
+export default Register;
