@@ -35,13 +35,13 @@ public class UserController {
 
     @PostMapping("/register")
     public RegisterResponse register(@RequestBody RegisterRequest registerRequest) {
-        try {
+       // try {
             User user = userService.register(registerRequest.getUsername(), registerRequest.getPassword(), registerRequest.getFirstName(), registerRequest.getLastName());
             return new RegisterResponse(user, true, null);
-        }
-        catch(Exception e) {
-            return new RegisterResponse(null, false, e.getMessage());
-        }
+        //}
+        //catch(Exception e) {
+         //   return new RegisterResponse(null, false, e.getMessage());
+        //}
     }
 
 }

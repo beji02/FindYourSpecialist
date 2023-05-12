@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
@@ -15,9 +13,6 @@
           http://www.springframework.org/schema/context/spring-context.xsd">
 
     <tx:annotation-driven />
-    <tx:annotation-driven transaction-manager="transactionManager" />
-    <context:component-scan base-package="fys.fyspersistence"/>
-
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver" />
@@ -40,6 +35,12 @@
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <context:component-scan base-package="fys.fyspersistence.users" />
+
+    <bean id="usersRepository" class="fys.fyspersistence.users.UsersDbRepository">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
 </beans>

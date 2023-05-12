@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="classpath:hibernate.cfg.xml"/>
+    <context:component-scan base-package="fys.fyspersistence.users" />
+
+    <bean id="userService" class="fys.fysserver.api.service.UserService">
+        <property name="usersRepository" ref="usersRepository" />
+    </bean>
+
+    <bean id="userController" class="fys.fysserver.api.controller.UserController">
+        <property name="userService" ref="userService" />
+    </bean>
+
+</beans>
