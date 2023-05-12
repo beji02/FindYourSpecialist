@@ -8,6 +8,7 @@ import Home from './Home';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
+import ProfilePage from "./ProfilePage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/profile" element={<ProfilePage />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>

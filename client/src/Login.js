@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
+
 import { LoginFormDto } from "./domain/dto/loginFormDto";
 function Login() {
     const [loginForm, setLoginForm] = useState(new LoginFormDto());
@@ -45,7 +46,7 @@ function Login() {
                                 body: JSON.stringify(loginForm),
                             }).then((response) => {
                                 if (response.status === 200) {
-                                    window.location.href = "/";
+                                     window.location.ref = "/home";
                                 } else {
                                     setError("Invalid credentials");
                                 }
