@@ -16,9 +16,15 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver" />
+<<<<<<< HEAD
         <property name="url" value="jdbc:postgresql://localhost:5433/fys" />
         <property name="username" value="postgres" />
         <property name="password" value="postgres" />
+=======
+        <property name="url" value="jdbc:postgresql://localhost:5432/fys" />
+        <property name="username" value="postgres" />
+        <property name="password" value="admin" />
+>>>>>>> vz/server-conf
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
@@ -43,4 +49,11 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+<<<<<<< HEAD
+=======
+    <bean id="announcementsRepository" class="fys.fyspersistence.announcements.AnnouncementsDbRepository">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+>>>>>>> vz/server-conf
 </beans>

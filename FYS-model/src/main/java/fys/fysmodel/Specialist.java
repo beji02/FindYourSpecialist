@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="specialists")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Specialist extends User {
     private Integer area;
     private String location;

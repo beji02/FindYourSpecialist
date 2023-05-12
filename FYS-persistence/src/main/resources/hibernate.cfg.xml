@@ -16,9 +16,9 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url" value="jdbc:postgresql://localhost:5433/fys" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/fys" />
         <property name="username" value="postgres" />
-        <property name="password" value="postgres" />
+        <property name="password" value="admin" />
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
@@ -40,6 +40,10 @@
     <context:component-scan base-package="fys.fyspersistence.users" />
 
     <bean id="usersRepository" class="fys.fyspersistence.users.UsersDbRepository">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="announcementsRepository" class="fys.fyspersistence.announcements.AnnouncementsDbRepository">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 

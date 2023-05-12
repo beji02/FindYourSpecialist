@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="users")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User extends Identifiable<Integer> {
     private String username;
     private String password;
