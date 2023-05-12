@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 
 import { LoginFormDto } from "./domain/dto/loginFormDto";
-function Login() {
+function LoginPage() {
     const [loginForm, setLoginForm] = useState(new LoginFormDto());
     const [error, setError] = useState('');
 
@@ -46,7 +46,7 @@ function Login() {
                                 body: JSON.stringify(loginForm),
                             }).then((response) => {
                                 if (response.status === 200) {
-                                     window.location.ref = "/home";
+                                    window.location.href = "/home";
                                 } else {
                                     setError("Invalid credentials");
                                 }
@@ -61,4 +61,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default LoginPage;
