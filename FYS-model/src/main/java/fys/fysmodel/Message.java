@@ -10,7 +10,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name="messages")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Message extends Identifiable<Integer> {
     private LocalDateTime dateTime;
     private String text;

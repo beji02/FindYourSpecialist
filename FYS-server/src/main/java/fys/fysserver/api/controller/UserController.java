@@ -24,13 +24,13 @@ public class UserController {
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest) {
-        try {
-            User user = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
-            return new LoginResponse(user, true, null);
-        }
-        catch(Exception e) {
-            return new LoginResponse(null, false, e.getMessage());
-        }
+        User user = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
+        return new LoginResponse(user, true, null);
+    }
+
+    @GetMapping("/announcements")
+    public Iterable getAnnouncements() {
+        return userService.getAnnouncements();
     }
 
     @PostMapping("/register")
