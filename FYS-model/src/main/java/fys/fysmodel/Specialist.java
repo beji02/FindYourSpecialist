@@ -20,8 +20,6 @@ public class Specialist extends User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Rating> ratingsSpecialist = new HashSet<>();
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Field> fields = new HashSet<>();
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Announcement> announcements = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Message> messages = new HashSet<>();
@@ -71,13 +69,6 @@ public class Specialist extends User {
         this.ratingsSpecialist = ratingsSpecialist;
     }
 
-    public Set<Field> getFields() {
-        return fields;
-    }
-
-    public void setFields(Set<Field> fields) {
-        this.fields = fields;
-    }
 
     public Set<Announcement> getAnnouncements() {
         return announcements;
@@ -105,13 +96,6 @@ public class Specialist extends User {
         this.ratingsSpecialist.remove(rating);
     }
 
-    public void addField(Field field) {
-        this.fields.add(field);
-    }
-
-    public void removeField(Field field) {
-        this.fields.remove(field);
-    }
 
     public void addAnnouncement(Announcement announcement) {
         this.announcements.add(announcement);

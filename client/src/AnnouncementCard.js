@@ -5,7 +5,7 @@ function AnnouncementCard(props) {
     const { title, description, startDate, endDate, image, rate } = props;
 
     return (
-        <Card className="mb-4">
+        <Card className="mb-4 announcement" style={{ minWidth: "150px" }}>
             <Row>
                 <Col md={4} className="text-center">
                     <Card.Img variant="top" src={image} />

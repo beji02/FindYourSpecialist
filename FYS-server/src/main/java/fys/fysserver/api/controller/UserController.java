@@ -28,11 +28,6 @@ public class UserController {
         return new LoginResponse(user, true, null);
     }
 
-    @GetMapping("/announcements")
-    public Iterable getAnnouncements() {
-        return userService.getAnnouncements();
-    }
-
     @PostMapping("/register")
     public RegisterResponse register(@RequestBody RegisterRequest registerRequest) {
        // try {

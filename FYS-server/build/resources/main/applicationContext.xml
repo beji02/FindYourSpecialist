@@ -10,11 +10,18 @@
 
     <bean id="userService" class="fys.fysserver.api.service.UserService">
         <property name="usersRepository" ref="usersRepository" />
+    </bean>
+
+    <bean id="announcementService" class="fys.fysserver.api.service.AnnouncementService">
         <property name="announcementsRepository" ref="announcementsRepository" />
     </bean>
 
     <bean id="userController" class="fys.fysserver.api.controller.UserController">
         <property name="userService" ref="userService" />
+    </bean>
+
+    <bean id="announcementController" class="fys.fysserver.api.controller.AnnouncementController">
+        <property name="announcementService" ref="announcementService" />
     </bean>
 
 </beans>

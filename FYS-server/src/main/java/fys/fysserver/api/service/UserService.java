@@ -17,14 +17,13 @@ import java.util.List;
 public class UserService {
 
     private UsersRepository usersRepository;
-    private AnnouncementsRepository announcementsRepository;
 
     public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
-    public void setAnnouncementsRepository(AnnouncementsRepository announcementsRepository) {
-        this.announcementsRepository = announcementsRepository;
-    }
+//    public void setAnnouncementsRepository(AnnouncementsRepository announcementsRepository) {
+//        this.announcementsRepository = announcementsRepository;
+//    }
 
 
     public UserService() {
@@ -37,11 +36,6 @@ public class UserService {
         return usersRepository.findByUsernameAndPassword(username, password);
     }
 
-    public Iterable<Announcement> getAnnouncements() {
-        Iterable<Announcement> announcements = announcementsRepository.findAll();
-        System.out.println(((List)announcements).size());
-        return announcements;
-    }
 
     public User register(String username, String password, String firstName, String lastName) {
         System.out.println("register: " + username + " " + password + " " + firstName + " " + lastName);

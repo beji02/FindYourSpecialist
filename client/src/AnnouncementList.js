@@ -5,17 +5,19 @@ import { Container, Row, Col } from "react-bootstrap";
 function AnnouncementList(props) {
     const { announcements } = props;
 
-    const firstTenAnnouncements = announcements.slice(0, 10);
+    const containerStyle = {
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "1rem",
+    };
 
     return (
-        <Container>
-            <Row>
-                {firstTenAnnouncements.map((announcement) => (
-                    <Col md={6} lg={4} key={announcement.id}>
-                        <AnnouncementCard {...announcement} />
-                    </Col>
-                ))}
-            </Row>
+        <Container style={containerStyle}>
+            {announcements.map((announcement) => (
+                <Col md={6} lg={3} key={announcement.id}>
+                    <AnnouncementCard {...announcement} />
+                </Col>
+            ))}
         </Container>
     );
 }
