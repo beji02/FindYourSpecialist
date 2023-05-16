@@ -31,6 +31,14 @@ function App() {
           >
               Home
           </a>
+          <a
+              className="App-link"
+              href="/testnewhomepage"
+              target="_blank"
+              rel="noopener noreferrer"
+          >
+              TestNewHomePage
+          </a>
       </header>
     </div>
   );

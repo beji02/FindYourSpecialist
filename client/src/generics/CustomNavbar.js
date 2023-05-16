@@ -2,11 +2,11 @@ import React from "react";
 import Container from 'react-bootstrap/Container';
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-function NavbarHome() {
+function CustomNavbar() {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">Find your specialist</Navbar.Brand>
+                <Navbar.Brand>Find your specialist</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
@@ -22,4 +22,4 @@ function NavbarHome() {
     );
 }
 
-export default NavbarHome;
+export default CustomNavbar;

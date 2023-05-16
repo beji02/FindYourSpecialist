@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import LoginPage from './LoginPage';
 import Signup from './Signup';
-import Home from './Home';
+import HomePage from './home/HomePage';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -18,7 +18,7 @@ root.render(
               <Route path="/" element={<App />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/home" element={<HomePage />} />
               <Route path="/profile" element={<ProfilePage />} />
           </Routes>
       </BrowserRouter>
