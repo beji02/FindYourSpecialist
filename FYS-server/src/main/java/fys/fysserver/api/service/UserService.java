@@ -30,14 +30,13 @@ public class UserService {
         return usersRepository.findByUsernameAndPassword(username, password);
     }
 
-    public User register(String username, String password, String firstName, String lastName) {
-        System.out.println("register: " + username + " " + password + " " + firstName + " " + lastName);
+    public User register(String username, String password, String email) {
+        System.out.println("register: " + username + " " + password + " " + email);
 
         User user = new User();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
         user.setUsername(username);
         user.setPassword(password);
+        user.setEmail(email);
 
         usersRepository.add(user);
         user = usersRepository.findByUsernameAndPassword(username, password);

@@ -19,6 +19,8 @@ public class User extends Identifiable<Integer> {
     private LocalDate birthDate;
     private String phoneNumber;
     private String optionalDescription;
+    private String email;
+
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Rating> ratingsUser = new HashSet<>();
@@ -193,5 +195,13 @@ public class User extends Identifiable<Integer> {
 
     public void removeRecentlyVisitedAnnouncement(Announcement announcement) {
         recentlyVisitedAnnouncements.remove(announcement);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
