@@ -32,10 +32,10 @@ function LoginPage() {
                     },
                     body: JSON.stringify(loginForm),
                 });
-
-                if (response.status === 200) {
+                    if (response.status === 200) {
                     const data = await response.json();
                     const token = data.token;
+
                     localStorage.setItem("token", token);
 
                     navigate('/home');

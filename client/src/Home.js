@@ -5,13 +5,10 @@ import FooterHome from "./FooterHome";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 function Home() {
-    const navigate = useNavigate();
     useEffect(() => {
-        // Retrieve the token from storage or any other appropriate place
         const token = localStorage.getItem("token");
-        // Use the token as needed (e.g., send it in API requests)
-        console.log("Token:", token);
-    }, []);
+    });
+
 
 
     const announcements = [
