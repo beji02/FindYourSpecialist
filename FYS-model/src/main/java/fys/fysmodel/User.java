@@ -10,8 +10,9 @@ import java.util.Set;
 
 @Entity
 @Table(name="users")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User extends Identifiable<Integer> {
+    @Column(unique = true)
     private String username;
     private String password;
     private String firstName;
@@ -19,6 +20,8 @@ public class User extends Identifiable<Integer> {
     private LocalDate birthDate;
     private String phoneNumber;
     private String optionalDescription;
+
+    @Column(unique = true)
     private String email;
 
 
