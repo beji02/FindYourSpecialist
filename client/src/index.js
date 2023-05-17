@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './style/index.css';
 import App from './App';
-import Login from './Login';
-import Signup from './Signup';
-import Home from './Home';
+import LoginPage from './LoginPage';
+import HomePage from './home/HomePage';
+import RegisterPage from './RegisterPage';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
+import ProfilePage from "./ProfilePage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,9 +16,10 @@ root.render(
       <BrowserRouter>
           <Routes>
               <Route path="/" element={<App />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>

@@ -1,6 +1,7 @@
 package fys.fyspersistence.announcements;
 
 import fys.fysmodel.Announcement;
+import fys.fysmodel.Field;
 import fys.fyspersistence.exceptions.NonexistentEntityException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -80,5 +81,13 @@ public class AnnouncementsDbRepository implements AnnouncementsRepository {
         Session session = sessionFactory.getCurrentSession();
         session.merge(announcement);
         logger.traceExit("Announcement modified");
+    }
+
+    @Override
+    public Iterable<Field> findAllFields() {
+        logger.traceEntry("Finding all fields");
+        Session session = sessionFactory.getCurrentSession();
+        logger.traceExit("All fields found");
+        return session.createQuery("from Field", Field.class).list();
     }
 }

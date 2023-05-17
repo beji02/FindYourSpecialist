@@ -1,6 +1,8 @@
 package fys.fysserver.api.service;
 
+import fys.fysmodel.Announcement;
 import fys.fysmodel.User;
+import fys.fyspersistence.announcements.AnnouncementsRepository;
 import fys.fyspersistence.users.UsersDbRepository;
 import fys.fyspersistence.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,10 @@ public class UserService {
     public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
+//    public void setAnnouncementsRepository(AnnouncementsRepository announcementsRepository) {
+//        this.announcementsRepository = announcementsRepository;
+//    }
+
 
     public UserService() {
 
@@ -30,14 +36,13 @@ public class UserService {
         return usersRepository.findByUsernameAndPassword(username, password);
     }
 
-    public User register(String username, String password, String firstName, String lastName) {
-        System.out.println("register: " + username + " " + password + " " + firstName + " " + lastName);
+    public User register(String username, String password, String email) {
+        System.out.println("register: " + username + " " + password + " " + email);
 
         User user = new User();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
         user.setUsername(username);
         user.setPassword(password);
+        user.setEmail(email);
 
         usersRepository.add(user);
         user = usersRepository.findByUsernameAndPassword(username, password);

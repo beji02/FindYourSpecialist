@@ -6,7 +6,7 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class Identifiable<ID extends Serializable> {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private ID id;
 
     public Identifiable() {}
