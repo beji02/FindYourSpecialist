@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="fields")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Field extends Identifiable<Integer> {
     private String name;
     private Float taxPercentage;

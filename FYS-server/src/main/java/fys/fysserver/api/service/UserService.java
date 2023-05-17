@@ -2,6 +2,7 @@ package fys.fysserver.api.service;
 
 import fys.fysmodel.Announcement;
 import fys.fysmodel.User;
+import fys.fyspersistence.announcements.AnnouncementsRepository;
 import fys.fyspersistence.users.UsersDbRepository;
 import fys.fyspersistence.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class UserService {
     public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
+//    public void setAnnouncementsRepository(AnnouncementsRepository announcementsRepository) {
+//        this.announcementsRepository = announcementsRepository;
+//    }
+
 
     public UserService() {
 

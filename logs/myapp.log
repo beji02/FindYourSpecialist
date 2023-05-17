@@ -202,6 +202,7 @@
 2023-05-11 00:33:24,353 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
 2023-05-11 00:33:25,767 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 <<<<<<< HEAD
+<<<<<<< HEAD
 2023-05-17 10:34:04,303 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
 2023-05-17 10:34:04,788 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
 2023-05-17 10:34:05,482 WARN o.h.e.j.e.i.JdbcEnvironmentInitiator [main] HHH000342: Could not obtain connection to query metadata
@@ -399,6 +400,69 @@ Caused by: org.postgresql.util.PSQLException: FATAL: database "fys" does not exi
 2023-05-17 15:09:44,704 WARN o.h.c.AnnotationBinder [main] HHH000138: Mixing inheritance strategy in a entity hierarchy is not allowed, ignoring sub strategy in: fys.fysmodel.VisitedSpecialist
 2023-05-17 15:09:46,209 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 =======
+2023-05-12 16:32:32,373 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:32:32,463 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:32:32,656 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:32:33,091 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-12 16:35:13,114 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:35:13,208 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:35:13,464 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:35:13,705 WARN o.s.c.s.ClassPathXmlApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [hibernate.cfg.xml]: Cannot use identity column key generation with <union-subclass> mapping for: fys.fysmodel.Specialist
+2023-05-12 16:39:00,292 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:39:00,382 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:39:00,576 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:39:00,736 WARN o.s.c.s.ClassPathXmlApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [hibernate.cfg.xml]: Could not instantiate id generator [entity-name=fys.fysmodel.Rating]
+2023-05-12 16:40:00,442 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:40:00,532 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:40:00,725 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:40:00,872 WARN o.s.c.s.ClassPathXmlApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [hibernate.cfg.xml]: Could not instantiate id generator [entity-name=fys.fysmodel.Rating]
+2023-05-12 16:42:05,998 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:42:06,093 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:42:06,265 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:42:06,675 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-12 16:44:54,052 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:44:54,139 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:44:54,325 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:44:54,573 WARN o.s.c.s.ClassPathXmlApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [hibernate.cfg.xml]: Cannot use identity column key generation with <union-subclass> mapping for: fys.fysmodel.Specialist
+2023-05-12 16:45:33,275 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:45:33,369 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:45:33,551 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:45:33,965 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-12 16:46:42,355 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:46:42,445 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:46:42,639 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:46:42,880 WARN o.s.c.s.ClassPathXmlApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [hibernate.cfg.xml]: Cannot use identity column key generation with <union-subclass> mapping for: fys.fysmodel.Specialist
+2023-05-12 16:46:49,867 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:46:49,957 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:46:50,120 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:46:50,153 WARN o.h.c.AnnotationBinder [main] HHH000138: Mixing inheritance strategy in a entity hierarchy is not allowed, ignoring sub strategy in: fys.fysmodel.Specialist
+2023-05-12 16:46:50,365 WARN o.s.c.s.ClassPathXmlApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [hibernate.cfg.xml]: Cannot use identity column key generation with <union-subclass> mapping for: fys.fysmodel.Specialist
+2023-05-12 16:47:53,482 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:47:53,574 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:47:53,766 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:47:53,801 WARN o.h.c.AnnotationBinder [main] HHH000138: Mixing inheritance strategy in a entity hierarchy is not allowed, ignoring sub strategy in: fys.fysmodel.Specialist
+2023-05-12 16:47:54,184 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-12 16:52:11,992 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:52:12,089 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:52:12,285 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:52:12,325 WARN o.h.c.AnnotationBinder [main] HHH000138: Mixing inheritance strategy in a entity hierarchy is not allowed, ignoring sub strategy in: fys.fysmodel.Specialist
+2023-05-12 16:52:12,458 WARN o.s.c.s.ClassPathXmlApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [hibernate.cfg.xml]: Could not instantiate id generator [entity-name=fys.fysmodel.Rating]
+2023-05-12 16:52:16,400 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:52:16,474 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:52:16,634 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:52:16,665 WARN o.h.c.AnnotationBinder [main] HHH000138: Mixing inheritance strategy in a entity hierarchy is not allowed, ignoring sub strategy in: fys.fysmodel.Specialist
+2023-05-12 16:52:16,769 WARN o.s.c.s.ClassPathXmlApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [hibernate.cfg.xml]: Could not instantiate id generator [entity-name=fys.fysmodel.Rating]
+2023-05-12 16:58:03,398 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 16:58:03,488 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 16:58:03,675 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 16:58:03,710 WARN o.h.c.AnnotationBinder [main] HHH000138: Mixing inheritance strategy in a entity hierarchy is not allowed, ignoring sub strategy in: fys.fysmodel.Specialist
+2023-05-12 16:58:03,927 WARN o.s.c.s.ClassPathXmlApplicationContext [main] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sessionFactory' defined in class path resource [hibernate.cfg.xml]: Cannot use identity column key generation with <union-subclass> mapping for: fys.fysmodel.Specialist
+2023-05-12 17:00:56,041 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-12 17:00:56,128 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-12 17:00:56,312 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-12 17:00:56,742 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+>>>>>>> master
+=======
 2023-05-17 14:27:15,433 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
 2023-05-17 14:27:15,522 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
 2023-05-17 14:27:15,706 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -417,4 +481,27 @@ Caused by: org.postgresql.util.PSQLException: FATAL: database "fys" does not exi
 2023-05-17 15:01:53,202 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
 2023-05-17 15:01:53,241 WARN o.h.c.AnnotationBinder [main] HHH000138: Mixing inheritance strategy in a entity hierarchy is not allowed, ignoring sub strategy in: fys.fysmodel.VisitedSpecialist
 2023-05-17 15:01:53,804 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+<<<<<<< HEAD
 >>>>>>> af04fdcf8c6fe2aae3f6f789bc71da973b35242c
+=======
+>>>>>>> vz/session_management
+2023-05-17 15:39:16,485 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-17 15:39:16,574 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-17 15:39:16,759 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-17 15:39:17,197 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-17 15:48:54,259 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-17 15:48:54,347 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-17 15:48:54,522 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-17 15:48:55,011 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-17 15:54:20,537 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-17 15:54:20,635 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-17 15:54:20,803 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-17 15:54:21,350 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-17 15:54:21,421 WARN o.h.e.j.s.SqlExceptionHelper [main] SQL Error: 0, SQLState: 23505
+2023-05-17 15:54:21,421 ERROR o.h.e.j.s.SqlExceptionHelper [main] ERROR: duplicate key value violates unique constraint "uk_r43af9ap4edm43mmtq01oddj6"
+  Detail: Key (username)=(test username) already exists.
+2023-05-17 15:54:34,456 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-17 15:54:34,540 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-17 15:54:34,711 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-17 15:54:35,131 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+>>>>>>> master

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="visited_announcements")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class VisitedAnnouncement extends Announcement {
     private LocalDateTime dateTime;
 
@@ -19,8 +19,8 @@ public class VisitedAnnouncement extends Announcement {
         this.dateTime = dateTime;
     }
 
-    public VisitedAnnouncement(Float rate, String description, String title, LocalDate startDate, LocalDate endDate, LocalDateTime dateTime) {
-        super(rate, description, title, startDate, endDate);
+    public VisitedAnnouncement(Float rate, String description, String title, LocalDate startDate, LocalDate endDate, LocalDateTime dateTime, Field field) {
+        super(rate, description, title, startDate, endDate, field);
         this.dateTime = dateTime;
     }
 

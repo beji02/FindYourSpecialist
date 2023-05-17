@@ -43,9 +43,16 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+<<<<<<< HEAD
     <context:component-scan base-package="fys.fyspersistence.announcements" />
 
     <bean id="announcementsRepository" class="fys.fyspersistence.announcements.AnnouncementsDbRepository">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+=======
+    <bean id="announcementsRepository" class="fys.fyspersistence.announcements.AnnouncementsDbRepository">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+>>>>>>> master
 </beans>

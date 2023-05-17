@@ -1,6 +1,7 @@
 package fys.fysmodel;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,8 +20,6 @@ public class Specialist extends User {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Rating> ratingsSpecialist = new HashSet<>();
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Field> fields = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Announcement> announcements = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -71,13 +70,6 @@ public class Specialist extends User {
         this.ratingsSpecialist = ratingsSpecialist;
     }
 
-    public Set<Field> getFields() {
-        return fields;
-    }
-
-    public void setFields(Set<Field> fields) {
-        this.fields = fields;
-    }
 
     public Set<Announcement> getAnnouncements() {
         return announcements;
@@ -105,14 +97,8 @@ public class Specialist extends User {
         this.ratingsSpecialist.remove(rating);
     }
 
-    public void addField(Field field) {
-        this.fields.add(field);
-    }
 
-    public void removeField(Field field) {
-        this.fields.remove(field);
-    }
-
+    @Transactional
     public void addAnnouncement(Announcement announcement) {
         this.announcements.add(announcement);
     }
@@ -127,5 +113,13 @@ public class Specialist extends User {
 
     public void removeMessage(Message message) {
         this.messages.remove(message);
+    }
+
+    public Float getRating() {
+        Float rating = 0f;
+        for (Rating r : this.ratingsSpecialist) {
+            rating += r.getScore();
+        }
+        return rating / this.ratingsSpecialist.size();
     }
 }

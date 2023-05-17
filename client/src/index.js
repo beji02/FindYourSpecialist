@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './style/index.css';
 import App from './App';
 import LoginPage from './LoginPage';
+import HomePage from './home/HomePage';
 import RegisterPage from './RegisterPage';
-import Home from './Home';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -18,8 +18,8 @@ root.render(
           <Routes>
               <Route path="/" element={<App />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/home" element={<HomePage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/addannouncement" element={<AddAnnouncementPage />} />
           </Routes>

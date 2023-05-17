@@ -1,7 +1,7 @@
 import { Container, Navbar } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import React from "react";
-function FooterHome() {
+function CustomFooter() {
     return (
         <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
@@ -18,4 +18,4 @@ function FooterHome() {
     );
 }
 
-export default FooterHome;
+export default CustomFooter;

@@ -1,14 +1,13 @@
 package fys.fysmodel;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name="anouncements")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name="announcements")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Announcement extends Identifiable<Integer> {
     private Float rate;
     private String description;
@@ -17,14 +16,23 @@ public class Announcement extends Identifiable<Integer> {
     private LocalDate endDate;
     
 
+    @ManyToOne
+    @JoinColumn(name = "specialist_id")
+    private Specialist specialist;
+
+    @ManyToOne
+    @JoinColumn(name = "field_id")
+    private Field field;
+
     public Announcement() {}
 
-    public Announcement(Float rate, String description, String title, LocalDate startDate, LocalDate endDate) {
+    public Announcement(Float rate, String description, String title, LocalDate startDate, LocalDate endDate, Field field) {
         this.rate = rate;
         this.description = description;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.field = field;
     }
 
     public Announcement(Integer integer, Float rate, String description, String title, LocalDate startDate, LocalDate endDate) {
@@ -34,6 +42,14 @@ public class Announcement extends Identifiable<Integer> {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    public void setField(Field field) {
+        this.field = field;
     }
 
     public Float getRate() {
@@ -74,5 +90,13 @@ public class Announcement extends Identifiable<Integer> {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
     }
 }
