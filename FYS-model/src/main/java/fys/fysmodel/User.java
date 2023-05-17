@@ -20,6 +20,7 @@ public class User extends Identifiable<Integer> {
     private LocalDate birthDate;
     private String phoneNumber;
     private String optionalDescription;
+
     @Column(unique = true)
     private String email;
 

@@ -201,6 +201,7 @@
 2023-05-11 00:33:23,707 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
 2023-05-11 00:33:24,353 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
 2023-05-11 00:33:25,767 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+<<<<<<< HEAD
 2023-05-17 10:34:04,303 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
 2023-05-17 10:34:04,788 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
 2023-05-17 10:34:05,482 WARN o.h.e.j.e.i.JdbcEnvironmentInitiator [main] HHH000342: Could not obtain connection to query metadata
@@ -397,3 +398,23 @@ Caused by: org.postgresql.util.PSQLException: FATAL: database "fys" does not exi
 2023-05-17 15:09:44,570 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
 2023-05-17 15:09:44,704 WARN o.h.c.AnnotationBinder [main] HHH000138: Mixing inheritance strategy in a entity hierarchy is not allowed, ignoring sub strategy in: fys.fysmodel.VisitedSpecialist
 2023-05-17 15:09:46,209 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+=======
+2023-05-17 14:27:15,433 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-17 14:27:15,522 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-17 14:27:15,706 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-17 14:27:16,188 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-17 14:57:18,849 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-17 14:57:18,936 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-17 14:57:19,116 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-17 14:57:19,646 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-17 15:01:01,712 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-17 15:01:01,801 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-17 15:01:01,968 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-17 15:01:02,002 WARN o.h.c.AnnotationBinder [main] HHH000138: Mixing inheritance strategy in a entity hierarchy is not allowed, ignoring sub strategy in: fys.fysmodel.Specialist
+2023-05-17 15:01:02,513 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-17 15:01:52,931 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-17 15:01:53,015 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-17 15:01:53,202 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-17 15:01:53,241 WARN o.h.c.AnnotationBinder [main] HHH000138: Mixing inheritance strategy in a entity hierarchy is not allowed, ignoring sub strategy in: fys.fysmodel.VisitedSpecialist
+2023-05-17 15:01:53,804 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+>>>>>>> af04fdcf8c6fe2aae3f6f789bc71da973b35242c
