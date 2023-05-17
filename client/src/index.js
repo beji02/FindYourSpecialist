@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import ProfilePage from "./ProfilePage";
+import AddAnnouncementPage from "./AddAnnouncementPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,6 +21,7 @@ root.render(
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/addannouncement" element={<AddAnnouncementPage />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>

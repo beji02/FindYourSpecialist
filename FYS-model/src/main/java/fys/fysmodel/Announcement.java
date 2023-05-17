@@ -15,6 +15,7 @@ public class Announcement extends Identifiable<Integer> {
     private String title;
     private LocalDate startDate;
     private LocalDate endDate;
+    
 
     public Announcement() {}
 

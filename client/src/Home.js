@@ -9,8 +9,6 @@ function Home() {
         const token = localStorage.getItem("token");
     });
 
-
-
     const announcements = [
         {
             id: 1,

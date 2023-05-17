@@ -1,5 +1,6 @@
 package fys;
 
+import fys.fysmodel.Announcement;
 import fys.fysmodel.User;
 import fys.fyspersistence.users.UsersRepository;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

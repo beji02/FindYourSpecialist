@@ -61,11 +61,12 @@ public class UsersDbRepository implements UsersRepository {
     }
 
     @Override
-    public void add(User user) {
+    public User add(User user) {
         logger.traceEntry("Adding user " + user);
         Session session = sessionFactory.getCurrentSession();
         session.persist(user);
         logger.traceExit("User added");
+        return user;
     }
 
     @Override

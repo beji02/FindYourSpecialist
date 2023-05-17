@@ -28,7 +28,7 @@ public interface Repository<ID extends Serializable, E extends Identifiable<ID>>
      * @return a list of all entities
      * @throws RepositoryException if the entity already exists
      */
-    void add(E entity);
+    E add(E entity);
 
     /**
      * Method to remove an entity from the repository.

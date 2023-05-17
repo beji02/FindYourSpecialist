@@ -45,11 +45,12 @@ public class AnnouncementsDbRepository implements AnnouncementsRepository {
     }
 
     @Override
-    public void add(Announcement announcement) {
+    public Announcement add(Announcement announcement) {
         logger.traceEntry("Adding announcement " + announcement);
         Session session = sessionFactory.getCurrentSession();
         session.persist(announcement);
         logger.traceExit("Announcement added");
+        return announcement;
     }
 
     @Override
