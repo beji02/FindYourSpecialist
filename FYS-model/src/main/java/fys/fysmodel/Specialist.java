@@ -1,6 +1,7 @@
 package fys.fysmodel;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ public class Specialist extends User {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Rating> ratingsSpecialist = new HashSet<>();
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Announcement> announcements = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Message> messages = new HashSet<>();
@@ -97,6 +98,7 @@ public class Specialist extends User {
     }
 
 
+    @Transactional
     public void addAnnouncement(Announcement announcement) {
         this.announcements.add(announcement);
     }
@@ -111,5 +113,13 @@ public class Specialist extends User {
 
     public void removeMessage(Message message) {
         this.messages.remove(message);
+    }
+
+    public Float getRating() {
+        Float rating = 0f;
+        for (Rating r : this.ratingsSpecialist) {
+            rating += r.getScore();
+        }
+        return rating / this.ratingsSpecialist.size();
     }
 }

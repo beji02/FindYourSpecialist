@@ -1,4 +1,4 @@
-import './App.css';
+import './style/App.css';
 
 function App() {
   return (
@@ -10,34 +10,23 @@ function App() {
         <a
             className="App-link"
             href="/login"
-            target="_blank"
             rel="noopener noreferrer"
         >
             Login
         </a>
         <a
             className="App-link"
-            href="/signup"
-            target="_blank"
+            href="/register"
             rel="noopener noreferrer"
         >
-            Signup
+            Register
         </a>
           <a
               className="App-link"
               href="/home"
-              target="_blank"
               rel="noopener noreferrer"
           >
               Home
-          </a>
-          <a
-              className="App-link"
-              href="/testnewhomepage"
-              target="_blank"
-              rel="noopener noreferrer"
-          >
-              TestNewHomePage
           </a>
       </header>
     </div>

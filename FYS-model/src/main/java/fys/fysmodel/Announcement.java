@@ -16,6 +16,10 @@ public class Announcement extends Identifiable<Integer> {
     private LocalDate endDate;
 
     @ManyToOne
+    @JoinColumn(name = "specialist_id")
+    private Specialist specialist;
+
+    @ManyToOne
     @JoinColumn(name = "field_id")
     private Field field;
 
@@ -85,5 +89,13 @@ public class Announcement extends Identifiable<Integer> {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public Specialist getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(Specialist specialist) {
+        this.specialist = specialist;
     }
 }

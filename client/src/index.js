@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './style/index.css';
 import App from './App';
 import LoginPage from './LoginPage';
-import Signup from './Signup';
 import HomePage from './home/HomePage';
+import RegisterPage from './RegisterPage';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -17,8 +17,8 @@ root.render(
           <Routes>
               <Route path="/" element={<App />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<Signup />} />
               <Route path="/home" element={<HomePage />} />
+              <Route path="/register" element={<RegisterPage />} />
               <Route path="/profile" element={<ProfilePage />} />
           </Routes>
       </BrowserRouter>
