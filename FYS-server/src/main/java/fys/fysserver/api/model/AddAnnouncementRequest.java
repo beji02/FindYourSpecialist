@@ -3,26 +3,23 @@ package fys.fysserver.api.model;
 import java.time.LocalDate;
 
 public class AddAnnouncementRequest {
-    private String token;
     private String title;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
 
+    private Integer fieldId;
+
 
     public AddAnnouncementRequest() {
     }
 
-    public AddAnnouncementRequest(String token, String title, String description, LocalDate startDate, LocalDate endDate) {
-        this.token = token;
+    public AddAnnouncementRequest(String title, String description, LocalDate startDate, LocalDate endDate, Integer fieldId) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
-    }
-
-    public String getToken() {
-        return token;
+        this.fieldId = fieldId;
     }
 
     public String getTitle() {
@@ -39,5 +36,13 @@ public class AddAnnouncementRequest {
 
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+    public Integer getFieldId() {
+        return fieldId;
+    }
+
+    public void setFieldId(Integer field_id) {
+        this.fieldId = field_id;
     }
 }

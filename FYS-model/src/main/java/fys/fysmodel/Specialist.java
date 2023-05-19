@@ -1,5 +1,6 @@
 package fys.fysmodel;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,6 +72,7 @@ public class Specialist extends User {
     }
 
 
+    @JsonManagedReference
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }

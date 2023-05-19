@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./style/LoginPage.css";
 
 function LoginPage() {
@@ -15,7 +15,7 @@ function LoginPage() {
     const handleUpdate = (event) => {
         let name = event.target.name;
         let value = event.target.value;
-        setLoginForm({ ...loginForm, [name]: value });
+        setLoginForm({...loginForm, [name]: value});
     };
 
     const handleLogin = async (event) => {
@@ -32,7 +32,7 @@ function LoginPage() {
                     },
                     body: JSON.stringify(loginForm),
                 });
-                    if (response.status === 200) {
+                if (response.status === 200) {
                     const data = await response.json();
                     const token = data.token;
 

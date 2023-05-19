@@ -6,4 +6,6 @@ import fys.fyspersistence.Repository;
 
 public interface AnnouncementsRepository extends Repository<Integer, Announcement> {
     Iterable<Field> findAllFields();
+
+    Field findFieldById(Integer id);
 }

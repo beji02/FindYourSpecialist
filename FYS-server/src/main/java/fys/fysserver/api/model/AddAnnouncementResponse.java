@@ -12,4 +12,16 @@ public class AddAnnouncementResponse {
         this.isAddAnnouncementSuccess = isAddAnnouncementSuccess;
         this.errorMessage = errorMessage;
     }
+
+    public Announcement getAnnouncement() {
+        return announcement;
+    }
+
+    public Boolean getAddAnnouncementSuccess() {
+        return isAddAnnouncementSuccess;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 }

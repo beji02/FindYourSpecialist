@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import ProfilePage from "./ProfilePage";
-import AddAnnouncementPage from "./AddAnnouncementPage";
+import AddAnnouncementPage from "./addannouncement/AddAnnouncementPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

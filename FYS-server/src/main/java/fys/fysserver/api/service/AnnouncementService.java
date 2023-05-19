@@ -1,64 +1,32 @@
-<<<<<<< HEAD
 package fys.fysserver.api.service;
 
 import fys.fysmodel.Announcement;
 import fys.fysmodel.Specialist;
+import fys.fysmodel.User;
+import fys.fyspersistence.announcements.AnnouncementsDbRepository;
 import fys.fyspersistence.announcements.AnnouncementsRepository;
-import fys.fyspersistence.specialists.SpecialistsRepository;
+import fys.fyspersistence.users.UsersRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-
-@Service
-public class AnnouncementService {
-    private AnnouncementsRepository announcementsRepository;
-    private SpecialistsRepository specialistsRepository;
-
-    public void setAnnouncementsRepository(AnnouncementsRepository announcementsRepository) {
-        this.announcementsRepository = announcementsRepository;
-    }
-
-    public void setSpecialistsRepository(SpecialistsRepository specialistsRepository) {
-        this.specialistsRepository = specialistsRepository;
-    }
-
-    public AnnouncementService() {
-    }
-
-    public Announcement addAnnouncement(String username, String title, String description, LocalDate startDate, LocalDate endDate) {
-        System.out.println("addAnnouncement: " + username + " " + title + " " + description + " " + startDate + " " + endDate);
-
-        Announcement announcement = new Announcement();
-        announcement.setTitle(title);
-        announcement.setDescription(description);
-        announcement.setStartDate(startDate);
-        announcement.setEndDate(endDate);
-        announcement.setRate(0f);
-
-        Announcement addedAnnouncement = announcementsRepository.add(announcement);
-
-        Specialist specialist = specialistsRepository.findSpecialistByUsername(username);
-        specialist.addAnnouncement(addedAnnouncement);
-        specialistsRepository.modify(specialist);
-
-        return announcement;
-    }
-}
-=======
-package fys.fysserver.api.service;
-
-import fys.fysmodel.Announcement;
-import fys.fyspersistence.announcements.AnnouncementsDbRepository;
-import fys.fyspersistence.announcements.AnnouncementsRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
 public class AnnouncementService {
     private AnnouncementsRepository announcementsRepository;
+    private UsersRepository usersRepository;
+
+    public void setAnnouncementsRepository(AnnouncementsRepository announcementsRepository) {
+        this.announcementsRepository = announcementsRepository;
+    }
+
+    public void setUsersRepository(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
+
+    public AnnouncementService() {
+    }
 
     public Iterable<Announcement> getAnnouncements(String searchQuery, String searchCategories, String pageNumber, String pageSize) {
         List<Announcement> allAnnouncements = (List<Announcement>) announcementsRepository.findAll();
@@ -158,5 +126,25 @@ public class AnnouncementService {
     public Iterable getAnnouncementFields() {
         return announcementsRepository.findAllFields();
     }
+
+
+    public Announcement addAnnouncement(String username, String title, String description, LocalDate startDate, LocalDate endDate, Integer fieldId) {
+        System.out.println("addAnnouncement: " + username + " " +  title  + " " +  description + " " + startDate.toString() + " " + endDate.toString() + " " + fieldId);
+
+        Announcement announcement = new Announcement();
+        announcement.setTitle(title);
+        announcement.setDescription(description);
+        announcement.setStartDate(startDate);
+        announcement.setEndDate(endDate);
+        announcement.setRate(0f);
+        announcement.setField(announcementsRepository.findFieldById(fieldId));
+        Specialist specialist = (Specialist) usersRepository.findByUsername(username);
+        announcement.setSpecialist(specialist);
+
+        Announcement addedAnnouncement = announcementsRepository.add(announcement);
+        specialist.addAnnouncement(addedAnnouncement);
+        usersRepository.modify(specialist);
+
+        return announcement;
+    }
 }
->>>>>>> master

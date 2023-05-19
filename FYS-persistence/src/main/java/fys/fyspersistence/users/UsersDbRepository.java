@@ -61,6 +61,22 @@ public class UsersDbRepository implements UsersRepository {
     }
 
     @Override
+    public Specialist findSpecialistByUsername(String username) {
+        logger.traceEntry("Finding specialist by username " + username);
+        Session session = sessionFactory.getCurrentSession();
+        List<Specialist> specialists = session.createQuery("from Specialist where username = :username", Specialist.class)
+                .setParameter("username", username)
+                .list();
+        if (specialists.size() == 0) {
+            logger.traceExit("Specialist with username " + username + " not found");
+            return null;
+        } else {
+            logger.traceExit("Specialist found");
+            return specialists.get(0);
+        }
+    }
+
+    @Override
     public User add(User user) {
         logger.traceEntry("Adding user " + user);
         Session session = sessionFactory.getCurrentSession();

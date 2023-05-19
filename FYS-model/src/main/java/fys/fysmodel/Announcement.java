@@ -1,5 +1,7 @@
 package fys.fysmodel;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -92,6 +94,7 @@ public class Announcement extends Identifiable<Integer> {
         this.endDate = endDate;
     }
 
+    @JsonBackReference
     public Specialist getSpecialist() {
         return specialist;
     }

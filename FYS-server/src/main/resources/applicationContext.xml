@@ -13,16 +13,17 @@
         <property name="usersRepository" ref="usersRepository" />
     </bean>
 
-    <bean id="announcementService" class="fys.fysserver.api.service.AnnouncementService">
-        <property name="announcementsRepository" ref="announcementsRepository" />
+    <bean id="userController" class="fys.fysserver.api.controller.UserController">
+        <property name="userService" ref="userService" />
     </bean>
 
     <bean id="userDetailsService" class="fys.fysserver.api.security.services.UserDetailsServiceImpl">
         <property name="usersRepository" ref="usersRepository" />
     </bean>
 
-    <bean id="userController" class="fys.fysserver.api.controller.UserController">
-        <property name="userService" ref="userService" />
+    <bean id="announcementService" class="fys.fysserver.api.service.AnnouncementService">
+        <property name="announcementsRepository" ref="announcementsRepository" />
+        <property name="usersRepository" ref="usersRepository" />
     </bean>
 
     <bean id="announcementController" class="fys.fysserver.api.controller.AnnouncementController">

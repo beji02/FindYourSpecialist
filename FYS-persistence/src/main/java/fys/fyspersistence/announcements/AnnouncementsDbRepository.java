@@ -91,4 +91,13 @@ public class AnnouncementsDbRepository implements AnnouncementsRepository {
         logger.traceExit("All fields found");
         return session.createQuery("from Field", Field.class).list();
     }
+
+    @Override
+    public Field findFieldById(Integer id) {
+        logger.traceEntry("Finding field by id " + id);
+        Session session = sessionFactory.getCurrentSession();
+        Field field = session.get(Field.class, id);
+        logger.traceExit("Field found" + field);
+        return field;
+    }
 }

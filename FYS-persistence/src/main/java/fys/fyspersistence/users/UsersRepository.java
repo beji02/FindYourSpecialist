@@ -12,4 +12,6 @@ public interface UsersRepository extends Repository<Integer, User> {
     Iterable<User> findAllUsers();
 
     Iterable<Specialist> findAllSpecialists();
+
+    Specialist findSpecialistByUsername(String username);
 }

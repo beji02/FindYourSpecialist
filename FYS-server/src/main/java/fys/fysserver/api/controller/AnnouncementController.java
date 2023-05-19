@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package fys.fysserver.api.controller;
 
 import fys.fysmodel.Announcement;
@@ -6,15 +5,12 @@ import fys.fysserver.api.model.AddAnnouncementRequest;
 import fys.fysserver.api.model.AddAnnouncementResponse;
 import fys.fysserver.api.security.jwt.JwtUtils;
 import fys.fysserver.api.service.AnnouncementService;
-import fys.fysserver.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class AnnouncementController {
@@ -35,40 +31,6 @@ public class AnnouncementController {
         this.jwtUtils = jwtUtils;
     }
 
-    @PostMapping("/addannouncement")
-    public ResponseEntity<?> addAnnouncement(@RequestBody AddAnnouncementRequest addAnnouncementRequest) {
-        try {
-            String username = jwtUtils.getUsernameFromJwtToken(addAnnouncementRequest.getToken());
-            Announcement announcement = announcementService.addAnnouncement(username, addAnnouncementRequest.getTitle(),
-                    addAnnouncementRequest.getDescription(), addAnnouncementRequest.getStartDate(),
-                    addAnnouncementRequest.getEndDate());
-            return new ResponseEntity<>(new AddAnnouncementResponse(announcement, true, null), HttpStatus.OK);
-        } catch (Exception e) {
-            return  new ResponseEntity<>(new AddAnnouncementResponse(null, false, e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-}
-=======
-package fys.fysserver.api.controller;
-
-import fys.fysserver.api.service.AnnouncementService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class AnnouncementController {
-    private AnnouncementService announcementService;
-
-    public AnnouncementController() {
-    }
-
-    @Autowired
-    public void setAnnouncementService(AnnouncementService announcementService) {
-        this.announcementService = announcementService;
-    }
 
     @GetMapping("/announcements")
     public Iterable getAnnouncements(
@@ -84,5 +46,32 @@ public class AnnouncementController {
     public Iterable getAnnouncementFields() {
         return announcementService.getAnnouncementFields();
     }
+
+
+
+    @PostMapping("/announcements")
+    public AddAnnouncementResponse addAnnouncement(HttpServletRequest request, @RequestBody AddAnnouncementRequest addAnnouncementRequest) {
+        try {
+            System.out.println("addAnnouncement");
+            String authorizationHeader = request.getHeader("Authorization");
+            System.out.println("authorizationHeader: " + authorizationHeader);
+            String token = extractTokenFromAuthorizationHeader(authorizationHeader);
+            String username = jwtUtils.getUsernameFromJwtToken(token);
+            System.out.println("username: " + username);
+            Announcement announcement = announcementService.addAnnouncement(username, addAnnouncementRequest.getTitle(),
+                    addAnnouncementRequest.getDescription(), addAnnouncementRequest.getStartDate(),
+                    addAnnouncementRequest.getEndDate(), addAnnouncementRequest.getFieldId());
+            return new AddAnnouncementResponse(announcement, true, null);
+        } catch (Exception e) {
+            return  new AddAnnouncementResponse(null, false, e.getMessage());
+        }
+    }
+
+    private String extractTokenFromAuthorizationHeader(String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            System.out.println("extractTokenFromAuthorizationHeader");
+            return authorizationHeader.substring(7); // Remove the "Bearer Token" prefix
+        }
+        return null;
+    }
 }
->>>>>>> master

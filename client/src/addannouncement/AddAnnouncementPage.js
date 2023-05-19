@@ -1,21 +1,16 @@
-import NavbarHome from "./NavbarHome";
 import Container from "react-bootstrap/Container";
 import React, {useEffect} from "react";
-import FooterHome from "./FooterHome";
-import { useNavigate } from "react-router-dom";
-import SearchBar from "./SearchBar";
 import AddAnnouncementForm from "./AddAnnouncementForm";
+import CustomFooter from "../generics/CustomFooter";
+import CustomNavbar from "../generics/CustomNavbar";
 function Home() {
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-    });
 
     return (
         <Container>
-            <NavbarHome />
+            <CustomNavbar />
             <AddAnnouncementForm />
             <Container className="bottom">
-                <FooterHome />
+                <CustomFooter />
             </Container>
         </Container>
     );
