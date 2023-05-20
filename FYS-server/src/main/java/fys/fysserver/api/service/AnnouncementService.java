@@ -156,4 +156,13 @@ public class AnnouncementService {
         System.out.println("addedAnnouncement: " + addedAnnouncement.toString());
         return announcement;
     }
+
+    public void addAnnouncementToFavourites(String username, Integer announcementId) {
+        System.out.println("addAnnouncementToFavourites: " + username + " " + announcementId);
+        User user = usersRepository.findByUsername(username);
+        Announcement announcement = announcementsRepository.findById(announcementId);
+        System.out.println("addAnnouncementToFavourites: " + user.toString() + " " + announcement.toString());
+        user.addFavouriteAnnouncement(announcement);
+        usersRepository.modify(user);
+    }
 }

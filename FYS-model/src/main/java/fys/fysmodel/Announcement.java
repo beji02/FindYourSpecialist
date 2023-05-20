@@ -102,4 +102,17 @@ public class Announcement extends Identifiable<Integer> {
     public void setSpecialist(Specialist specialist) {
         this.specialist = specialist;
     }
+
+    @Override
+    public String toString() {
+        return "Announcement{" +
+                "rate=" + rate +
+                ", description='" + description + '\'' +
+                ", title='" + title + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", specialist=" + specialist +
+                ", field=" + field +
+                '}';
+    }
 }

@@ -37,7 +37,8 @@ function Filters({setSelectedFilters}) {
         <Form>
             <Form.Label>Fields</Form.Label>
             {filters.map((filter) => (
-                <Form.Check type="checkbox" key={filter.id} label={filter.name} onClick={() => handleFilterSelect(filter)}/>
+                <Form.Check type="checkbox" key={filter.id} label={filter.name}
+                            onClick={() => handleFilterSelect(filter)}/>
             ))}
         </Form>
     );

@@ -3,6 +3,8 @@ package fys.fysserver.api.controller;
 import fys.fysmodel.Announcement;
 import fys.fysserver.api.model.AddAnnouncementRequest;
 import fys.fysserver.api.model.AddAnnouncementResponse;
+import fys.fysserver.api.model.AddAnnouncementToFavouritesRequest;
+import fys.fysserver.api.model.AddAnnouncementToFavouritesResponse;
 import fys.fysserver.api.security.jwt.JwtUtils;
 import fys.fysserver.api.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +65,21 @@ public class AnnouncementController {
         return announcementService.getAnnouncementFields();
     }
 
+    @PostMapping("/favourites")
+    public AddAnnouncementToFavouritesResponse addAnnouncementToFavourites(HttpServletRequest request, @RequestBody AddAnnouncementToFavouritesRequest addAnnouncementToFavouritesRequest) {
+        try {
+            System.out.println("addAnnouncementToFavourites");
+            String authorizationHeader = request.getHeader("Authorization");
+            System.out.println("authorizationHeader: " + authorizationHeader);
+            String token = extractTokenFromAuthorizationHeader(authorizationHeader);
+            String username = jwtUtils.getUsernameFromJwtToken(token);
+            System.out.println("username: " + username);
+            announcementService.addAnnouncementToFavourites(username, addAnnouncementToFavouritesRequest.getAnnouncementId());
+            return new AddAnnouncementToFavouritesResponse(true, null);
+        } catch (Exception e) {
+            return  new AddAnnouncementToFavouritesResponse(false, e.getMessage());
+        }
+    }
 
 
     @PostMapping("/announcements")
