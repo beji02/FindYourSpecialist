@@ -3,13 +3,11 @@ package fys.fysserver.api.controller;
 import fys.fysmodel.Announcement;
 import fys.fysserver.api.model.AddAnnouncementRequest;
 import fys.fysserver.api.model.AddAnnouncementResponse;
-import fys.fysserver.api.model.AddAnnouncementToFavouritesRequest;
-import fys.fysserver.api.model.AddAnnouncementToFavouritesResponse;
+import fys.fysserver.api.model.AnnouncementFavouritesRequest;
+import fys.fysserver.api.model.AnnouncementFavouritesResponse;
 import fys.fysserver.api.security.jwt.JwtUtils;
 import fys.fysserver.api.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +64,7 @@ public class AnnouncementController {
     }
 
     @PostMapping("/favourites")
-    public AddAnnouncementToFavouritesResponse addAnnouncementToFavourites(HttpServletRequest request, @RequestBody AddAnnouncementToFavouritesRequest addAnnouncementToFavouritesRequest) {
+    public AnnouncementFavouritesResponse addAnnouncementToFavourites(HttpServletRequest request, @RequestBody AnnouncementFavouritesRequest announcementFavouritesRequest) {
         try {
             System.out.println("addAnnouncementToFavourites");
             String authorizationHeader = request.getHeader("Authorization");
@@ -74,10 +72,26 @@ public class AnnouncementController {
             String token = extractTokenFromAuthorizationHeader(authorizationHeader);
             String username = jwtUtils.getUsernameFromJwtToken(token);
             System.out.println("username: " + username);
-            announcementService.addAnnouncementToFavourites(username, addAnnouncementToFavouritesRequest.getAnnouncementId());
-            return new AddAnnouncementToFavouritesResponse(true, null);
+            announcementService.addAnnouncementToFavourites(username, announcementFavouritesRequest.getAnnouncementId());
+            return new AnnouncementFavouritesResponse(true, null);
         } catch (Exception e) {
-            return  new AddAnnouncementToFavouritesResponse(false, e.getMessage());
+            return  new AnnouncementFavouritesResponse(false, e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/favourites/{announcementId}")
+    public AnnouncementFavouritesResponse removeAnnouncementFromFavourites(HttpServletRequest request, @PathVariable Integer announcementId) {
+        try {
+            System.out.println("removeAnnouncementFromFavourites");
+            String authorizationHeader = request.getHeader("Authorization");
+            System.out.println("authorizationHeader: " + authorizationHeader);
+            String token = extractTokenFromAuthorizationHeader(authorizationHeader);
+            String username = jwtUtils.getUsernameFromJwtToken(token);
+            System.out.println("username: " + username);
+            announcementService.removeAnnouncementFromFavourites(username, announcementId);
+            return new AnnouncementFavouritesResponse(true, null);
+        } catch (Exception e) {
+            return  new AnnouncementFavouritesResponse(false, e.getMessage());
         }
     }
 

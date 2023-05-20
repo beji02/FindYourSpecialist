@@ -1,12 +1,12 @@
 package fys.fysserver.api.model;
 
-public class AddAnnouncementToFavouritesRequest {
+public class AnnouncementFavouritesRequest {
     private Integer announcementId;
 
-    public AddAnnouncementToFavouritesRequest() {
+    public AnnouncementFavouritesRequest() {
     }
 
-    public AddAnnouncementToFavouritesRequest(Integer announcementId) {
+    public AnnouncementFavouritesRequest(Integer announcementId) {
         this.announcementId = announcementId;
     }
 

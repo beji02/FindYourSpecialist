@@ -165,4 +165,13 @@ public class AnnouncementService {
         user.addFavouriteAnnouncement(announcement);
         usersRepository.modify(user);
     }
+
+    public void removeAnnouncementFromFavourites(String username, Integer announcementId) {
+        System.out.println("deleteAnnouncementFromFavourites: " + username + " " + announcementId);
+        User user = usersRepository.findByUsername(username);
+        Announcement announcement = announcementsRepository.findById(announcementId);
+        System.out.println("deleteAnnouncementFromFavourites: " + user.toString() + " " + announcement.toString());
+        user.removeFavouriteAnnouncement(announcement);
+        usersRepository.modify(user);
+    }
 }

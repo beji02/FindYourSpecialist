@@ -1,13 +1,13 @@
 package fys.fysserver.api.model;
 
-public class AddAnnouncementToFavouritesResponse {
+public class AnnouncementFavouritesResponse {
     private boolean success;
     private String message;
 
-    public AddAnnouncementToFavouritesResponse() {
+    public AnnouncementFavouritesResponse() {
     }
 
-    public AddAnnouncementToFavouritesResponse(boolean success, String message) {
+    public AnnouncementFavouritesResponse(boolean success, String message) {
         this.success = success;
         this.message = message;
     }
