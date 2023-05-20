@@ -12,6 +12,7 @@ function CustomNavbar() {
                     <Nav className="me-auto">
                         <Nav.Link href="/home">Home</Nav.Link>
                         <Nav.Link href="/addannouncement">Add your announcement</Nav.Link>
+                        <Nav.Link href="/myannouncements">My announcements</Nav.Link>
                     </Nav>
                     <Nav className="ml-auto">
                         <Nav.Link href="/profile">Profile</Nav.Link>

@@ -31,6 +31,22 @@ public class AnnouncementController {
         this.jwtUtils = jwtUtils;
     }
 
+    @GetMapping("/myannouncements")
+    public Iterable getMyAnnouncements(
+            HttpServletRequest request,
+            @RequestParam(name="search-query", defaultValue = "") String searchQuery,
+            @RequestParam(name="search-categories", defaultValue = "") String searchCategories,
+            @RequestParam(name="page-number", defaultValue = "0") String pageNumber,
+            @RequestParam(name="page-size", defaultValue = "10") String pageSize
+    ) {
+        System.out.println("addMyAnnouncement");
+        String authorizationHeader = request.getHeader("Authorization");
+        System.out.println("authorizationHeader: " + authorizationHeader);
+        String token = extractTokenFromAuthorizationHeader(authorizationHeader);
+        String username = jwtUtils.getUsernameFromJwtToken(token);
+        System.out.println("username: " + username);
+        return announcementService.getMyAnnouncements(username, searchQuery, searchCategories, pageNumber, pageSize);
+    }
 
     @GetMapping("/announcements")
     public Iterable getAnnouncements(

@@ -118,9 +118,17 @@ public class AnnouncementService {
         return announcements;
     }
 
-
-    public void setAnnouncementsRepository(AnnouncementsDbRepository announcementsRepository) {
-        this.announcementsRepository = announcementsRepository;
+    public Iterable<Announcement> getMyAnnouncements(String username, String searchQuery, String searchCategories, String pageNumber, String pageSize) {
+        List<Announcement> announcements = (List<Announcement>) getAnnouncements(searchQuery, searchCategories, pageNumber, pageSize);
+        List<Announcement> myAnnouncements = new ArrayList<>();
+        announcements.forEach(
+                announcement -> {
+                    if (announcement.getSpecialist().getUsername().equals(username)) {
+                        myAnnouncements.add(announcement);
+                    }
+                }
+        );
+        return myAnnouncements;
     }
 
     public Iterable getAnnouncementFields() {
@@ -145,6 +153,7 @@ public class AnnouncementService {
         specialist.addAnnouncement(addedAnnouncement);
         usersRepository.modify(specialist);
 
+        System.out.println("addedAnnouncement: " + addedAnnouncement.toString());
         return announcement;
     }
 }
