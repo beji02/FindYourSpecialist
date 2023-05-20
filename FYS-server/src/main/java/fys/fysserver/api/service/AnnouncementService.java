@@ -174,4 +174,11 @@ public class AnnouncementService {
         user.removeFavouriteAnnouncement(announcement);
         usersRepository.modify(user);
     }
+
+    public Iterable<Announcement> getFavouriteAnnouncements(String username) {
+        System.out.println("getFavouriteAnnouncements: " + username);
+        User user = usersRepository.findByUsername(username);
+        System.out.println("getFavouriteAnnouncements: " + user.toString());
+        return user.getFavoriteAnnouncements();
+    }
 }

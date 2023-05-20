@@ -63,6 +63,22 @@ public class AnnouncementController {
         return announcementService.getAnnouncementFields();
     }
 
+    @GetMapping("/favourites")
+    public Iterable<Announcement> getFavouriteAnnouncements(HttpServletRequest request) {
+        try {
+            System.out.println("getFavouriteAnnouncements");
+            String authorizationHeader = request.getHeader("Authorization");
+            System.out.println("authorizationHeader: " + authorizationHeader);
+            String token = extractTokenFromAuthorizationHeader(authorizationHeader);
+            String username = jwtUtils.getUsernameFromJwtToken(token);
+            System.out.println("username: " + username);
+            return announcementService.getFavouriteAnnouncements(username);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
     @PostMapping("/favourites")
     public AnnouncementFavouritesResponse addAnnouncementToFavourites(HttpServletRequest request, @RequestBody AnnouncementFavouritesRequest announcementFavouritesRequest) {
         try {
