@@ -1,0 +1,11 @@
+.heart-icon {
+    cursor: pointer;
+    font-size: 1.8rem;
+    position:absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.favorite {
+    color: red;
+}

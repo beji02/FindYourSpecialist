@@ -1,16 +1,18 @@
 package fys.fysserver.api.service;
 
 import fys.fysmodel.Announcement;
+import fys.fysmodel.Field;
 import fys.fysmodel.Specialist;
 import fys.fysmodel.User;
-import fys.fyspersistence.announcements.AnnouncementsDbRepository;
 import fys.fyspersistence.announcements.AnnouncementsRepository;
 import fys.fyspersistence.users.UsersRepository;
+import fys.fysserver.api.dto.AnnouncementDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AnnouncementService {
@@ -28,11 +30,32 @@ public class AnnouncementService {
     public AnnouncementService() {
     }
 
-    public Iterable<Announcement> getAnnouncements(String searchQuery, String searchCategories, String pageNumber, String pageSize) {
+    public Iterable<AnnouncementDTO> getFilteredAnnouncementsWithFavourites(String username, String searchQuery, String searchCategories, String pageNumber, String pageSize) {
+        List<Announcement> allAnnouncements = (List<Announcement>) getFilteredAnnouncements(searchQuery, searchCategories, pageNumber, pageSize);
+        List<AnnouncementDTO> announcementsDto = new ArrayList<>();
+        if (username != null) {
+            User user = usersRepository.findByUsername(username);
+            Set<Announcement> favourites = user.getFavoriteAnnouncements();
+
+            allAnnouncements.forEach(announcement -> {
+                boolean isFavourite = favourites.contains(announcement);
+                announcementsDto.add(new AnnouncementDTO(announcement.getId(), announcement.getRate(),
+                        announcement.getDescription(), announcement.getTitle(), announcement.getStartDate(),
+                        announcement.getEndDate(), announcement.getField(), announcement.getSpecialist(), isFavourite));
+            });
+        } else {
+            allAnnouncements.forEach(announcement -> announcementsDto.add(new AnnouncementDTO(announcement.getId(), announcement.getRate(),
+                    announcement.getDescription(), announcement.getTitle(), announcement.getStartDate(),
+                    announcement.getEndDate(), announcement.getField(), announcement.getSpecialist(), false)));
+        }
+        return announcementsDto;
+    }
+
+    public Iterable<Announcement> getFilteredAnnouncements(String searchQuery, String searchCategories, String pageNumber, String pageSize) {
         List<Announcement> allAnnouncements = (List<Announcement>) announcementsRepository.findAll();
         List<Announcement> announcements = new ArrayList<>();
 
-        if(!searchCategories.isEmpty()) {
+        if (!searchCategories.isEmpty()) {
             // split the searchCategories into words
             List<String> searchCategoriesList = new ArrayList<>(List.of(searchCategories.split(" ")));
             //make lowercase
@@ -97,7 +120,7 @@ public class AnnouncementService {
             }
         }
 
-        if(searchQuery.isEmpty()) {
+        if (searchQuery.isEmpty()) {
             announcements = allAnnouncements;
         }
 
@@ -114,13 +137,13 @@ public class AnnouncementService {
 
         announcements = announcements.subList(firstIndex, lastIndex);
 
-        System.out.println(((List) announcements).size());
+        System.out.println((announcements).size());
         return announcements;
     }
 
-    public Iterable<Announcement> getMyAnnouncements(String username, String searchQuery, String searchCategories, String pageNumber, String pageSize) {
-        List<Announcement> announcements = (List<Announcement>) getAnnouncements(searchQuery, searchCategories, pageNumber, pageSize);
-        List<Announcement> myAnnouncements = new ArrayList<>();
+    public Iterable<AnnouncementDTO> getMyAnnouncements(String username, String searchQuery, String searchCategories, String pageNumber, String pageSize) {
+        List<AnnouncementDTO> announcements = (List<AnnouncementDTO>) getFilteredAnnouncementsWithFavourites(username, searchQuery, searchCategories, pageNumber, pageSize);
+        List<AnnouncementDTO> myAnnouncements = new ArrayList<>();
         announcements.forEach(
                 announcement -> {
                     if (announcement.getSpecialist().getUsername().equals(username)) {
@@ -131,13 +154,13 @@ public class AnnouncementService {
         return myAnnouncements;
     }
 
-    public Iterable getAnnouncementFields() {
+    public Iterable<Field> getAnnouncementFields() {
         return announcementsRepository.findAllFields();
     }
 
 
     public Announcement addAnnouncement(String username, String title, String description, LocalDate startDate, LocalDate endDate, Integer fieldId) {
-        System.out.println("addAnnouncement: " + username + " " +  title  + " " +  description + " " + startDate.toString() + " " + endDate.toString() + " " + fieldId);
+        System.out.println("addAnnouncement: " + username + " " + title + " " + description + " " + startDate.toString() + " " + endDate.toString() + " " + fieldId);
 
         Announcement announcement = new Announcement();
         announcement.setTitle(title);

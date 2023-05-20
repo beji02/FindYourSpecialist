@@ -8,7 +8,7 @@ import Filters from "./home/Filters";
 import QuickAccess from "./home/QuickAccess";
 import SearchBar from "./home/SearchBar";
 
-function AnnouncementsPage({includeToken}) {
+function AnnouncementsPage({...props}) {
     const [announcements, setAnnouncements] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
@@ -19,9 +19,16 @@ function AnnouncementsPage({includeToken}) {
         const filtersQueryParam = selectedFilters
             .map((filter) => filter.name.toLowerCase())
             .join(" ");
-        if (includeToken) {
+        let url = "";
+        if (props.page === 0) {
+            console.log("page home");
+            url = `announcements?search-query=${searchQuery}&page-number=${pageNumber}&page-size=${pageSize}&search-categories=${filtersQueryParam}`;
+        } else if (props.page === 1) {
+            console.log("page my announcements");
+            url = `myannouncements?search-query=${searchQuery}&page-number=${pageNumber}&page-size=${pageSize}&search-categories=${filtersQueryParam}`;
+        }
+        if (props.includeToken) {
             console.log("include token");
-            const url = `myannouncements?search-query=${searchQuery}&page-number=${pageNumber}&page-size=${pageSize}&search-categories=${filtersQueryParam}`;
             const token = localStorage.getItem("token");
             // Include token in headers
             fetch(url, {
@@ -37,7 +44,6 @@ function AnnouncementsPage({includeToken}) {
                     console.error("Error fetching announcements:", error);
                 });
         } else {
-            const url = `announcements?search-query=${searchQuery}&page-number=${pageNumber}&page-size=${pageSize}&search-categories=${filtersQueryParam}`;
             fetch(url)
                 .then((response) => response.json())
                 .then((data) => {

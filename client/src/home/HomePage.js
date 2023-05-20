@@ -5,7 +5,7 @@ import AnnouncementsPage from "../AnnouncementsPage";
 function HomePage() {
     return (
         <Container>
-            <AnnouncementsPage includeToken={false}/>
+            <AnnouncementsPage includeToken={true} page={0}/>
         </Container>
     );
 }

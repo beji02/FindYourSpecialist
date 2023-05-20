@@ -1,9 +1,10 @@
 package fys.fysserver.api.controller;
 
 import fys.fysmodel.Announcement;
+import fys.fysmodel.Field;
+import fys.fysserver.api.dto.AnnouncementDTO;
 import fys.fysserver.api.model.AddAnnouncementRequest;
 import fys.fysserver.api.model.AddAnnouncementResponse;
-import fys.fysserver.api.model.AnnouncementFavouritesRequest;
 import fys.fysserver.api.model.AnnouncementFavouritesResponse;
 import fys.fysserver.api.security.jwt.JwtUtils;
 import fys.fysserver.api.service.AnnouncementService;
@@ -32,7 +33,7 @@ public class AnnouncementController {
     }
 
     @GetMapping("/myannouncements")
-    public Iterable getMyAnnouncements(
+    public Iterable<AnnouncementDTO> getMyAnnouncements(
             HttpServletRequest request,
             @RequestParam(name="search-query", defaultValue = "") String searchQuery,
             @RequestParam(name="search-categories", defaultValue = "") String searchCategories,
@@ -49,17 +50,27 @@ public class AnnouncementController {
     }
 
     @GetMapping("/announcements")
-    public Iterable getAnnouncements(
+    public Iterable<AnnouncementDTO> getAnnouncements(
+            HttpServletRequest request,
             @RequestParam(name="search-query", defaultValue = "") String searchQuery,
             @RequestParam(name="search-categories", defaultValue = "") String searchCategories,
             @RequestParam(name="page-number", defaultValue = "0") String pageNumber,
             @RequestParam(name="page-size", defaultValue = "10") String pageSize
     ) {
-        return announcementService.getAnnouncements(searchQuery, searchCategories, pageNumber, pageSize);
+        System.out.println("getAnnouncements");
+        String authorizationHeader = request.getHeader("Authorization");
+        if (authorizationHeader == null) {
+            return announcementService.getFilteredAnnouncementsWithFavourites(null, searchQuery, searchCategories, pageNumber, pageSize);
+        }
+        System.out.println("authorizationHeader: " + authorizationHeader);
+        String token = extractTokenFromAuthorizationHeader(authorizationHeader);
+        String username = jwtUtils.getUsernameFromJwtToken(token);
+        System.out.println("username: " + username);
+        return announcementService.getFilteredAnnouncementsWithFavourites(username, searchQuery, searchCategories, pageNumber, pageSize);
     }
 
     @GetMapping("/announcements/fields")
-    public Iterable getAnnouncementFields() {
+    public Iterable<Field> getAnnouncementFields() {
         return announcementService.getAnnouncementFields();
     }
 
@@ -79,8 +90,8 @@ public class AnnouncementController {
     }
 
 
-    @PostMapping("/favourites")
-    public AnnouncementFavouritesResponse addAnnouncementToFavourites(HttpServletRequest request, @RequestBody AnnouncementFavouritesRequest announcementFavouritesRequest) {
+    @PutMapping("/favourites/{announcementId}")
+    public AnnouncementFavouritesResponse addAnnouncementToFavourites(HttpServletRequest request, @PathVariable Integer announcementId) {
         try {
             System.out.println("addAnnouncementToFavourites");
             String authorizationHeader = request.getHeader("Authorization");
@@ -88,7 +99,7 @@ public class AnnouncementController {
             String token = extractTokenFromAuthorizationHeader(authorizationHeader);
             String username = jwtUtils.getUsernameFromJwtToken(token);
             System.out.println("username: " + username);
-            announcementService.addAnnouncementToFavourites(username, announcementFavouritesRequest.getAnnouncementId());
+            announcementService.addAnnouncementToFavourites(username, announcementId);
             return new AnnouncementFavouritesResponse(true, null);
         } catch (Exception e) {
             return  new AnnouncementFavouritesResponse(false, e.getMessage());

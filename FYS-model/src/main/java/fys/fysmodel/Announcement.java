@@ -37,6 +37,17 @@ public class Announcement extends Identifiable<Integer> {
         this.field = field;
     }
 
+    public Announcement(Integer integer, Float rate, String description, String title, LocalDate startDate, LocalDate endDate, Specialist specialist, Field field) {
+        super(integer);
+        this.rate = rate;
+        this.description = description;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.specialist = specialist;
+        this.field = field;
+    }
+
     public Announcement(Integer integer, Float rate, String description, String title, LocalDate startDate, LocalDate endDate) {
         super(integer);
         this.rate = rate;
