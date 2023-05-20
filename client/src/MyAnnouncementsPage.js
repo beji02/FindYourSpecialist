@@ -1,7 +1,5 @@
 import Container from "react-bootstrap/Container";
-import CustomNavbar from "./generics/CustomNavbar";
 import AnnouncementsPage from "./AnnouncementsPage";
-import CustomFooter from "./generics/CustomFooter";
 
 const MyAnnouncementsPage = () => {
     return (

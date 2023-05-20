@@ -1,7 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {Container, Form, Button} from "react-bootstrap";
-import AnnouncementList from "./announcement/AnnouncementList";
-import FilterButtons from "../FilterButtons";
+import React from "react";
+import {Form, Button} from "react-bootstrap";
 
 function SearchBar({searchAnnouncements, setSearchQuery}) {
 

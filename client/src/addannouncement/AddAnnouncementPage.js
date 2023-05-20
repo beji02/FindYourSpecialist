@@ -1,5 +1,5 @@
 import Container from "react-bootstrap/Container";
-import React, {useEffect} from "react";
+import React from "react";
 import AddAnnouncementForm from "./AddAnnouncementForm";
 import CustomFooter from "../generics/CustomFooter";
 import CustomNavbar from "../generics/CustomNavbar";

@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import AnnouncementCard from "./AnnouncementCard";
-import { Container, Row, Col } from "react-bootstrap";
 
 function AnnouncementList({announcements}) {
     return (
