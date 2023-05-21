@@ -200,6 +200,22 @@ public class User extends Identifiable<Integer> {
         recentlyVisitedAnnouncements.remove(announcement);
     }
 
+    public Map<Specialist, LocalDateTime> getRecentlyVisitedSpecialists() {
+        return recentlyVisitedSpecialists;
+    }
+
+    public void setRecentlyVisitedSpecialists(Map<Specialist, LocalDateTime> recentlyVisitedSpecialists) {
+        this.recentlyVisitedSpecialists = recentlyVisitedSpecialists;
+    }
+
+    public Map<Announcement, LocalDateTime> getRecentlyVisitedAnnouncements() {
+        return recentlyVisitedAnnouncements;
+    }
+
+    public void setRecentlyVisitedAnnouncements(Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements) {
+        this.recentlyVisitedAnnouncements = recentlyVisitedAnnouncements;
+    }
+
     public String getEmail() {
         return email;
     }

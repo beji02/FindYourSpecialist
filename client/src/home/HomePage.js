@@ -8,13 +8,22 @@ import Filters from "./Filters";
 import AnnouncementList from "./announcement/AnnouncementList";
 import CustomPagination from "./CustomPagination";
 import {Col, Row} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
+    const navigate = useNavigate();
     const [announcements, setAnnouncements] = useState([]);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [pageNumber, setPageNumber] = useState(0);
     const pageSize = 6;
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            navigate('/login');
+        }
+    });
 
     const loadAnnouncements = () => {
         //fetch announcements base on search query and selected filters

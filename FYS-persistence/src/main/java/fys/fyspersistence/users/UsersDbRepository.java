@@ -24,8 +24,6 @@ public class UsersDbRepository implements UsersRepository {
         this.sessionFactory = sessionFactory;
     }
 
-
-
     @Override
     public User findById(Integer id) {
         logger.traceEntry("Finding user by id " + id);

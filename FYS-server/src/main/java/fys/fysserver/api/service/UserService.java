@@ -30,11 +30,6 @@ public class UserService {
 
     }
 
-    public User login(String username, String password) {
-        System.out.println("login: " + username + " " + password);
-
-        return usersRepository.findByUsernameAndPassword(username, password);
-    }
 
     public User register(String username, String password, String email) {
         System.out.println("register: " + username + " " + password + " " + email);
@@ -48,5 +43,16 @@ public class UserService {
         user = usersRepository.findByUsernameAndPassword(username, password);
 
         return user;
+    }
+
+    public User findUserByUsername(String username) {
+        System.out.println("findUserByUsername: " + username);
+
+        return usersRepository.findByUsername(username);
+    }
+
+    public void updateUser(User user) {
+        System.out.println("updateUser: " + user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
+        usersRepository.modify(user);
     }
 }

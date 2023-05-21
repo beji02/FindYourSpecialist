@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AnnouncementController {
+public class    AnnouncementController {
     private AnnouncementService announcementService;
 
     public AnnouncementController() {
