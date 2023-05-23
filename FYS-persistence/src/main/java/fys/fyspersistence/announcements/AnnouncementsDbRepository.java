@@ -2,20 +2,17 @@ package fys.fyspersistence.announcements;
 
 import fys.fysmodel.Announcement;
 import fys.fysmodel.Field;
+import fys.fysmodel.Reservation;
 import fys.fyspersistence.exceptions.NonexistentEntityException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.beans.Transient;
 
 @Transactional
 public class AnnouncementsDbRepository implements AnnouncementsRepository {
-
     private static final Logger logger = LogManager.getLogger();
     private SessionFactory sessionFactory;
 
@@ -99,5 +96,14 @@ public class AnnouncementsDbRepository implements AnnouncementsRepository {
         Field field = session.get(Field.class, id);
         logger.traceExit("Field found" + field);
         return field;
+    }
+
+    @Override
+    public Reservation insertReservation(Reservation reservation) {
+        logger.traceEntry("Inserting reservation " + reservation);
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(reservation);
+        logger.traceExit("Reservation inserted");
+        return reservation;
     }
 }

@@ -17,19 +17,13 @@ import java.util.List;
 
 @Service
 public class UserService {
-
     private UsersRepository usersRepository;
 
     public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
-//    public void setAnnouncementsRepository(AnnouncementsRepository announcementsRepository) {
-//        this.announcementsRepository = announcementsRepository;
-//    }
-
 
     public UserService() {
-
     }
 
     public User login(String username, String password) {

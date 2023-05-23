@@ -47,6 +47,8 @@ public class UserController {
         this.authenticationManager = authenticationManager;
     }
 
+
+
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;

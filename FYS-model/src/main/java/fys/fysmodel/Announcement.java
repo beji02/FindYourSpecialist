@@ -16,7 +16,9 @@ public class Announcement extends Identifiable<Integer> {
     private String title;
     private LocalDate startDate;
     private LocalDate endDate;
-    
+
+    @OneToMany(mappedBy = "announcement", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Reservation> reservations = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "specialist_id")
@@ -27,6 +29,9 @@ public class Announcement extends Identifiable<Integer> {
     private Field field;
 
     public Announcement() {}
+
+
+
 
     public Announcement(Float rate, String description, String title, LocalDate startDate, LocalDate endDate, Field field) {
         this.rate = rate;
@@ -114,6 +119,18 @@ public class Announcement extends Identifiable<Integer> {
         this.specialist = specialist;
     }
 
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public void addReservation(Reservation reservation) {
+        this.reservations.add(reservation);
+    }
+
     @Override
     public String toString() {
         return "Announcement{" +
@@ -122,6 +139,7 @@ public class Announcement extends Identifiable<Integer> {
                 ", title='" + title + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", reservations=" + reservations +
                 ", specialist=" + specialist +
                 ", field=" + field +
                 '}';

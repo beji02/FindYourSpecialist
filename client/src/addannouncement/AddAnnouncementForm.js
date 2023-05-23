@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Form, Button, Container} from "react-bootstrap";
+import {Calendar, DateObject} from "react-multi-date-picker";
+// https://shahabyazdi.github.io/react-multi-date-picker/colors/
+
 
 function AnnouncementForm(props) {
     const [formValues, setFormValues] = useState({
         title: "",
         description: "",
-        startDate: "",
-        endDate: "",
+        workDays: [],
         fieldId: 0
     });
     const [fields, setFields] = useState([]);
@@ -14,7 +16,7 @@ function AnnouncementForm(props) {
     const [success, setSuccess] = useState("");
 
     useEffect(() => {
-        fetch("announcements/fields")
+        fetch("fields")
             .then((response) => response.json())
             .then((data) => {
                 setFields(data); // Set the fetched fields in the state
@@ -25,7 +27,7 @@ function AnnouncementForm(props) {
     }, []);
 
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setFormValues((prevValues) => ({
             ...prevValues,
             [name]: name === "fieldId" ? parseInt(value) : value,
@@ -34,11 +36,20 @@ function AnnouncementForm(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (formValues.title === "" || formValues.description === "" || formValues.fieldId === 0 || formValues.startDate === "" || formValues.endDate === ""){
+        if (formValues.title === "" || formValues.description === "" || formValues.fieldId === 0 || formValues.workDays.length === 0) {
             setError("Please fill in all the details");
             return;
         }
         try {
+            //console.log(formValues.workDays[0].toString());
+            const formattedWorkDays = formValues.workDays.map((date) => {
+                    let newDate = new Date(date.toString());
+                    let newUTCDate = new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60000);
+                    //console.log(newUTCDate);
+                    return newUTCDate;
+                }
+            );
+            formValues.workDays = formattedWorkDays;
             const token = localStorage.getItem("token");
             const response = await fetch("announcements", {
                 method: "POST",
@@ -50,13 +61,12 @@ function AnnouncementForm(props) {
                 body: JSON.stringify(formValues)
             });
 
-
             if (response.ok) {
                 setSuccess("Announcement added successfully");
             } else {
                 setError("An error occurred. Please try again.");
             }
-            console.log(JSON.stringify(formValues));
+            //console.log(JSON.stringify(formValues));
 
         } catch (error) {
             setError("An error occurred. Please try again.");
@@ -65,8 +75,7 @@ function AnnouncementForm(props) {
         setFormValues({
             title: "",
             description: "",
-            startDate: "",
-            endDate: "",
+            workDays: [],
             fieldId: 1
         });
     };
@@ -100,36 +109,24 @@ function AnnouncementForm(props) {
                     />
                 </Form.Group>
 
-                <Form.Group controlId="formBasicStartDate">
-                    <Form.Label>Start Date</Form.Label>
-                    <Form.Control
-                        type="date"
-                        name="startDate"
-                        placeholder="Enter start date"
-                        value={formValues.startDate}
-                        onChange={handleInputChange}
+                <Form.Group controlId="formWorkDays">
+                    <Form.Label>Work days</Form.Label><br/>
+                    <Calendar
+                        multiple
+                        value={formValues.workDays}
+                        onChange={(value) => {
+                            handleInputChange({target: {name: "workDays", value: value}})
+                        }}
+                        minDate={new DateObject()}
                     />
                 </Form.Group>
-
-                <Form.Group controlId="formBasicEndDate">
-                    <Form.Label>End Date</Form.Label>
-                    <Form.Control
-                        type="date"
-                        name="endDate"
-                        placeholder="Enter end date"
-                        value={formValues.endDate}
-                        onChange={handleInputChange}
-                    />
-                </Form.Group>
-
                 <Form.Group controlId="formFieldSelect">
                     <Form.Label>Select a field</Form.Label>
                     <Form.Control
                         as="select"
                         name="fieldId"
                         value={formValues.fieldId}
-                        onChange={handleInputChange}
-                    >
+                        onChange={handleInputChange}>
                         <option value="0">Select the field &#x25BC;</option>
                         {fields.map((field) => (
                             <option key={field.id} value={field.id}>

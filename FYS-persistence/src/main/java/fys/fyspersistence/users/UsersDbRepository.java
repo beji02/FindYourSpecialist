@@ -15,7 +15,6 @@ import java.util.List;
 
 @Transactional
 public class UsersDbRepository implements UsersRepository {
-
     private static final Logger logger = LogManager.getLogger();
     private SessionFactory sessionFactory;
 
@@ -23,8 +22,6 @@ public class UsersDbRepository implements UsersRepository {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
-
 
     @Override
     public User findById(Integer id) {

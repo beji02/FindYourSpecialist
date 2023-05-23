@@ -1,6 +1,7 @@
 package fys.fysserver.api.model;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class AddAnnouncementRequest {
     private String title;
@@ -8,6 +9,7 @@ public class AddAnnouncementRequest {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    private Set<LocalDate> workDays;
     private Integer fieldId;
 
 
@@ -44,5 +46,14 @@ public class AddAnnouncementRequest {
 
     public void setFieldId(Integer field_id) {
         this.fieldId = field_id;
+    }
+
+
+    public Set<LocalDate> getWorkDays() {
+        return workDays;
+    }
+
+    public void setWorkDays(Set<LocalDate> workDays) {
+        this.workDays = workDays;
     }
 }

@@ -1,5 +1,7 @@
 package fys.fysmodel;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,27 +22,22 @@ public class User extends Identifiable<Integer> {
     private LocalDate birthDate;
     private String phoneNumber;
     private String optionalDescription;
-
     @Column(unique = true)
     private String email;
-
-
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Reservation> myReservations = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Rating> ratingsUser = new HashSet<>();
-
-    // new fields
     @ElementCollection
     @CollectionTable(name="user_recently_visited_specialists", joinColumns=@JoinColumn(name="user_id"))
     @MapKeyJoinColumn(name="specialist_id")
     @Column(name="timestamp")
     private Map<Specialist, LocalDateTime> recentlyVisitedSpecialists = new HashMap<>();
-
     @ElementCollection
     @CollectionTable(name="user_recently_visited_announcements", joinColumns=@JoinColumn(name="user_id"))
     @MapKeyJoinColumn(name="announcement_id")
     @Column(name="timestamp")
     private Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements = new HashMap<>();
-
     @CollectionTable(name="user_favorite_specialists", joinColumns=@JoinColumn(name="user_id"))
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Specialist> favoriteSpecialists = new HashSet<>();
@@ -207,4 +204,15 @@ public class User extends Identifiable<Integer> {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    @JsonBackReference
+    public Set<Reservation> getMyReservations() {
+        return myReservations;
+    }
+
+    public void setMyReservations(Set<Reservation> myReservations) {
+        this.myReservations = myReservations;
+    }
+
 }

@@ -71,7 +71,6 @@ public class Specialist extends User {
         this.ratingsSpecialist = ratingsSpecialist;
     }
 
-
     @JsonManagedReference
     public Set<Announcement> getAnnouncements() {
         return announcements;

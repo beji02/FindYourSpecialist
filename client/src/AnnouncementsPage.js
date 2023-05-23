@@ -25,7 +25,7 @@ function AnnouncementsPage({...props}) {
             url = `announcements?search-query=${searchQuery}&page-number=${pageNumber}&page-size=${pageSize}&search-categories=${filtersQueryParam}`;
         } else if (props.page === 1) {
             console.log("page my announcements");
-            url = `myannouncements?search-query=${searchQuery}&page-number=${pageNumber}&page-size=${pageSize}&search-categories=${filtersQueryParam}`;
+            url = `my-announcements?search-query=${searchQuery}&page-number=${pageNumber}&page-size=${pageSize}&search-categories=${filtersQueryParam}`;
         }
         if (props.includeToken) {
             console.log("include token");

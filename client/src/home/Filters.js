@@ -5,7 +5,7 @@ function Filters({setSelectedFilters}) {
     const [filters, setFilters] = useState([]);
 
     useEffect(() => {
-        fetch("announcements/fields")
+        fetch("fields")
             .then((response) => response.json())
             .then((data) => {
                 setFilters(data);

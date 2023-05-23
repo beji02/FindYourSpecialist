@@ -1,16 +1,15 @@
 package fys.fysserver.api.service;
 
-import fys.fysmodel.Announcement;
-import fys.fysmodel.Field;
-import fys.fysmodel.Specialist;
-import fys.fysmodel.User;
+import fys.fysmodel.*;
 import fys.fyspersistence.announcements.AnnouncementsRepository;
 import fys.fyspersistence.users.UsersRepository;
 import fys.fysserver.api.dto.AnnouncementDTO;
+import fys.fysserver.api.dto.ReservationDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,13 +39,13 @@ public class AnnouncementService {
             allAnnouncements.forEach(announcement -> {
                 boolean isFavourite = favourites.contains(announcement);
                 announcementsDto.add(new AnnouncementDTO(announcement.getId(), announcement.getRate(),
-                        announcement.getDescription(), announcement.getTitle(), announcement.getStartDate(),
-                        announcement.getEndDate(), announcement.getField(), announcement.getSpecialist(), isFavourite));
+                        announcement.getDescription(), announcement.getTitle(), null,
+                        null, announcement.getReservations(), announcement.getField(), announcement.getSpecialist(), isFavourite));
             });
         } else {
             allAnnouncements.forEach(announcement -> announcementsDto.add(new AnnouncementDTO(announcement.getId(), announcement.getRate(),
-                    announcement.getDescription(), announcement.getTitle(), announcement.getStartDate(),
-                    announcement.getEndDate(), announcement.getField(), announcement.getSpecialist(), false)));
+                    announcement.getDescription(), announcement.getTitle(), null,
+                    null, announcement.getReservations(), announcement.getField(), announcement.getSpecialist(), false)));
         }
         return announcementsDto;
     }
@@ -158,9 +157,8 @@ public class AnnouncementService {
         return announcementsRepository.findAllFields();
     }
 
-
-    public Announcement addAnnouncement(String username, String title, String description, LocalDate startDate, LocalDate endDate, Integer fieldId) {
-        System.out.println("addAnnouncement: " + username + " " + title + " " + description + " " + startDate.toString() + " " + endDate.toString() + " " + fieldId);
+    public Announcement addAnnouncement(String username, String title, String description, LocalDate startDate, LocalDate endDate, Integer fieldId, Set<LocalDate> workDays) {
+        System.out.println("addAnnouncement: " + username + " " + title + " " + description + " " + fieldId + " " + workDays.toString());
 
         Announcement announcement = new Announcement();
         announcement.setTitle(title);
@@ -169,15 +167,29 @@ public class AnnouncementService {
         announcement.setEndDate(endDate);
         announcement.setRate(0f);
         announcement.setField(announcementsRepository.findFieldById(fieldId));
+
         Specialist specialist = (Specialist) usersRepository.findByUsername(username);
         announcement.setSpecialist(specialist);
+        announcement.setReservations(new HashSet<>());
 
         Announcement addedAnnouncement = announcementsRepository.add(announcement);
+
+        workDays.forEach(workDay -> {
+            Reservation reservation = new Reservation();
+            reservation.setDate(workDay);
+            reservation.setAnnouncement(addedAnnouncement);
+            reservation = announcementsRepository.insertReservation(reservation);
+
+            addedAnnouncement.addReservation(reservation);
+        });
+
+        announcementsRepository.modify(addedAnnouncement);
+
         specialist.addAnnouncement(addedAnnouncement);
         usersRepository.modify(specialist);
 
         System.out.println("addedAnnouncement: " + addedAnnouncement.toString());
-        return announcement;
+        return addedAnnouncement;
     }
 
     public void addAnnouncementToFavourites(String username, Integer announcementId) {
@@ -203,5 +215,28 @@ public class AnnouncementService {
         User user = usersRepository.findByUsername(username);
         System.out.println("getFavouriteAnnouncements: " + user.toString());
         return user.getFavoriteAnnouncements();
+    }
+
+    public void addReservation(String username, ReservationDTO reservationDTO) {
+        System.out.println("addReservation: " + username + " " + reservationDTO.toString());
+        User user = usersRepository.findByUsername(username);
+
+        Integer announcementId = reservationDTO.getAnnouncementId();
+        Announcement announcement = announcementsRepository.findById(announcementId);
+
+        if (user.getId().equals(announcement.getSpecialist().getId())) {
+            throw new RuntimeException("You can't reserve your own announcement!");
+        }
+
+        if (user != null && announcement != null) {
+            announcement.getReservations().forEach(reservation -> {
+                reservationDTO.getSelectedDates().forEach(selectedDate -> {
+                    if (reservation.getDate().equals(selectedDate)) {
+                        reservation.setUser(user);
+                    }
+                });
+            });
+            announcementsRepository.modify(announcement);
+        }
     }
 }
