@@ -83,7 +83,7 @@ const SpecialistDataTile = ({ token }) => {
     return (
         <Row className="justify-content-md-center mt-5">
             <Col md={8}>
-                <h2></h2>
+                <h2>Work info</h2>
                 <Card>
                     <Card.Body>
                         {error && <p className="text-danger">{error}</p>}

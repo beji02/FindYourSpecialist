@@ -4,10 +4,7 @@ import fys.fysmodel.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class UserResponse {
     private String username;
@@ -21,7 +18,7 @@ public class UserResponse {
 
     private Set<Rating> ratingsUser = new HashSet<>();
 
-    private Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements = new HashMap<>();
+    private Iterable<Announcement> recentlyVisitedAnnouncements = new ArrayList<>();
 
     private Set<Specialist> favoriteSpecialists = new HashSet<>();
     private Set<Announcement> favoriteAnnouncements = new HashSet<>();
@@ -38,7 +35,7 @@ public class UserResponse {
         this.optionalDescription = optionalDescription;
     }
 
-    public UserResponse(String username, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String optionalDescription, String email, Set<Rating> ratingsUser, Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements, Set<Specialist> favoriteSpecialists, Set<Announcement> favoriteAnnouncements, Set<Message> messages) {
+    public UserResponse(String username, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String optionalDescription, String email, Set<Rating> ratingsUser, Iterable<Announcement> recentlyVisitedAnnouncements, Set<Specialist> favoriteSpecialists, Set<Announcement> favoriteAnnouncements, Set<Message> messages) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -155,7 +152,7 @@ public class UserResponse {
         this.ratingsUser = ratingsUser;
     }
 
-    public void setRecentlyVisitedAnnouncements(Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements) {
+    public void setRecentlyVisitedAnnouncements(Iterable<Announcement> recentlyVisitedAnnouncements) {
         this.recentlyVisitedAnnouncements = recentlyVisitedAnnouncements;
     }
 

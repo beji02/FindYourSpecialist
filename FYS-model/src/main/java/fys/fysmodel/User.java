@@ -3,10 +3,8 @@ package fys.fysmodel;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="users")
@@ -180,6 +178,22 @@ public class User extends Identifiable<Integer> {
     public void addRecentlyVisitedAnnouncement(Announcement announcement) {
         LocalDateTime timestamp = LocalDateTime.now();
         recentlyVisitedAnnouncements.put(announcement, timestamp);
+
+        if (recentlyVisitedAnnouncements.size() > 4) {
+            Announcement oldestAnnouncement = null;
+            LocalDateTime oldestTimestamp = LocalDateTime.MAX;
+
+            for (Map.Entry<Announcement, LocalDateTime> entry : recentlyVisitedAnnouncements.entrySet()) {
+                if (entry.getValue().isBefore(oldestTimestamp)) {
+                    oldestAnnouncement = entry.getKey();
+                    oldestTimestamp = entry.getValue();
+                }
+            }
+
+            if (oldestAnnouncement != null) {
+                recentlyVisitedAnnouncements.remove(oldestAnnouncement);
+            }
+        }
     }
 
     public void removeRecentlyVisitedAnnouncement(Announcement announcement) {
@@ -187,10 +201,13 @@ public class User extends Identifiable<Integer> {
     }
 
 
-    public Map<Announcement, LocalDateTime> getRecentlyVisitedAnnouncements() {
-        return recentlyVisitedAnnouncements;
+    public Iterable<Announcement> getRecentlyVisitedAnnouncements() {
+        return recentlyVisitedAnnouncements.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
-
     public void setRecentlyVisitedAnnouncements(Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements) {
         this.recentlyVisitedAnnouncements = recentlyVisitedAnnouncements;
     }

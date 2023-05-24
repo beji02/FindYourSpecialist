@@ -1,5 +1,6 @@
 package fys.fysserver.api.controller;
 
+import fys.fysmodel.Announcement;
 import fys.fysmodel.Specialist;
 import fys.fysmodel.User;
 import fys.fysserver.api.model.*;
@@ -135,6 +136,22 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/users/recently-visited-announcements")
+    public ResponseEntity<?> getRecentlyVisitedAnnouncements(@RequestHeader("Authorization") String token) {
+        if(token == null) {
+            return new ResponseEntity<String>("No token provided", HttpStatus.BAD_REQUEST);
+        } else if(!jwtUtils.validateJwtToken(token)) {
+            return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
+        }
+
+        User user = userService.findUserByUsername(jwtUtils.getUsernameFromJwtToken(token));
+        Iterable<Announcement> announcements = user.getRecentlyVisitedAnnouncements();
+
+        System.out.println("recently visited announcements: " + ((List)announcements).size());
+
+        return new ResponseEntity<>(announcements, HttpStatus.OK);
     }
 
     @PostMapping("/login")

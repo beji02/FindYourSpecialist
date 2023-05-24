@@ -5,10 +5,7 @@ import fys.fysserver.api.model.user.UserResponse;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SpecialistResponse {
     private String username;
@@ -24,7 +21,7 @@ public class SpecialistResponse {
 
     private Set<Rating> ratingsUser = new HashSet<>();
 
-    private Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements = new HashMap<>();
+    private Iterable<Announcement> recentlyVisitedAnnouncements = new ArrayList<>();
 
     private Set<Specialist> favoriteSpecialists = new HashSet<>();
     private Set<Announcement> favoriteAnnouncements = new HashSet<>();
@@ -44,7 +41,7 @@ public class SpecialistResponse {
     public SpecialistResponse(String username, String firstName, String lastName,
                               LocalDate birthDate, String phoneNumber, String optionalDescription, String email,
                               String location, String description,
-                              Set<Rating> ratingsUser, Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements,
+                              Set<Rating> ratingsUser, Iterable<Announcement> recentlyVisitedAnnouncements,
                               Set<Specialist> favoriteSpecialists, Set<Announcement> favoriteAnnouncements,
                               Set<Message> messages) {
         this.username = username;
@@ -166,7 +163,7 @@ public class SpecialistResponse {
         this.ratingsUser = ratingsUser;
     }
 
-    public void setRecentlyVisitedAnnouncements(Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements) {
+    public void setRecentlyVisitedAnnouncements(Iterable<Announcement> recentlyVisitedAnnouncements) {
         this.recentlyVisitedAnnouncements = recentlyVisitedAnnouncements;
     }
 
@@ -198,7 +195,7 @@ public class SpecialistResponse {
         this.description = description;
     }
 
-    public Map<Announcement, LocalDateTime> getRecentlyVisitedAnnouncements() {
+    public Iterable<Announcement> getRecentlyVisitedAnnouncements() {
         return recentlyVisitedAnnouncements;
     }
 }

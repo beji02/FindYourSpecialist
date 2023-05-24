@@ -1,21 +1,27 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import AnnouncementCard from './AnnouncementCard';
 
 function AnnouncementsTile({ title, announcements }) {
     return (
-        <Row>
-            <Col>
-                <h2>{title}</h2>
-            </Col>
-            <Col>
-                <div className="row row-cols-3">
-                    {announcements.map((announcement) => (
-                        <AnnouncementCard key={announcement.id} announcement={announcement} />
-                    ))}
-                </div>
-            </Col>
-        </Row>
+        <Container className="mt-3">
+            <Row className="justify-content-center">
+                <Col md={8}>
+                    <h2>{title}</h2>
+                    <Card>
+                        <Card.Body>
+                            <Row>
+                                {announcements.map((announcement) => (
+                                    <Col key={announcement.id} md={4} className="mb-3">
+                                        <AnnouncementCard announcement={announcement} />
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 
