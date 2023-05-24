@@ -1,7 +1,13 @@
 package fys.fysserver.api.controller;
 
+import fys.fysmodel.Specialist;
 import fys.fysmodel.User;
 import fys.fysserver.api.model.*;
+import fys.fysserver.api.model.specialist.SpecialistResponse;
+import fys.fysserver.api.model.specialist.SpecialistUpdateRequest;
+import fys.fysserver.api.model.user.UpdateType;
+import fys.fysserver.api.model.user.UserResponse;
+import fys.fysserver.api.model.user.UserUpdateRequest;
 import fys.fysserver.api.security.jwt.JwtUtils;
 import fys.fysserver.api.security.services.UserDetailsImpl;
 import fys.fysserver.api.service.UserService;
@@ -30,6 +36,12 @@ public class UserController {
     public UserController() {
     }
 
+    private static void checkToken(String token) {
+        if(token == null) {
+            throw new IllegalArgumentException("No token provided");
+        }
+    }
+
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -54,42 +66,79 @@ public class UserController {
     public ResponseEntity<?> getUser(@RequestHeader("Authorization") String token) {
         if(token == null) {
             return new ResponseEntity<String>("No token provided", HttpStatus.BAD_REQUEST);
+        } else if(!jwtUtils.validateJwtToken(token)) {
+            return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
         }
 
         User user = userService.findUserByUsername(jwtUtils.getUsernameFromJwtToken(token));
         return new ResponseEntity<>(UserResponse.build(user), HttpStatus.OK);
     }
 
+    @PostMapping("/specialist")
+    public ResponseEntity<?> getSpecialist(@RequestHeader("Authorization") String token) {
+        if(token == null) {
+            return new ResponseEntity<String>("No token provided", HttpStatus.BAD_REQUEST);
+        } else if(!jwtUtils.validateJwtToken(token)) {
+            return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
+        }
+
+        Specialist specialist = (Specialist) userService.findUserByUsername(jwtUtils.getUsernameFromJwtToken(token));
+        return new ResponseEntity<>(SpecialistResponse.build(specialist), HttpStatus.OK);
+    }
+
     @PutMapping("/user")
     public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String token, @RequestBody UserUpdateRequest userRequest) {
         if(token == null) {
             return new ResponseEntity<String>("No token provided", HttpStatus.BAD_REQUEST);
+        } else if(!jwtUtils.validateJwtToken(token)) {
+            return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
         }
 
-        User user = userService.findUserByUsername(jwtUtils.getUsernameFromJwtToken(token));
-        user.setFirstName(userRequest.getFirstName());
-        user.setLastName(userRequest.getLastName());
-        user.setEmail(userRequest.getEmail());
-        user.setBirthDate(userRequest.getBirthDate());
-        user.setPhoneNumber(userRequest.getPhoneNumber());
-        user.setPhoneNumber(userRequest.getPhoneNumber());
-        user.setOptionalDescription(userRequest.getOptionalDescription());
-        user.setBirthDate(userRequest.getBirthDate());
+        System.out.println("update type:" + userRequest.getUpdateType());
+        if (userRequest.getUpdateType() == UpdateType.UPDATE_USER) {
+            User user = userService.findUserByUsername(jwtUtils.getUsernameFromJwtToken(token));
+            user.setFirstName(userRequest.getFirstName());
+            user.setLastName(userRequest.getLastName());
+            user.setEmail(userRequest.getEmail());
+            user.setBirthDate(userRequest.getBirthDate());
+            user.setPhoneNumber(userRequest.getPhoneNumber());
+            user.setOptionalDescription(userRequest.getOptionalDescription());
 
-        userService.updateUser(user);
+            userService.updateUser(user);
 
-        return new ResponseEntity<>(UserResponse.build(user), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(UserResponse.build(user), HttpStatus.NO_CONTENT);
+        } else {
+            User user = userService.findUserByUsername(jwtUtils.getUsernameFromJwtToken(token));
+
+            userService.upgradeToSpecialist(user);
+
+            return new ResponseEntity<>(UserResponse.build(user), HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @PutMapping("/specialist")
+    public ResponseEntity<?> updateSpecialist(@RequestHeader("Authorization") String token, @RequestBody SpecialistUpdateRequest specialistUpdateRequest) {
+        if(token == null) {
+            return new ResponseEntity<String>("No token provided", HttpStatus.BAD_REQUEST);
+        } else if(!jwtUtils.validateJwtToken(token)) {
+            return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
+        }
+
+        Specialist specialist = (Specialist) userService.findUserByUsername(jwtUtils.getUsernameFromJwtToken(token));
+        specialist.setLocation(specialistUpdateRequest.getLocation());
+        specialist.setDescription(specialistUpdateRequest.getDescription());
+
+        try {
+            userService.updateSpecialist(specialist);
+
+            return new ResponseEntity<>(SpecialistResponse.build(specialist), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-//        try {
-//            User user = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
-//            return new LoginResponse(user, true, null);
-//        }
-//        catch(Exception e) {
-//            return new LoginResponse(null, false, e.getMessage());
-//        }
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

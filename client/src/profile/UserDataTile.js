@@ -13,6 +13,7 @@ const UserDataTile = ({ token }) => {
         email: '',
         phoneNumber: '',
         birthDate: null,
+        updateType: '',
     });
 
     const [error, setError] = useState('');
@@ -27,6 +28,8 @@ const UserDataTile = ({ token }) => {
 
     const handleSave = (event) => {
         event.preventDefault();
+
+        console.log(profileForm.updateType);
 
         try {
             fetch('user', {
@@ -79,6 +82,7 @@ const UserDataTile = ({ token }) => {
                         email: data.email,
                         phoneNumber: data.phoneNumber,
                         birthDate: data.birthDate ? new Date(data.birthDate) : null,
+                        updateType: 'UPDATE_USER',
                     });
                 });
         } catch (error) {
@@ -93,6 +97,7 @@ const UserDataTile = ({ token }) => {
     return (
         <Row className="justify-content-md-center mt-5">
             <Col md={8}>
+                <h2>Personal info</h2>
                 <Card>
                     <Card.Body>
                         {error && <p className="text-danger">{error}</p>}

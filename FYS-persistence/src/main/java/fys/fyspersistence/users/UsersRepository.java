@@ -12,4 +12,8 @@ public interface UsersRepository extends Repository<Integer, User> {
     Iterable<User> findAllUsers();
 
     Iterable<Specialist> findAllSpecialists();
+
+    void remove(String username);
+
+    void upgradeToSpecialist(User user);
 }

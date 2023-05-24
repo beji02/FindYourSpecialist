@@ -29,13 +29,8 @@ public class User extends Identifiable<Integer> {
     private Set<Rating> ratingsUser = new HashSet<>();
 
     // new fields
-    @ElementCollection
-    @CollectionTable(name="user_recently_visited_specialists", joinColumns=@JoinColumn(name="user_id"))
-    @MapKeyJoinColumn(name="specialist_id")
-    @Column(name="timestamp")
-    private Map<Specialist, LocalDateTime> recentlyVisitedSpecialists = new HashMap<>();
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="user_recently_visited_announcements", joinColumns=@JoinColumn(name="user_id"))
     @MapKeyJoinColumn(name="announcement_id")
     @Column(name="timestamp")
@@ -182,15 +177,6 @@ public class User extends Identifiable<Integer> {
         this.ratingsUser.remove(rating);
     }
 
-    public void addRecentlyVisitedSpecialist(Specialist specialist) {
-        LocalDateTime timestamp = LocalDateTime.now();
-        recentlyVisitedSpecialists.put(specialist, timestamp);
-    }
-
-    public void removeRecentlyVisitedSpecialist(Specialist specialist) {
-        recentlyVisitedSpecialists.remove(specialist);
-    }
-
     public void addRecentlyVisitedAnnouncement(Announcement announcement) {
         LocalDateTime timestamp = LocalDateTime.now();
         recentlyVisitedAnnouncements.put(announcement, timestamp);
@@ -200,13 +186,6 @@ public class User extends Identifiable<Integer> {
         recentlyVisitedAnnouncements.remove(announcement);
     }
 
-    public Map<Specialist, LocalDateTime> getRecentlyVisitedSpecialists() {
-        return recentlyVisitedSpecialists;
-    }
-
-    public void setRecentlyVisitedSpecialists(Map<Specialist, LocalDateTime> recentlyVisitedSpecialists) {
-        this.recentlyVisitedSpecialists = recentlyVisitedSpecialists;
-    }
 
     public Map<Announcement, LocalDateTime> getRecentlyVisitedAnnouncements() {
         return recentlyVisitedAnnouncements;

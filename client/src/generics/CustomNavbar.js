@@ -23,7 +23,7 @@ function CustomNavbar() {
         <Navbar bg="light" expand="lg">
             <Container>
                 <Navbar.Brand>
-                    <Nav.Link onClick={handleProfileClick}>Find your specialist</Nav.Link>
+                    <Nav.Link onClick={handleHomeClick}>Find your specialist</Nav.Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
