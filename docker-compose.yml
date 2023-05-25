@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: postgres_fys_database
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: fys
+      PGDATA: /data/postgres
+    volumes:
+      - postgres-db:/data/postgres
+    ports:
+      - "9201:5432"
+
+
+volumes:
+  postgres-db:
+    driver: local
