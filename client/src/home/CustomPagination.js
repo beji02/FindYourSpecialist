@@ -26,4 +26,5 @@ function CustomPagination({announcementsListLength, pageSize, pageNumber, setPag
         </Pagination>
     );
 }
+
 export default CustomPagination;

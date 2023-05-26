@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FindYourSpcialist.iml" filepath="$PROJECT_DIR$/.idea/modules/FindYourSpcialist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FYS-server/FindYourSpcialist.FYS-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/FYS-server/FindYourSpcialist.FYS-server.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-839756783/FindYourSpecialist.FindYourSpcialist.FYS-persistence.test.iml" filepath="$PROJECT_DIR$/.idea/modules/-839756783/FindYourSpecialist.FindYourSpcialist.FYS-persistence.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/client.iml" filepath="$PROJECT_DIR$/client.iml" />
     </modules>
