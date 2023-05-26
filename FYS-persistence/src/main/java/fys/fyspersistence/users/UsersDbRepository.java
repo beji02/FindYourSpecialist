@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,6 +98,21 @@ public class UsersDbRepository implements UsersRepository {
     }
 
     @Override
+    public void remove(String username) {
+        logger.traceEntry("Removing user with username " + username);
+        Session session = sessionFactory.getCurrentSession();
+        User user = session.get(User.class, username);
+        if (user != null) {
+            session.remove(user);
+            logger.traceExit("User removed");
+        } else {
+            logger.traceExit("User with username " + username + " not found");
+            throw new NonexistentEntityException("User with username " + username + " does not exist");
+        }
+    }
+
+    @Override
+    @Transactional
     public void remove(User user) {
         logger.traceEntry("Removing user " + user);
         Session session = sessionFactory.getCurrentSession();
@@ -147,5 +163,39 @@ public class UsersDbRepository implements UsersRepository {
         return users.get(0);
     }
 
+    @Override
+    public void upgradeToSpecialist(User user) {
+        logger.traceEntry("Saving Race {}", user);
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = null;
 
+            try{
+                transaction = session.beginTransaction();
+                session.remove(user);
+                transaction.commit();
+                logger.traceExit();
+            } catch (RuntimeException ex) {
+                if(transaction != null) {
+                    transaction.rollback();
+                    logger.error("Error in adding race {}", user);
+                }
+            }
+        }
+        Specialist specialist = Specialist.build(user);
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = null;
+
+            try{
+                transaction = session.beginTransaction();
+                session.save(specialist);
+                transaction.commit();
+                logger.traceExit();
+            } catch (RuntimeException ex) {
+                if(transaction != null) {
+                    transaction.rollback();
+                    logger.error("Error in adding race {}", user);
+                }
+            }
+        }
+    }
 }

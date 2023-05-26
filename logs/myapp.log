@@ -504,6 +504,7 @@ Caused by: org.postgresql.util.PSQLException: FATAL: database "fys" does not exi
 2023-05-17 15:54:34,540 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
 2023-05-17 15:54:34,711 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
 2023-05-17 15:54:35,131 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+<<<<<<< HEAD
 >>>>>>> master
 2023-05-19 10:01:59,389 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
 2023-05-19 10:01:59,794 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
@@ -612,3 +613,9 @@ Caused by: org.postgresql.util.PSQLException: FATAL: database "fys" does not exi
 2023-05-22 20:26:55,624 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
 2023-05-22 20:26:56,203 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
 2023-05-22 20:26:57,812 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+=======
+2023-05-23 00:07:35,023 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-05-23 00:07:35,112 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-23 00:07:35,286 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-05-23 00:07:35,762 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+>>>>>>> 4f0b7b56d5de4891643cb2d91662f8a40059ef1b

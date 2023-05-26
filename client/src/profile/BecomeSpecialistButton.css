@@ -1,0 +1,17 @@
+.custom-button {
+    height: 50px;
+    background: #57b374;
+    border-color: #57b374;
+}
+
+@media (max-width: 768px) {
+    .custom-button {
+        height: 40px;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-button {
+        height: 30px;
+    }
+}

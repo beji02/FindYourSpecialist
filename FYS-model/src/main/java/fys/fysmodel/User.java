@@ -5,10 +5,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="users")
@@ -28,12 +26,10 @@ public class User extends Identifiable<Integer> {
     private Set<Reservation> myReservations = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Rating> ratingsUser = new HashSet<>();
-    @ElementCollection
-    @CollectionTable(name="user_recently_visited_specialists", joinColumns=@JoinColumn(name="user_id"))
-    @MapKeyJoinColumn(name="specialist_id")
-    @Column(name="timestamp")
-    private Map<Specialist, LocalDateTime> recentlyVisitedSpecialists = new HashMap<>();
-    @ElementCollection
+
+    // new fields
+
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="user_recently_visited_announcements", joinColumns=@JoinColumn(name="user_id"))
     @MapKeyJoinColumn(name="announcement_id")
     @Column(name="timestamp")
@@ -179,22 +175,41 @@ public class User extends Identifiable<Integer> {
         this.ratingsUser.remove(rating);
     }
 
-    public void addRecentlyVisitedSpecialist(Specialist specialist) {
-        LocalDateTime timestamp = LocalDateTime.now();
-        recentlyVisitedSpecialists.put(specialist, timestamp);
-    }
-
-    public void removeRecentlyVisitedSpecialist(Specialist specialist) {
-        recentlyVisitedSpecialists.remove(specialist);
-    }
-
     public void addRecentlyVisitedAnnouncement(Announcement announcement) {
         LocalDateTime timestamp = LocalDateTime.now();
         recentlyVisitedAnnouncements.put(announcement, timestamp);
+
+        if (recentlyVisitedAnnouncements.size() > 4) {
+            Announcement oldestAnnouncement = null;
+            LocalDateTime oldestTimestamp = LocalDateTime.MAX;
+
+            for (Map.Entry<Announcement, LocalDateTime> entry : recentlyVisitedAnnouncements.entrySet()) {
+                if (entry.getValue().isBefore(oldestTimestamp)) {
+                    oldestAnnouncement = entry.getKey();
+                    oldestTimestamp = entry.getValue();
+                }
+            }
+
+            if (oldestAnnouncement != null) {
+                recentlyVisitedAnnouncements.remove(oldestAnnouncement);
+            }
+        }
     }
 
     public void removeRecentlyVisitedAnnouncement(Announcement announcement) {
         recentlyVisitedAnnouncements.remove(announcement);
+    }
+
+
+    public Iterable<Announcement> getRecentlyVisitedAnnouncements() {
+        return recentlyVisitedAnnouncements.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+    public void setRecentlyVisitedAnnouncements(Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements) {
+        this.recentlyVisitedAnnouncements = recentlyVisitedAnnouncements;
     }
 
     public String getEmail() {

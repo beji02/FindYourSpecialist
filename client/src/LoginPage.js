@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import {useNavigate} from "react-router-dom";
@@ -35,8 +35,12 @@ function LoginPage() {
                 if (response.status === 200) {
                     const data = await response.json();
                     const token = data.token;
+                    const roles = data.roles;
 
                     localStorage.setItem("token", token);
+                    localStorage.setItem("roles", roles);
+
+                    console.log(roles);
 
                     navigate('/home');
                 } else {
@@ -47,6 +51,8 @@ function LoginPage() {
             }
         }
     };
+
+
 
     return (
         <div className="page-container">

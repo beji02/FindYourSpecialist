@@ -1,6 +1,7 @@
 package fys.fysserver.api.service;
 
 import fys.fysmodel.Announcement;
+import fys.fysmodel.Specialist;
 import fys.fysmodel.User;
 import fys.fyspersistence.announcements.AnnouncementsRepository;
 import fys.fyspersistence.users.UsersDbRepository;
@@ -8,6 +9,7 @@ import fys.fyspersistence.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Console;
 import java.time.LocalDate;
@@ -26,11 +28,6 @@ public class UserService {
     public UserService() {
     }
 
-    public User login(String username, String password) {
-        System.out.println("login: " + username + " " + password);
-
-        return usersRepository.findByUsernameAndPassword(username, password);
-    }
 
     public User register(String username, String password, String email) {
         System.out.println("register: " + username + " " + password + " " + email);
@@ -44,5 +41,32 @@ public class UserService {
         user = usersRepository.findByUsernameAndPassword(username, password);
 
         return user;
+    }
+
+    public User findUserByUsername(String username) {
+        System.out.println("findUserByUsername: " + username);
+
+        return usersRepository.findByUsername(username);
+    }
+
+    @Transactional
+    public void upgradeToSpecialist(User user) {
+        System.out.println("upgradeToSpecialist: " + user.getUsername());
+
+        Specialist specialist = Specialist.build(user);
+        //usersRepository.remove(user);
+        //usersRepository.add(specialist);
+
+        usersRepository.upgradeToSpecialist(user);
+    }
+
+    public void updateUser(User user) {
+        System.out.println("updateUser: " + user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
+        usersRepository.modify(user);
+    }
+
+    public void updateSpecialist(Specialist specialist) {
+        System.out.println("updateUser: " + specialist.getUsername() + " " + specialist.getEmail());
+        usersRepository.modify(specialist);
     }
 }

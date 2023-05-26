@@ -284,20 +284,17 @@ public class AnnouncementController {
             );
 
             return new ResponseEntity<>(new AddAnnouncementResponse(announcement, true, null), HttpStatus.OK);
-        }
-        catch (MalformedJwtException | IllegalArgumentException e) {
+        } catch (MalformedJwtException | IllegalArgumentException e) {
             return new ResponseEntity<>(
                     new AddAnnouncementResponse(null, false, "Unauthorized"),
                     HttpStatus.UNAUTHORIZED
             );
-        }
-        catch (HttpClientErrorException.BadRequest e) {
+        } catch (HttpClientErrorException.BadRequest e) {
             return new ResponseEntity<>(
                     new AddAnnouncementResponse(null, false, e.toString()),
                     HttpStatus.BAD_REQUEST
             );
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(
                     new AddAnnouncementResponse(null, false, e.toString()),
                     HttpStatus.INTERNAL_SERVER_ERROR

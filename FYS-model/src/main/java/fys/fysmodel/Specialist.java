@@ -19,6 +19,10 @@ public class Specialist extends User {
 
     public Specialist() {}
 
+    public static Specialist build(User user) {
+        return new Specialist(user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getBirthDate(), user.getPhoneNumber(), user.getOptionalDescription(), 0, "", "");
+    }
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Rating> ratingsSpecialist = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
