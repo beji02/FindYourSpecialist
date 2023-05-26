@@ -56,8 +56,6 @@ const UserDataTile = ({ token }) => {
         }
     };
 
-    const [phone, setPhone] = useState('');
-
     useEffect(() => {
         try {
             fetch('user', {
