@@ -17,6 +17,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
+@CrossOrigin
 public class AnnouncementController {
     private JwtUtils jwtUtils;
 

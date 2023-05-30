@@ -154,6 +154,7 @@ const UserDataTile = ({ token }) => {
                                         <Form.Label>Date of Birth</Form.Label>
                                         <br />
                                         <DatePicker
+                                            value={profileForm.birthDate}
                                             selected={profileForm.birthDate}
                                             onChange={(date) =>
                                                 setProfileForm({ ...profileForm, birthDate: date })

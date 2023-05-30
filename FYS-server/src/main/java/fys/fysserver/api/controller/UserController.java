@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 public class UserController {
 
     AuthenticationManager authenticationManager;
@@ -109,13 +110,14 @@ public class UserController {
 
             userService.updateUser(user);
 
-            return new ResponseEntity<>(UserResponse.build(user), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(UserResponse.build(user), HttpStatus.OK);
         } else {
             User user = userService.findUserByUsername(jwtUtils.getUsernameFromJwtToken(token));
 
             userService.upgradeToSpecialist(user);
+            user = userService.findUserByUsername(jwtUtils.getUsernameFromJwtToken(token));
 
-            return new ResponseEntity<>(UserResponse.build(user), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(UserResponse.build(user), HttpStatus.OK);
         }
     }
 

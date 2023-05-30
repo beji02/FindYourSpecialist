@@ -1,6 +1,6 @@
 package fys.fysmodel;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,7 +75,7 @@ public class Specialist extends User {
         this.ratingsSpecialist = ratingsSpecialist;
     }
 
-    @JsonManagedReference
+    @JsonBackReference
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }

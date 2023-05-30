@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import {useNavigate} from "react-router-dom";
 import "./style/LoginPage.css";
+import {login} from "./utils/restcalls/user";
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -23,32 +24,15 @@ function LoginPage() {
         if (loginForm.username === "" || loginForm.password === "") {
             setError("Please fill all the details");
         } else {
-            try {
-                const response = await fetch("login", {
-                    method: "POST",
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(loginForm),
-                });
-                if (response.status === 200) {
-                    const data = await response.json();
+            login(loginForm).then(data => {
                     const token = data.token;
                     const roles = data.roles;
 
                     localStorage.setItem("token", token);
                     localStorage.setItem("roles", roles);
 
-                    console.log(roles);
-
                     navigate('/home');
-                } else {
-                    setError("Invalid credentials");
-                }
-            } catch (error) {
-                setError("An error occurred. Please try again.");
-            }
+            }).catch(error => setError("Invalid credentials"));
         }
     };
 
