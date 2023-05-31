@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button, Form, InputGroup } from 'react-bootstrap';
+import { Row, Col, Card, Button, Form } from 'react-bootstrap';
 import 'react-phone-input-2/lib/style.css';
-import PhoneInput from 'react-phone-input-2';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-//AIzaSyBZCn63RlKrEgWS1TJdfE-L_DGUWYLDDt0 -- google maps api key
+import { LoadScript, Autocomplete } from '@react-google-maps/api';
+import { MAPS_API_KEY } from '../utils/constants'
 
 const SpecialistDataTile = ({ token }) => {
     const [specialistForm, setSpecialistForm] = useState({
@@ -13,6 +11,7 @@ const SpecialistDataTile = ({ token }) => {
         description: '',
     });
 
+    const [autocomplete, setAutocomplete] = useState(null);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
@@ -21,6 +20,14 @@ const SpecialistDataTile = ({ token }) => {
         const value = event.target.value;
 
         setSpecialistForm({ ...specialistForm, [name]: value });
+    };
+
+    const handlePlaceSelect = () => {
+        if (autocomplete !== null) {
+            const place = autocomplete.getPlace();
+            const location = place.formatted_address;
+            setSpecialistForm({ ...specialistForm, location });
+        }
     };
 
     const handleSave = (event) => {
@@ -51,8 +58,6 @@ const SpecialistDataTile = ({ token }) => {
         }
     };
 
-    const [phone, setPhone] = useState('');
-
     useEffect(() => {
         try {
             fetch('specialist', {
@@ -64,7 +69,7 @@ const SpecialistDataTile = ({ token }) => {
                 },
             })
                 .then((response) => {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         return response.json();
                     }
                     throw new Error('Something went wrong');
@@ -91,13 +96,20 @@ const SpecialistDataTile = ({ token }) => {
                         <Form>
                             <Form.Group controlId="location">
                                 <Form.Label>Location</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="location"
-                                    onChange={handleUpdate}
-                                    value={specialistForm.location}
-                                    placeholder="Enter your location"
-                                />
+                                <LoadScript googleMapsApiKey={MAPS_API_KEY} libraries={['places']}>
+                                    <Autocomplete
+                                        onLoad={(autocomplete) => setAutocomplete(autocomplete)}
+                                        onPlaceChanged={handlePlaceSelect}
+                                    >
+                                        <Form.Control
+                                            type="text"
+                                            name="location"
+                                            onChange={handleUpdate}
+                                            value={specialistForm.location}
+                                            placeholder="Enter your location"
+                                        />
+                                    </Autocomplete>
+                                </LoadScript>
                             </Form.Group>
                             <Form.Group controlId="description">
                                 <Form.Label>Description</Form.Label>
