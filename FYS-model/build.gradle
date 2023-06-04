@@ -26,7 +26,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-tx
     implementation group: 'org.springframework', name: 'spring-tx', version: '6.0.8'
 
-
     // https://mvnrepository.com/artifact/commons-io/commons-io
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
     implementation group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
@@ -36,9 +35,8 @@ dependencies {
     implementation 'org.hibernate.common:hibernate-commons-annotations:5.1.2.Final'
     implementation 'org.postgresql:postgresql:42.3.1'
 
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
-
+    //implementation 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.15.1'
 }
 
 test {

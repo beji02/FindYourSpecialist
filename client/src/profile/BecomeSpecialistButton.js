@@ -3,23 +3,19 @@ import { Container, Row, Col, Card, Button, Form, InputGroup } from 'react-boots
 import 'react-phone-input-2/lib/style.css';
 import './BecomeSpecialistButton.css';
 
-const BecomeSpecialistButton = ({ token }) => {
+const BecomeSpecialistButton = ({ token, upgradeToSpecialistFunc }) => {
+    const [profileForm, setProfileForm] = useState({
+        updateType: '',
+    });
+
+    useEffect(() => {
+        setProfileForm({ ...profileForm, updateType: 'UPGRADE_TO_SPECIALIST' })
+    }, []);
 
     const handleBecomeSpecialist = (event) => {
         event.preventDefault();
-
-        try {
-            fetch('specialists', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                }
-            })
-        } catch (error) {
-            console.log("ERROR")
-        }
+        console.log(profileForm);
+        upgradeToSpecialistFunc(profileForm);
     }
 
     return (

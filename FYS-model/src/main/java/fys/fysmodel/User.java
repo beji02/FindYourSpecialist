@@ -1,6 +1,7 @@
 package fys.fysmodel;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -28,9 +29,14 @@ public class User extends Identifiable<Integer> {
     private Set<Rating> ratingsUser = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_recently_visited_announcements", joinColumns = @JoinColumn(name = "user_id"))
-    @MapKeyJoinColumn(name = "announcement_id")
-    @Column(name = "timestamp")
+    @CollectionTable(
+            name="user_recently_visited_announcements",
+            joinColumns=@JoinColumn(name="user_id"),
+            foreignKey=@ForeignKey(name="fk_user_recently_visited_announcements")
+    )
+    @MapKeyJoinColumn(name="announcement_id")
+    @Column(name="timestamp")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements = new HashMap<>();
     @CollectionTable(name = "user_favorite_specialists", joinColumns = @JoinColumn(name = "user_id"))
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -52,6 +58,11 @@ public class User extends Identifiable<Integer> {
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.optionalDescription = optionalDescription;
+    }
+
+    public User(String username, String password, String email, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String optionalDescription) {
+        this(username, password, firstName, lastName, birthDate, phoneNumber, optionalDescription);
+        this.email = email;
     }
 
     public String getUsername() {
@@ -210,6 +221,10 @@ public class User extends Identifiable<Integer> {
 
     public void setRecentlyVisitedAnnouncements(Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements) {
         this.recentlyVisitedAnnouncements = recentlyVisitedAnnouncements;
+    }
+
+    public Map<Announcement, LocalDateTime> getRecentlyVisitedAnnouncementsMap() {
+        return recentlyVisitedAnnouncements;
     }
 
     public String getEmail() {

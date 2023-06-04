@@ -7,6 +7,7 @@ import CustomPagination from "./home/CustomPagination";
 import Filters from "./home/Filters";
 import QuickAccess from "./home/QuickAccess";
 import SearchBar from "./home/SearchBar";
+import {isLogged} from "./utils/utils";
 
 function AnnouncementsPage({...props}) {
     const [announcements, setAnnouncements] = useState([]);
@@ -66,7 +67,6 @@ function AnnouncementsPage({...props}) {
 
     return (
         <Container>
-            <CustomNavbar/>
             <Container>
                 <Row>
                     <Col xs={2} lg={2}>
