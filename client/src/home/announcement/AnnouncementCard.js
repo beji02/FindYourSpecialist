@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {Card, Col, Row} from "react-bootstrap";
 import AnnouncementModal from "./AnnouncementModal";
-import "../../style/AnnouncementCard.css"; // Import the CSS file for custom styling
+import "../../style/AnnouncementCard.css";
+import {addRecentlyVisitedAnnouncement} from "../../utils/restcalls/user";
 
 function AnnouncementCard({announcement}) {
     const [isFavorite, setIsFavorite] = useState(announcement.isFavorite);
@@ -11,6 +12,9 @@ function AnnouncementCard({announcement}) {
 
     const handleModalToggle = () => {
         setShowModal(!showModal);
+        addRecentlyVisitedAnnouncement(announcement.id)
+            .then(r => console.log("Added recently visited announcement"))
+            .catch(e => console.log("Failed to add recently visited announcement"));
     };
 
     useEffect(() => {

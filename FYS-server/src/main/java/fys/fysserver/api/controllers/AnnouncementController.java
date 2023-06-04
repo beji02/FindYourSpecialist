@@ -6,14 +6,11 @@ import fys.fysserver.api.dtos.announcements.NewReservationDto;
 import fys.fysserver.api.exceptions.ValidationException;
 import fys.fysserver.api.security.jwt.JwtUtils;
 import fys.fysserver.api.services.AnnouncementService;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.SignatureException;
+import fys.fysserver.api.utils.HeadersUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @CrossOrigin
@@ -44,7 +41,7 @@ public class AnnouncementController {
             @RequestParam(name = "page-size", defaultValue = "10") String pageSize
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
 
             return new ResponseEntity<>(
                     announcementService.getMyAnnouncements(username, searchQuery, searchCategories, pageNumber, pageSize),
@@ -63,7 +60,7 @@ public class AnnouncementController {
             @RequestParam(name = "page-number", defaultValue = "0") String pageNumber,
             @RequestParam(name = "page-size", defaultValue = "10") String pageSize
     ) {
-        String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+        String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
 
         return new ResponseEntity<>(
                 announcementService.getAnnouncements(username, searchQuery, searchCategories, pageNumber, pageSize),
@@ -96,7 +93,7 @@ public class AnnouncementController {
             @RequestBody NewReservationDto newReservationDTO
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
             announcementService.addReservation(username, newReservationDTO);
 
             return new ResponseEntity<>(
@@ -121,7 +118,7 @@ public class AnnouncementController {
             @RequestHeader("Authorization") String authorizationHeader
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
 
             return new ResponseEntity<>(
                     announcementService.getFavouriteAnnouncements(username),
@@ -142,7 +139,7 @@ public class AnnouncementController {
             @PathVariable Integer announcementId
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
 
             announcementService.addAnnouncementToFavourites(username, announcementId);
             return new ResponseEntity<>(true, HttpStatus.OK);
@@ -161,7 +158,7 @@ public class AnnouncementController {
             @PathVariable Integer announcementId
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
 
             announcementService.removeAnnouncementFromFavourites(username, announcementId);
             return new ResponseEntity<>(true, HttpStatus.OK);
@@ -180,7 +177,7 @@ public class AnnouncementController {
             @RequestBody NewAnnouncementDto newAnnouncementDto
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
 
             AnnouncementDto announcement =
                     announcementService.addAnnouncement(username, newAnnouncementDto);
@@ -189,15 +186,6 @@ public class AnnouncementController {
         }
         catch (ValidationException e) {
             return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    private String extractUsernameFromAuthorizationHeader(String authorizationHeader) {
-        try{
-            String token = authorizationHeader.substring(7);
-            return jwtUtils.getUsernameFromJwtToken(token);
-        }catch(Exception ignored) {
-            return null;
         }
     }
 }

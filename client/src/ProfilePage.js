@@ -7,8 +7,14 @@ import BecomeSpecialistButton from "./profile/BecomeSpecialistButton";
 import { isSpecialist as checkIsSpecialist } from "./utils/roles";
 import SpecialistDataTile from "./profile/SpecialistDataTile";
 import AnnouncementsTile from "./home/announcement/AnnouncementsTile";
-import {updateWorkInfo, getWorkInfo, upgradeToSpecialist, updatePersonalInfo, getPersonalInfo} from "./utils/restcalls/user";
-import {isLogged} from "./utils/utils";
+import {
+    updateWorkInfo,
+    getWorkInfo,
+    upgradeToSpecialist,
+    updatePersonalInfo,
+    getPersonalInfo,
+    getRecentlyVisitedAnnouncements
+} from "./utils/restcalls/user";
 
 const ProfilePage = () => {
     const [isUserSpecialist, setIsUserSpecialist] = useState(false);
@@ -42,22 +48,13 @@ const ProfilePage = () => {
     }
 
     const loadRecentlyVisitedAnnouncements = () => {
-        const url = `users/recently-visited-announcements`;
-        fetch(url, {
-            method: 'GET',
-                headers: {
-                Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: localStorage.getItem("token"),
-            },
+        getRecentlyVisitedAnnouncements().then(data => {
+            setRecentlyVisitedAnnouncements(data);
+        }).catch((error) => {
+          console.error("Error fetching recently visited announcements:", error);
         })
-            .then((response) => response.json())
-            .then((data) => {
-                setRecentlyVisitedAnnouncements(data);
-            })
-            .catch((error) => {
-                console.error("Error fetching announcements:", error);
-            });
+
+
     };
 
     useEffect(() => {

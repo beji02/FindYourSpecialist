@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CustomNavbar from "../generics/CustomNavbar";
 import {isLogged} from "../utils/utils";
 import {isSpecialist} from "../utils/roles";
+import {getAnnouncements} from "../utils/restcalls/announcement";
 
 function HomePage() {
     const navigate = useNavigate();
@@ -20,17 +21,11 @@ function HomePage() {
     });
 
     const loadAnnouncements = () => {
-        //fetch announcements base on search query and selected filters
         const filtersQueryParam = selectedFilters.map((filter) => filter.name.toLowerCase()).join(" ");
-        const url = `announcements?search-query=${searchQuery}&page-number=${pageNumber}&page-size=${pageSize}&search-categories=${filtersQueryParam}`;
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-                setAnnouncements(data);
-            })
-            .catch((error) => {
-                console.error("Error fetching announcements:", error);
-            });
+
+        getAnnouncements(searchQuery, pageNumber, pageSize, filtersQueryParam).then(data => {
+            setAnnouncements(data);
+        }).catch(error => console.log("Error fetching announcements", error));
     };
 
     const searchAnnouncements = () => {

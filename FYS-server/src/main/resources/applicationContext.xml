@@ -11,6 +11,7 @@
 
     <bean id="userService" class="fys.fysserver.api.services.UserService">
         <property name="usersRepository" ref="usersRepository" />
+        <property name="announcementsRepository" ref="announcementsRepository" />
     </bean>
 
     <bean id="userController" class="fys.fysserver.api.controllers.UserController">

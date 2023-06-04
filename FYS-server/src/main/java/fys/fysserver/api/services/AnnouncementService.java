@@ -371,6 +371,12 @@ public class AnnouncementService {
         announcementsRepository.modify(announcement);
     }
 
+    /**
+     * get reservations of an announcement
+     * @param announcementId id of the announcement
+     * @return list of reservation DTOs
+     * @throws ValidationException if announcementId is invalid
+     */
     public List<ReservationDto> getAnnouncementReservations(Integer announcementId) throws ValidationException {
         // get announcement
         Announcement announcement = announcementsRepository.findById(announcementId);
@@ -386,6 +392,16 @@ public class AnnouncementService {
         });
 
         return reservationDtos;
+    }
+
+    /**
+     * get announcement by id
+     * @param id id of the announcement
+     * @return announcement
+     */
+    public Announcement findAnnouncementById(Integer id) throws ValidationException {
+        if(id == null || id <= 0) throw new ValidationException("id is invalid");
+        return announcementsRepository.findById(id);
     }
 }
 

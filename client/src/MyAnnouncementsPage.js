@@ -4,6 +4,7 @@ import AnnouncementsPage from "./AnnouncementsPage";
 const MyAnnouncementsPage = () => {
     return (
         <Container>
+
             <AnnouncementsPage includeToken={true} page={1}/>
         </Container>
     );

@@ -1,4 +1,3 @@
-import {json, status} from '../utils.js';
 import {FYS_BASE_URL} from "../constants";
 import {createRequest, processRequest} from "./utils";
 
@@ -69,8 +68,17 @@ export function addRecentlyVisitedAnnouncement(announcementId) {
     let headers = new Headers();
     headers.append('Accept', 'application/json');
 
-    let init = createRequest(null, "POST");
-    let request = new Request(FYS_BASE_URL + "users/recently-visited-announcements/" + announcementId, init);
+    let init = createRequest({announcementId: announcementId}, "POST");
+    let request = new Request(FYS_BASE_URL + "user/recently-visited-announcements", init);
+    return processRequest(request);
+}
+
+export function getRecentlyVisitedAnnouncements() {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    let init = createRequest(undefined, "GET");
+    let request = new Request(FYS_BASE_URL + "user/recently-visited-announcements", init);
     return processRequest(request);
 }
 

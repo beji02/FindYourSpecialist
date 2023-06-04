@@ -3,6 +3,7 @@ package fys.fysserver.api.services;
 import fys.fysmodel.Announcement;
 import fys.fysmodel.Specialist;
 import fys.fysmodel.User;
+import fys.fyspersistence.announcements.AnnouncementsRepository;
 import fys.fyspersistence.users.UsersRepository;
 import fys.fysserver.api.dtos.*;
 import fys.fysserver.api.dtos.announcements.AnnouncementDto;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private UsersRepository usersRepository;
+    private AnnouncementsRepository announcementsRepository;
     private AuthenticationManager authenticationManager;
     private PasswordEncoder passwordEncoder;
 
@@ -34,6 +36,10 @@ public class UserService {
 
     public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
+    }
+
+    public void setAnnouncementsRepository(AnnouncementsRepository announcementsRepository) {
+        this.announcementsRepository = announcementsRepository;
     }
 
     @Autowired
@@ -239,5 +245,18 @@ public class UserService {
         // build user DTO
         UserDto userDto = DtoBuilder.buildUserDTO(user);
         return userDto;
+    }
+
+    public void addRecentlyVisitedAnnouncement(String username, Integer announcementId) throws ValidationException {
+        User user = usersRepository.findByUsername(username);
+        System.out.println("addRecentlyVisitedAnnouncement: " + username + " " + announcementId);
+        if(user == null) throw new ValidationException("Username is invalid");
+
+        if(announcementId == null || announcementId < 0) throw new ValidationException("Announcement id is invalid");
+
+        Announcement announcement = announcementsRepository.findById(announcementId);
+
+        user.addRecentlyVisitedAnnouncement(announcement);
+        usersRepository.modify(user);
     }
 }
