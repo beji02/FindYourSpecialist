@@ -124,5 +124,11 @@ public class AnnouncementsDbRepository implements AnnouncementsRepository {
         logger.traceExit("Reservation deleted");
     }
 
-
+    @Override
+    public void modifyReservation(Reservation reservation) {
+        logger.traceEntry("Modifying reservation " + reservation);
+        Session session = sessionFactory.getCurrentSession();
+        session.merge(reservation);
+        logger.traceExit("Reservation modified");
+    }
 }

@@ -4,10 +4,7 @@ import fys.fysmodel.Announcement;
 import fys.fysmodel.Field;
 import fys.fysmodel.Reservation;
 import fys.fysmodel.Specialist;
-import fys.fysserver.api.dtos.announcements.AnnouncementDto;
-import fys.fysserver.api.dtos.announcements.FieldDto;
-import fys.fysserver.api.dtos.announcements.ReservationDto;
-import fys.fysserver.api.dtos.announcements.ScheduledReservationDto;
+import fys.fysserver.api.dtos.announcements.*;
 import fys.fysserver.api.dtos.users.LoginDto;
 import fys.fysserver.api.dtos.users.SpecialistDto;
 import fys.fysserver.api.dtos.users.UserDto;
@@ -42,5 +39,9 @@ public class DtoBuilder {
 
     public static ScheduledReservationDto buildScheduledReservationDto(Reservation reservation) {
         return new ScheduledReservationDto(reservation);
+    }
+
+    public static MyReservationDto buildMyReservationDto(Reservation reservation) {
+        return new MyReservationDto(reservation);
     }
 }

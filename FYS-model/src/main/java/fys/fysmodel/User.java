@@ -23,7 +23,8 @@ public class User extends Identifiable<Integer> {
     private String optionalDescription;
     @Column(unique = true)
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Reservation> myReservations = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Rating> ratingsUser = new HashSet<>();

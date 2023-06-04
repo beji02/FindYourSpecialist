@@ -14,6 +14,7 @@ public class Reservation extends Identifiable<Integer> {
     @JoinColumn(name = "announcement_id")
     private Announcement announcement;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
     private LocalDate date;
 

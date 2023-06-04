@@ -445,5 +445,56 @@ public class AnnouncementService {
         // delete scheduled reservation
         announcementsRepository.deleteReservation(reservation);
     }
+
+    /**
+     * get user's reservations in DTO format
+     * @param username username of the user
+     * @return list of reservation DTOs
+     * @throws ValidationException if username is invalid
+     */
+    public List<MyReservationDto> getMyReservations(String username) throws ValidationException {
+        // get specialist
+        User user = usersRepository.findByUsername(username);
+        if (user == null) throw new ValidationException("username is invalid");
+
+        // get my reservations
+        List<Reservation> reservations = user.getMyReservations().stream()
+                .filter(reservation -> reservation.getDate().isAfter(LocalDate.now()))
+                .filter(reservation -> reservation.getUser() != null)
+                .sorted(Comparator.comparing(Reservation::getDate))
+                .toList();
+
+        // build the DTO
+        List<MyReservationDto> myReservationDtos = new ArrayList<>();
+        reservations.forEach(reservation -> {
+            myReservationDtos.add(DtoBuilder.buildMyReservationDto(reservation));
+        });
+
+        return myReservationDtos;
+    }
+
+    /**
+     * delete a user's reservation (the date will be available for other users)
+     * @param username username of the user
+     * @param reservationId id of the reservation
+     * @throws ValidationException if username is invalid or
+     * reservationId is not a valid reservation id
+     */
+    public void deleteReservation(String username, Integer reservationId) throws ValidationException {
+        // get user
+        User user = usersRepository.findByUsername(username);
+        if (user == null) throw new ValidationException("username is invalid");
+
+        // get reservation
+        Reservation reservation = user.getMyReservations().stream()
+                .filter(reservation1 -> reservation1.getId().equals(reservationId))
+                .findFirst()
+                .orElse(null);
+        if (reservation == null) throw new ValidationException("reservationId is invalid");
+
+        // delete reservation
+        reservation.setUser(null);
+        announcementsRepository.modifyReservation(reservation);
+    }
 }
 
