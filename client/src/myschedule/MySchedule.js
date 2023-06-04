@@ -1,19 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {Table, Button, Row, Col} from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Table, Button, Row, Col } from 'react-bootstrap';
 
-const MySchedule = ({token}) => {
+const MySchedule = ({ token, role }) => {
     const [reservations, setReservations] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [deleteError, setDeleteError] = useState('');
 
     const fetchReservations = () => {
+        console.log("MySchedule.js: role: ", role);
+
         const url = '/my-schedules';
         fetch(url, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`, // Include the token as an authorization bearer
+                Authorization: `Bearer ${token}`,
             },
         })
             .then((response) => response.json())
@@ -34,23 +35,20 @@ const MySchedule = ({token}) => {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`, // Include the token as an authorization bearer
+                Authorization: `Bearer ${token}`,
             },
         })
             .then((response) => {
                 if (response.ok) {
-                    // Remove the deleted reservation from the state
                     setReservations((prevReservations) =>
                         prevReservations.filter((reservation) => reservation.id !== reservationId)
                     );
-                    //setSuccessMessage('Reservation deleted successfully');
                 } else {
-                    //setErrorMessage('Failed to delete reservation');
+                    console.error('Failed to delete reservation');
                 }
             })
             .catch((error) => {
                 console.error('Error deleting reservation:', error);
-                //setErrorMessage('An error occurred. Please try again.');
             });
     };
 
@@ -58,44 +56,47 @@ const MySchedule = ({token}) => {
         fetchReservations();
     }, []);
 
+    if (loading) {
+        return <p>Loading reservations...</p>;
+    }
+
+    if (reservations.length === 0) {
+        return null; // Do not display the component if there are no reservations
+    }
+
     return (
         <Row className="justify-content-md-center mt-5">
             <Col md={8}>
                 <div>
-                    <h2>My Schedule</h2>
-                    {loading ? (
-                        <p>Loading reservations...</p>
-                    ) : (
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Date</th>
-                                <th>User First Name</th>
-                                <th>User Last Name</th>
-                                <th>User Phone Number</th>
-                                <th>Action</th>
+                    <h2>{role ? 'My Schedule' : 'My reservations'}</h2>
+                    <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>{role ? 'User First Name' : 'Specialist First Name'}</th>
+                            <th>{role ? 'User Last Name' : 'Specialist Last Name'}</th>
+                            <th>{role ? 'User Phone Number' : 'Specialist Phone Number'}</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {reservations.map((reservation) => (
+                            <tr key={reservation.id}>
+                                <td>{reservation.title}</td>
+                                <td>{reservation.date}</td>
+                                <td>{role ? reservation.user.firstName : reservation.specialist.firstName}</td>
+                                <td>{role ? reservation.user.lastName : reservation.specialist.lastName}</td>
+                                <td>{role ? reservation.user.phoneNumber : reservation.specialist.phoneNumber}</td>
+                                <td>
+                                    <Button variant="danger" onClick={() => handleDeleteReservation(reservation.id)}>
+                                        Delete
+                                    </Button>
+                                </td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            {reservations.map((reservation) => (
-                                <tr key={reservation.id}>
-                                    <td>{reservation.title}</td>
-                                    <td>{reservation.date}</td>
-                                    <td>{reservation.user.firstName}</td>
-                                    <td>{reservation.user.lastName}</td>
-                                    <td>{reservation.user.phoneNumber}</td>
-                                    <td>
-                                        <Button variant="danger"
-                                                onClick={() => handleDeleteReservation(reservation.id)}>
-                                            Delete
-                                        </Button>
-                                    </td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </Table>
-                    )}
+                        ))}
+                        </tbody>
+                    </Table>
                 </div>
             </Col>
         </Row>
