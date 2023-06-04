@@ -4,7 +4,7 @@ import 'react-phone-input-2/lib/style.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import { LoadScript, Autocomplete } from '@react-google-maps/api';
 import { MAPS_API_KEY } from '../utils/constants'
-import {updatePersonalInfo} from "../utils/restcalls/user";
+
 
 const SpecialistDataTile = ({ token, updateWorkInfoFunc, getWorkInfoFunc }) => {
     const [specialistForm, setSpecialistForm] = useState({
