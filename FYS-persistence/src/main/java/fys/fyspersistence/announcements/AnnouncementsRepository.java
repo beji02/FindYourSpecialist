@@ -11,4 +11,8 @@ public interface AnnouncementsRepository extends Repository<Integer, Announcemen
     Field findFieldById(Integer id);
 
     Reservation insertReservation(Reservation reservation);
+
+    Reservation findReservationById(Integer scheduleId);
+
+    void deleteReservation(Reservation reservation);
 }

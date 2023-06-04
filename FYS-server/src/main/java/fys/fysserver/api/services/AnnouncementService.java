@@ -226,7 +226,7 @@ public class AnnouncementService {
 
         System.out.println("addAnnouncement: " + username + " " + title + " " + description + " " + fieldId + " " + workDays.toString());
 
-        // get user
+        // get specialist
         User user = usersRepository.findByUsername(username);
         if (!(user instanceof Specialist)) throw new ValidationException("username is invalid");
         Specialist specialist = (Specialist) user;
@@ -371,6 +371,12 @@ public class AnnouncementService {
         announcementsRepository.modify(announcement);
     }
 
+    /**
+     * get reservations of an announcement
+     * @param announcementId id of the announcement
+     * @return list of reservation DTOs
+     * @throws ValidationException if announcementId is invalid
+     */
     public List<ReservationDto> getAnnouncementReservations(Integer announcementId) throws ValidationException {
         // get announcement
         Announcement announcement = announcementsRepository.findById(announcementId);
@@ -386,6 +392,58 @@ public class AnnouncementService {
         });
 
         return reservationDtos;
+    }
+
+
+    /**
+     * get specialist's scheduled future reservations, sorted ascending by date
+     * @param username username of the specialist
+     * @return list of reservation DTOs
+     * @throws ValidationException if username is not a specialist's username
+     */
+    public List<ScheduledReservationDto> getMySchedule(String username) throws ValidationException {
+        // get specialist
+        User user = usersRepository.findByUsername(username);
+        if (!(user instanceof Specialist)) throw new ValidationException("username is invalid");
+        Specialist specialist = (Specialist) user;
+
+        // get scheduled reservations
+        List<Reservation> reservations = specialist.getAnnouncements().stream()
+                .flatMap(announcement -> announcement.getReservations().stream())
+                .filter(reservation -> reservation.getDate().isAfter(LocalDate.now()))
+                .filter(reservation -> reservation.getUser() != null)
+                .sorted(Comparator.comparing(Reservation::getDate))
+                .toList();
+
+        // build the DTO
+        List<ScheduledReservationDto> scheduledReservationDtos = new ArrayList<>();
+        reservations.forEach(reservation -> {
+            scheduledReservationDtos.add(DtoBuilder.buildScheduledReservationDto(reservation));
+        });
+
+        return scheduledReservationDtos;
+    }
+
+
+    /**
+     * delete a scheduled reservation (the date will no longer be available)
+     * @param username username of the specialist
+     * @param scheduleId id of the scheduled reservation
+     * @throws ValidationException if username is not a specialist's username or
+     * scheduleId is not a valid scheduled reservation id
+     */
+    public void deleteSchedule(String username, Integer scheduleId) throws ValidationException {
+        // get specialist
+        User user = usersRepository.findByUsername(username);
+        if (!(user instanceof Specialist)) throw new ValidationException("username is invalid");
+        Specialist specialist = (Specialist) user;
+
+        // get scheduled reservation
+        Reservation reservation = announcementsRepository.findReservationById(scheduleId);
+        if (reservation == null) throw new ValidationException("scheduleId is invalid");
+
+        // delete scheduled reservation
+        announcementsRepository.deleteReservation(reservation);
     }
 }
 

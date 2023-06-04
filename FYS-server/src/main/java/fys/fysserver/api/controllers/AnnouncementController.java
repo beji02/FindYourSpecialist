@@ -192,6 +192,47 @@ public class AnnouncementController {
         }
     }
 
+    @GetMapping("/my-schedules")
+    public ResponseEntity<?> getMySchedules(
+            @RequestHeader("Authorization") String authorizationHeader
+    ) {
+        try {
+            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+
+            return new ResponseEntity<>(
+                    announcementService.getMySchedule(username),
+                    HttpStatus.OK
+            );
+        }
+        catch (ValidationException e) {
+            return new ResponseEntity<>(
+                    e.toString(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    @DeleteMapping("/my-schedules/{scheduleId}")
+    public ResponseEntity<?> deleteSchedule(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @PathVariable Integer scheduleId
+    ) {
+        try {
+            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+
+            announcementService.deleteSchedule(username, scheduleId);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        catch (ValidationException e) {
+            return new ResponseEntity<>(
+                    e.toString(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+
+
     private String extractUsernameFromAuthorizationHeader(String authorizationHeader) {
         try{
             String token = authorizationHeader.substring(7);

@@ -7,6 +7,7 @@ import fys.fysmodel.Specialist;
 import fys.fysserver.api.dtos.announcements.AnnouncementDto;
 import fys.fysserver.api.dtos.announcements.FieldDto;
 import fys.fysserver.api.dtos.announcements.ReservationDto;
+import fys.fysserver.api.dtos.announcements.ScheduledReservationDto;
 import fys.fysserver.api.dtos.users.LoginDto;
 import fys.fysserver.api.dtos.users.SpecialistDto;
 import fys.fysserver.api.dtos.users.UserDto;
@@ -37,5 +38,9 @@ public class DtoBuilder {
 
     public static LoginDto buildLoginDTO(UserDetailsImpl userDetails, String token, Collection<String> roles) {
         return new LoginDto(token, userDetails.getId(), userDetails.getUsername(), userDetails.getPassword(), roles);
+    }
+
+    public static ScheduledReservationDto buildScheduledReservationDto(Reservation reservation) {
+        return new ScheduledReservationDto(reservation);
     }
 }

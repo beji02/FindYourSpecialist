@@ -106,4 +106,23 @@ public class AnnouncementsDbRepository implements AnnouncementsRepository {
         logger.traceExit("Reservation inserted");
         return reservation;
     }
+
+    @Override
+    public Reservation findReservationById(Integer scheduleId) {
+        logger.traceEntry("Finding reservation by id " + scheduleId);
+        Session session = sessionFactory.getCurrentSession();
+        Reservation reservation = session.get(Reservation.class, scheduleId);
+        logger.traceExit("Reservation found" + reservation);
+        return reservation;
+    }
+
+    @Override
+    public void deleteReservation(Reservation reservation) {
+        logger.traceEntry("Deleting reservation " + reservation);
+        Session session = sessionFactory.getCurrentSession();
+        session.remove(reservation);
+        logger.traceExit("Reservation deleted");
+    }
+
+
 }
