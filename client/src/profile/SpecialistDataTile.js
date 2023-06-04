@@ -4,6 +4,7 @@ import 'react-phone-input-2/lib/style.css';
 import PhoneInput from 'react-phone-input-2';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import MySchedule from "../myschedule/MySchedule";
 
 //AIzaSyBZCn63RlKrEgWS1TJdfE-L_DGUWYLDDt0 -- google maps api key
 

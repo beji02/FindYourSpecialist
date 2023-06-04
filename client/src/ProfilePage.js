@@ -7,6 +7,7 @@ import BecomeSpecialistButton from "./profile/BecomeSpecialistButton";
 import { isSpecialist as checkIsSpecialist } from "./utils/roles";
 import SpecialistDataTile from "./profile/SpecialistDataTile";
 import AnnouncementsTile from "./home/announcement/AnnouncementsTile";
+import MySchedule from "./myschedule/MySchedule";
 
 const ProfilePage = () => {
     const [isUserSpecialist, setIsUserSpecialist] = useState(false);
@@ -45,6 +46,7 @@ const ProfilePage = () => {
             {!isUserSpecialist && <AnnouncementsTile title="Recently visited" announcements={recentlyVisitedAnnouncements} />}
             {!isUserSpecialist && <BecomeSpecialistButton token={localStorage.getItem("token")} />}
             {isUserSpecialist && <SpecialistDataTile token={localStorage.getItem("token")} />}
+            {isUserSpecialist && <MySchedule token={localStorage.getItem("token")} />}
         </Container>
     );
 }
