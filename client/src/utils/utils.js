@@ -10,3 +10,7 @@ export function status(response) {
 export function json(response) {
     return response.json()
 }
+
+export function isLogged() {
+    return localStorage.getItem("token") !== null;
+}

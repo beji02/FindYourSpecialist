@@ -1,7 +1,7 @@
 export function isSpecialist(roles) {
-    return roles.includes("ROLE_SPECIALIST");
+    return roles != undefined && roles.includes("ROLE_SPECIALIST");
 }
 
 export function isUser(roles) {
-    return roles.includes("ROLE_USER");
+    return roles != undefined && roles.includes("ROLE_USER");
 }

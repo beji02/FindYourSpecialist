@@ -166,6 +166,7 @@ public class UsersDbRepository implements UsersRepository {
     @Override
     public void upgradeToSpecialist(User user) {
         logger.traceEntry("Saving Race {}", user);
+        Specialist specialist = Specialist.build(user);
         try(Session session = sessionFactory.openSession()) {
             Transaction transaction = null;
 
@@ -181,7 +182,6 @@ public class UsersDbRepository implements UsersRepository {
                 }
             }
         }
-        Specialist specialist = Specialist.build(user);
         try(Session session = sessionFactory.openSession()) {
             Transaction transaction = null;
 

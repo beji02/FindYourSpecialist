@@ -7,7 +7,8 @@ import BecomeSpecialistButton from "./profile/BecomeSpecialistButton";
 import { isSpecialist as checkIsSpecialist } from "./utils/roles";
 import SpecialistDataTile from "./profile/SpecialistDataTile";
 import AnnouncementsTile from "./home/announcement/AnnouncementsTile";
-import {login, upgradeToSpecialist} from "./utils/restcalls/user";
+import {updateWorkInfo, getWorkInfo, upgradeToSpecialist, updatePersonalInfo, getPersonalInfo} from "./utils/restcalls/user";
+import {isLogged} from "./utils/utils";
 
 const ProfilePage = () => {
     const [isUserSpecialist, setIsUserSpecialist] = useState(false);
@@ -22,6 +23,22 @@ const ProfilePage = () => {
         }).catch((error) => {
             console.error("Error upgrading to specialist:", error);
         });
+    }
+
+    const updatePersonalInfoFunc = (personalForm) => {
+        return updatePersonalInfo(personalForm);
+    }
+
+    const updateWorkInfoFunc = (workForm) => {
+        return updateWorkInfo(workForm);
+    }
+
+    const getPersonalInfoFunc = () => {
+        return getPersonalInfo();
+    }
+
+    const getWorkInfoFunc = () => {
+        return getWorkInfo();
     }
 
     const loadRecentlyVisitedAnnouncements = () => {
@@ -52,11 +69,11 @@ const ProfilePage = () => {
 
     return (
         <Container>
-            <CustomNavbar />
-            <UserDataTile token={localStorage.getItem("token")} />
-            {!isUserSpecialist && <AnnouncementsTile title="Recently visited" announcements={recentlyVisitedAnnouncements} />}
+            <CustomNavbar isSpecialist={isUserSpecialist} />
+            <UserDataTile token={localStorage.getItem("token")} updatePersonalInfoFunc={updatePersonalInfoFunc} getPersonalInfoFunc={getPersonalInfoFunc}/>
+            <AnnouncementsTile title="Recently visited" announcements={recentlyVisitedAnnouncements} />
             {!isUserSpecialist && <BecomeSpecialistButton token={localStorage.getItem("token")} upgradeToSpecialistFunc={upgradeToSpecialistFunc} />}
-            {isUserSpecialist && <SpecialistDataTile token={localStorage.getItem("token")} />}
+            {isUserSpecialist && <SpecialistDataTile token={localStorage.getItem("token")} updateWorkInfoFunc={updateWorkInfoFunc} getWorkInfoFunc={getWorkInfoFunc} />}
         </Container>
     );
 }

@@ -53,7 +53,7 @@ public class UserService {
     public void upgradeToSpecialist(User user) {
         System.out.println("upgradeToSpecialist: " + user.getUsername());
 
-        Specialist specialist = Specialist.build(user);
+        //Specialist specialist = Specialist.build(user);
         //usersRepository.remove(user);
         //usersRepository.add(specialist);
 

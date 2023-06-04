@@ -1,55 +1,80 @@
 import {json, status} from '../utils.js';
 import {FYS_BASE_URL} from "../constants";
+import {createRequest, processRequest} from "./utils";
 
 export function login(loginForm) {
     let headers = new Headers();
     headers.append('Accept', 'application/json');
-    let init = {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
-        mode: 'cors',
-        body: JSON.stringify(loginForm),
-    };
-    let request = new Request(FYS_BASE_URL + "login", init);
 
-    return fetch(request)
-        .then(status)
-        .then(json)
-        .then(data=> {
-            console.log('Request succeeded with JSON response', data);
-            return data;
-        }).catch(error=>{
-            console.log('Request failed', error);
-            return Promise.reject(error);
-        });
+    let init = createRequest(loginForm, "POST");
+    let request = new Request(FYS_BASE_URL + "login", init);
+    return processRequest(request);
+}
+
+export function register(registerForm) {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    let init = createRequest(registerForm, "POST");
+    let request = new Request(FYS_BASE_URL + "register", init);
+    return processRequest(request);
 }
 
 export function upgradeToSpecialist(profileForm) {
     let headers = new Headers();
     headers.append('Accept', 'application/json');
 
-    let init = {
-        method: 'PUT',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token'),
-        },
-        body: JSON.stringify(profileForm),
-    };
+    let init = createRequest(profileForm, "PUT");
     let request = new Request(FYS_BASE_URL + "user", init);
+    return processRequest(request);
+}
 
-    return fetch(request)
-        .then(status)
-        .then(json)
-        .then(data=> {
-            console.log('Request succeeded with JSON response', data);
-            return data;
-        }).catch(error=>{
-            console.log('Request failed', error);
-            return Promise.reject(error);
-        });
+export function updatePersonalInfo(personalForm) {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    let init = createRequest(personalForm, "PUT");
+    let request = new Request(FYS_BASE_URL + "user", init);
+    return processRequest(request);
+}
+
+export function getPersonalInfo() {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    let init = createRequest(null, "POST");
+    let request = new Request(FYS_BASE_URL + "user", init);
+    return processRequest(request);
+}
+
+export function updateWorkInfo(workForm) {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    let init = createRequest(workForm, "PUT");
+    let request = new Request(FYS_BASE_URL + "specialist", init);
+    return processRequest(request);
+}
+
+export function getWorkInfo() {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    let init = createRequest(null, "POST");
+    let request = new Request(FYS_BASE_URL + "specialist", init);
+    return processRequest(request);
+}
+
+export function addRecentlyVisitedAnnouncement(announcementId) {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    let init = createRequest(null, "POST");
+    let request = new Request(FYS_BASE_URL + "users/recently-visited-announcements/" + announcementId, init);
+    return processRequest(request);
+}
+
+export function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("roles");
 }

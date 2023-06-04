@@ -4,8 +4,9 @@ import 'react-phone-input-2/lib/style.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import { LoadScript, Autocomplete } from '@react-google-maps/api';
 import { MAPS_API_KEY } from '../utils/constants'
+import {updatePersonalInfo} from "../utils/restcalls/user";
 
-const SpecialistDataTile = ({ token }) => {
+const SpecialistDataTile = ({ token, updateWorkInfoFunc, getWorkInfoFunc }) => {
     const [specialistForm, setSpecialistForm] = useState({
         location: '',
         description: '',
@@ -33,56 +34,23 @@ const SpecialistDataTile = ({ token }) => {
     const handleSave = (event) => {
         event.preventDefault();
 
-        try {
-            fetch('specialist', {
-                method: 'PUT',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: localStorage.getItem('token'),
-                },
-                body: JSON.stringify(specialistForm),
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        setSuccess('Profile updated successfully');
-                    } else {
-                        setError('Invalid credentials');
-                    }
-                })
-                .catch((error) => {
-                    setError('An error occurred. Please try again.');
-                });
-        } catch (error) {
+        updateWorkInfoFunc(specialistForm).then(data => {
+            setSuccess('Profile updated successfully');
+        }).catch(error => {
             setError('An error occurred. Please try again.');
-        }
+        })
     };
 
     useEffect(() => {
-        try {
-            fetch('specialist', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: token,
-                },
-            })
-                .then((response) => {
-                    if (response.status === 200) {
-                        return response.json();
-                    }
-                    throw new Error('Something went wrong');
-                })
-                .then((data) => {
-                    setSpecialistForm({
-                        location: data.location,
-                        description: data.description,
-                    });
+        getWorkInfoFunc()
+            .then((data) => {
+                setSpecialistForm({
+                    location: data.location,
+                    description: data.description,
                 });
-        } catch (error) {
+            }).catch((error) => {
             setError('An error occurred. Please try again.');
-        }
+        });
     }, []);
 
     return (
