@@ -8,7 +8,7 @@ const MySchedule = ({ token, role }) => {
     const fetchReservations = () => {
         console.log("MySchedule.js: role: ", role);
 
-        const url = '/my-schedules';
+        const url = role ? '/my-schedules' : '/my-reservations';
         fetch(url, {
             method: 'GET',
             headers: {
@@ -19,6 +19,7 @@ const MySchedule = ({ token, role }) => {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 setReservations(data);
                 setLoading(false);
             })
@@ -29,7 +30,7 @@ const MySchedule = ({ token, role }) => {
     };
 
     const handleDeleteReservation = (reservationId) => {
-        const url = `/my-schedules/${reservationId}`;
+        const url = role ? `/my-schedules/${reservationId}` : `/my-reservations/${reservationId}`;
         fetch(url, {
             method: 'DELETE',
             headers: {
@@ -74,9 +75,9 @@ const MySchedule = ({ token, role }) => {
                         <tr>
                             <th>Title</th>
                             <th>Date</th>
-                            <th>{role ? 'User First Name' : 'Specialist First Name'}</th>
-                            <th>{role ? 'User Last Name' : 'Specialist Last Name'}</th>
-                            <th>{role ? 'User Phone Number' : 'Specialist Phone Number'}</th>
+                            <th>{role ? 'Specialist First Name' : 'User First Name'}</th>
+                            <th>{role ? 'Specialist Last Name' : 'User Last Name'}</th>
+                            <th>{role ? 'Specialist Phone Number' : 'User Phone Number'}</th>
                             <th>Action</th>
                         </tr>
                         </thead>

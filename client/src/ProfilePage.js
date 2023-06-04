@@ -75,8 +75,8 @@ const ProfilePage = () => {
             <AnnouncementsTile title="Recently visited" announcements={recentlyVisitedAnnouncements} />
             {!isUserSpecialist && <BecomeSpecialistButton token={localStorage.getItem("token")} upgradeToSpecialistFunc={upgradeToSpecialistFunc} />}
             {isUserSpecialist && <SpecialistDataTile token={localStorage.getItem("token")} updateWorkInfoFunc={updateWorkInfoFunc} getWorkInfoFunc={getWorkInfoFunc} />}
+            <MySchedule token={localStorage.getItem("token")} role={false} />
             {isUserSpecialist && <MySchedule token={localStorage.getItem("token")} role={isUserSpecialist} />}
-            <MySchedule token={localStorage.getItem("token")} role={!isUserSpecialist} />
         </Container>
     );
 }

@@ -410,7 +410,7 @@ public class AnnouncementService {
         // get scheduled reservations
         List<Reservation> reservations = specialist.getAnnouncements().stream()
                 .flatMap(announcement -> announcement.getReservations().stream())
-                .filter(reservation -> reservation.getDate().isAfter(LocalDate.now()))
+                .filter(reservation -> reservation.getDate().isAfter(LocalDate.now().minusDays(1)))
                 .filter(reservation -> reservation.getUser() != null)
                 .sorted(Comparator.comparing(Reservation::getDate))
                 .toList();
@@ -459,7 +459,7 @@ public class AnnouncementService {
 
         // get my reservations
         List<Reservation> reservations = user.getMyReservations().stream()
-                .filter(reservation -> reservation.getDate().isAfter(LocalDate.now()))
+                .filter(reservation -> reservation.getDate().isAfter(LocalDate.now().minusDays(1)))
                 .filter(reservation -> reservation.getUser() != null)
                 .sorted(Comparator.comparing(Reservation::getDate))
                 .toList();
