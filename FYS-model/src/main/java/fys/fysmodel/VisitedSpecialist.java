@@ -8,12 +8,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="visited_specialists")
+@Table(name = "visited_specialists")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class VisitedSpecialist extends Specialist {
     private LocalDateTime dateTime;
 
-    public VisitedSpecialist() {}
+    public VisitedSpecialist() {
+    }
 
     public VisitedSpecialist(LocalDateTime dateTime) {
         this.dateTime = dateTime;

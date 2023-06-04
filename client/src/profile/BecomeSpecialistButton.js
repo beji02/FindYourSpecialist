@@ -5,28 +5,17 @@ import './BecomeSpecialistButton.css';
 
 const BecomeSpecialistButton = ({ token }) => {
 
-    const [profileForm, setProfileForm] = useState({
-        updateType: '',
-    });
-
-    useEffect(() => {
-        setProfileForm({ ...profileForm, updateType: 'UPGRADE_TO_SPECIALIST' })
-    }, []);
-
     const handleBecomeSpecialist = (event) => {
         event.preventDefault();
 
-        console.log(profileForm.updateType);
-
         try {
-            fetch('user', {
-                method: 'PUT',
+            fetch('specialists', {
+                method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    Authorization: localStorage.getItem('token'),
-                },
-                body: JSON.stringify(profileForm),
+                    Authorization: `Bearer ${token}`,
+                }
             })
         } catch (error) {
             console.log("ERROR")

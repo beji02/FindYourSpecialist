@@ -29,15 +29,15 @@ const UserDataTile = ({ token }) => {
     const handleSave = (event) => {
         event.preventDefault();
 
-        console.log(profileForm.updateType);
-
         try {
-            fetch('user', {
+            const token = localStorage.getItem("token");
+
+            fetch('users', {
                 method: 'PUT',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    Authorization: localStorage.getItem('token'),
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(profileForm),
             })
@@ -57,13 +57,15 @@ const UserDataTile = ({ token }) => {
     };
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+
         try {
-            fetch('user', {
-                method: 'POST',
+            fetch('users', {
+                method: 'GET',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    Authorization: token,
+                    Authorization: `Bearer ${token}`,
                 },
             })
                 .then((response) => {
@@ -80,7 +82,6 @@ const UserDataTile = ({ token }) => {
                         email: data.email,
                         phoneNumber: data.phoneNumber,
                         birthDate: data.birthDate ? new Date(data.birthDate) : null,
-                        updateType: 'UPDATE_USER',
                     });
                 });
         } catch (error) {

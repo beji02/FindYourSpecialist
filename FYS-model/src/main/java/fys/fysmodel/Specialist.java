@@ -9,15 +9,18 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.lang.Math.max;
+
 @Entity
-@Table(name="specialists")
+@Table(name = "specialists")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Specialist extends User {
     private Integer area;
     private String location;
     private String description;
 
-    public Specialist() {}
+    public Specialist() {
+    }
 
     public static Specialist build(User user) {
         return new Specialist(user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getBirthDate(), user.getPhoneNumber(), user.getOptionalDescription(), 0, "", "");
@@ -75,7 +78,6 @@ public class Specialist extends User {
         this.ratingsSpecialist = ratingsSpecialist;
     }
 
-    @JsonManagedReference
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }
@@ -122,9 +124,14 @@ public class Specialist extends User {
 
     public Float getRating() {
         Float rating = 0f;
+
         for (Rating r : this.ratingsSpecialist) {
             rating += r.getScore();
         }
-        return rating / this.ratingsSpecialist.size();
+        return rating / max(this.ratingsSpecialist.size(), 1);
+    }
+
+    public User getUser() {
+        return this;
     }
 }

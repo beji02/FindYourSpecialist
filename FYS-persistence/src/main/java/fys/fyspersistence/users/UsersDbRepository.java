@@ -139,7 +139,8 @@ public class UsersDbRepository implements UsersRepository {
 
         if(users.isEmpty()) {
             logger.traceExit("User not found");
-            throw new NonexistentEntityException("User with username = " + username + " does not exist");
+            //throw new NonexistentEntityException("User with username = " + username + " does not exist");
+            return null;
         }
         logger.traceExit("User found");
         return users.get(0);
@@ -187,7 +188,7 @@ public class UsersDbRepository implements UsersRepository {
 
             try{
                 transaction = session.beginTransaction();
-                session.save(specialist);
+                session.persist(specialist);
                 transaction.commit();
                 logger.traceExit();
             } catch (RuntimeException ex) {
