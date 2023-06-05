@@ -1,6 +1,5 @@
 package fys.fysmodel;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -46,6 +45,9 @@ public class User extends Identifiable<Integer> {
     private Set<Announcement> favoriteAnnouncements = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Message> messages = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Notification> notifications = new HashSet<>();
 
     public User() {
     }
@@ -187,6 +189,11 @@ public class User extends Identifiable<Integer> {
 
     public void addRecentlyVisitedAnnouncement(Announcement announcement) {
         LocalDateTime timestamp = LocalDateTime.now();
+
+        if(recentlyVisitedAnnouncements.containsKey(announcement)) {
+            recentlyVisitedAnnouncements.put(announcement, timestamp);
+            return;
+        }
         recentlyVisitedAnnouncements.put(announcement, timestamp);
 
         if (recentlyVisitedAnnouncements.size() > 4) {
@@ -241,6 +248,20 @@ public class User extends Identifiable<Integer> {
 
     public void setMyReservations(Set<Reservation> myReservations) {
         this.myReservations = myReservations;
+    }
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void addNotification(Notification notification) {
+        this.notifications.add(notification);
+    }
+
+    public void readNotification(Notification notification) {
+        notifications.remove(notification);
+        notification.setRead(true);
+        notifications.add(notification);
     }
 
 }

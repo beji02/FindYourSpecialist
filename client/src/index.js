@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ProfilePage from "./ProfilePage";
 import AddAnnouncementPage from "./addannouncement/AddAnnouncementPage";
 import MyAnnouncementsPage from "./MyAnnouncementsPage";
+import NotificationPage from "./home/notification/NotificationsPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,6 +25,7 @@ root.render(
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/addannouncement" element={<AddAnnouncementPage />} />
               <Route path="/myannouncements" element={<MyAnnouncementsPage />} />
+              <Route path="/notifications" element={<NotificationPage />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>

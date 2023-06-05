@@ -623,3 +623,7 @@ Caused by: org.postgresql.util.PSQLException: FATAL: database "fys" does not exi
 2023-06-04 13:48:29,108 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
 2023-06-04 13:48:29,805 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
 2023-06-04 13:48:31,309 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-06-05 23:15:03,418 INFO o.h.Version [main] HHH000412: Hibernate ORM core version 5.6.3.Final
+2023-06-05 23:15:03,510 INFO o.h.a.c.Version [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-06-05 23:15:03,749 INFO o.h.d.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-06-05 23:15:04,297 INFO o.h.e.t.j.p.i.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]

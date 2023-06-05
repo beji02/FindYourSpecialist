@@ -1,6 +1,7 @@
 package fys.fysserver.api.services;
 
 import fys.fysmodel.Announcement;
+import fys.fysmodel.Notification;
 import fys.fysmodel.Specialist;
 import fys.fysmodel.User;
 import fys.fyspersistence.announcements.AnnouncementsRepository;
@@ -19,10 +20,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,7 +76,7 @@ public class UserService {
         if(user == null) throw new ValidationException("Username is invalid");
 
         // build user DTO
-        UserDto userDto = DtoBuilder.buildUserDTO(user);
+        UserDto userDto = DtoUtils.buildUserDTO(user);
 
         return userDto;
     }
@@ -104,7 +106,7 @@ public class UserService {
         System.out.println("updateUser: " + user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
 
         // build user DTO
-        UserDto userDto = DtoBuilder.buildUserDTO(user);
+        UserDto userDto = DtoUtils.buildUserDTO(user);
 
         return userDto;
     }
@@ -131,7 +133,7 @@ public class UserService {
         usersRepository.modify(specialist);
 
         // build specialist DTO
-        SpecialistDto specialistDto = DtoBuilder.buildSpecialistDTO(specialist);
+        SpecialistDto specialistDto = DtoUtils.buildSpecialistDTO(specialist);
 
         return specialistDto;
     }
@@ -149,7 +151,7 @@ public class UserService {
         Specialist specialist = usersRepository.findSpecialistByUsername(username);
         if(specialist == null) throw new ValidationException("Username is invalid");
 
-        SpecialistDto specialistDto = DtoBuilder.buildSpecialistDTO(specialist);
+        SpecialistDto specialistDto = DtoUtils.buildSpecialistDTO(specialist);
 
         return specialistDto;
     }
@@ -187,7 +189,7 @@ public class UserService {
         List<AnnouncementDto> announcementDtos = new ArrayList<>();
         announcements.forEach(announcement -> {
                     Boolean isFavourite = user.getFavoriteAnnouncements().contains(announcement);
-                    announcementDtos.add(DtoBuilder.buildAnnouncementDTO(announcement, isFavourite));
+                    announcementDtos.add(DtoUtils.buildAnnouncementDTO(announcement, isFavourite));
                 }
         );
 
@@ -213,7 +215,7 @@ public class UserService {
                     .collect(Collectors.toList());
 
             //build login DTO
-            LoginDto loginDto = DtoBuilder.buildLoginDTO(userDetails, jwt, roles);
+            LoginDto loginDto = DtoUtils.buildLoginDTO(userDetails, jwt, roles);
             return loginDto;
         }
         catch (AuthenticationException e){
@@ -243,7 +245,7 @@ public class UserService {
         usersRepository.add(user);
 
         // build user DTO
-        UserDto userDto = DtoBuilder.buildUserDTO(user);
+        UserDto userDto = DtoUtils.buildUserDTO(user);
         return userDto;
     }
 
@@ -259,4 +261,27 @@ public class UserService {
         user.addRecentlyVisitedAnnouncement(announcement);
         usersRepository.modify(user);
     }
+
+    public List<NotificationDto> getNotifications(String username) throws ValidationException {
+        List<Notification> notifications = (List)usersRepository.findNotificationsByUsername(username);
+
+        if (notifications == null) throw new ValidationException("Username is invalid");
+
+        List<NotificationDto> notificationDtos = new ArrayList<>();
+        notifications.forEach(notification -> notificationDtos.add(DtoUtils.buildNotificationDTO(notification)));
+
+        return notificationDtos;
+    }
+
+    public void readNotification(String username, Integer notificationId) throws ValidationException {
+        User user = usersRepository.findByUsername(username);
+        if(user == null) throw new ValidationException("Username is invalid");
+
+        Notification notification = usersRepository.findNotificationById(notificationId);
+        if(notification == null) throw new ValidationException("Notification id is invalid");
+
+        user.readNotification(notification);
+        usersRepository.modify(user);
+    }
+
 }

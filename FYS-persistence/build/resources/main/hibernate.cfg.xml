@@ -16,12 +16,12 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.postgresql.Driver" />
-<!--        <property name="url" value="jdbc:postgresql://localhost:5433/fys" />-->
-<!--        <property name="username" value="postgres" />-->
-<!--        <property name="password" value="postgres" />-->
-        <property name="url" value="jdbc:postgresql://localhost:9201/postgres" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/fys" />
         <property name="username" value="postgres" />
-        <property name="password" value="1234" />
+        <property name="password" value="admin" />
+<!--        <property name="url" value="jdbc:postgresql://localhost:9201/postgres" />-->
+<!--        <property name="username" value="postgres" />-->
+<!--        <property name="password" value="1234" />-->
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">

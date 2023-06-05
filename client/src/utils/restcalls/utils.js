@@ -13,7 +13,18 @@ export function processRequest(request) {
         });
 }
 
+export function processEmptyRequest(request) {
+    return fetch(request)
+        .then(status)
+        .then(data => {return data})
+        .catch(error=>{
+            console.log('Request failed', error);
+            return Promise.reject(error);
+        });
+}
+
 export function createRequest(data, method) {
+    console.log(JSON.stringify(data));
     return {
         method: method,
         headers: {

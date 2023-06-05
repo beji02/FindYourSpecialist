@@ -1,5 +1,5 @@
 import {FYS_BASE_URL} from "../constants";
-import {createRequest, processRequest} from "./utils";
+import {createRequest, processEmptyRequest, processRequest} from "./utils";
 
 export function login(loginForm) {
     let headers = new Headers();
@@ -69,7 +69,7 @@ export function addRecentlyVisitedAnnouncement(announcementId) {
     headers.append('Accept', 'application/json');
 
     let init = createRequest({announcementId: announcementId}, "POST");
-    let request = new Request(FYS_BASE_URL + "user/recently-visited-announcements", init);
+    let request = new Request(FYS_BASE_URL + "users/recently-visited-announcements", init);
     return processRequest(request);
 }
 
@@ -78,8 +78,26 @@ export function getRecentlyVisitedAnnouncements() {
     headers.append('Accept', 'application/json');
 
     let init = createRequest(undefined, "GET");
-    let request = new Request(FYS_BASE_URL + "user/recently-visited-announcements", init);
+    let request = new Request(FYS_BASE_URL + "users/recently-visited-announcements", init);
     return processRequest(request);
+}
+
+export function getNotifications() {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    let init = createRequest(undefined, "GET");
+    let request = new Request(FYS_BASE_URL + "users/notifications", init);
+    return processRequest(request);
+}
+
+export function markNotificationAsRead(notificationId) {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    let init = createRequest(undefined, "PUT");
+    let request = new Request(FYS_BASE_URL + "users/notifications/" + notificationId, init);
+    return processEmptyRequest(request);
 }
 
 export function logout() {

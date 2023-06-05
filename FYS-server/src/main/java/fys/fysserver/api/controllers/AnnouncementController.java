@@ -41,7 +41,7 @@ public class AnnouncementController {
             @RequestParam(name = "page-size", defaultValue = "10") String pageSize
     ) {
         try {
-            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader, jwtUtils);
 
             return new ResponseEntity<>(
                     announcementService.getMyAnnouncements(username, searchQuery, searchCategories, pageNumber, pageSize),
@@ -60,7 +60,7 @@ public class AnnouncementController {
             @RequestParam(name = "page-number", defaultValue = "0") String pageNumber,
             @RequestParam(name = "page-size", defaultValue = "10") String pageSize
     ) {
-        String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+        String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader, jwtUtils);
 
         return new ResponseEntity<>(
                 announcementService.getAnnouncements(username, searchQuery, searchCategories, pageNumber, pageSize),
@@ -93,7 +93,7 @@ public class AnnouncementController {
             @RequestBody NewReservationDto newReservationDTO
     ) {
         try {
-            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader, jwtUtils);
             announcementService.addReservation(username, newReservationDTO);
 
             return new ResponseEntity<>(
@@ -118,7 +118,7 @@ public class AnnouncementController {
             @RequestHeader("Authorization") String authorizationHeader
     ) {
         try {
-            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader, jwtUtils);
 
             return new ResponseEntity<>(
                     announcementService.getFavouriteAnnouncements(username),
@@ -139,7 +139,7 @@ public class AnnouncementController {
             @PathVariable Integer announcementId
     ) {
         try {
-            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader, jwtUtils);
 
             announcementService.addAnnouncementToFavourites(username, announcementId);
             return new ResponseEntity<>(true, HttpStatus.OK);
@@ -158,7 +158,7 @@ public class AnnouncementController {
             @PathVariable Integer announcementId
     ) {
         try {
-            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader, jwtUtils);
 
             announcementService.removeAnnouncementFromFavourites(username, announcementId);
             return new ResponseEntity<>(true, HttpStatus.OK);
@@ -177,7 +177,7 @@ public class AnnouncementController {
             @RequestBody NewAnnouncementDto newAnnouncementDto
     ) {
         try {
-            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader, jwtUtils);
 
             AnnouncementDto announcement =
                     announcementService.addAnnouncement(username, newAnnouncementDto);

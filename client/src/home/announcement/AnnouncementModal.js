@@ -1,6 +1,7 @@
 import {Modal} from "react-bootstrap";
 import {Calendar, DateObject} from "react-multi-date-picker";
 import React, {useEffect, useState} from "react";
+import {createReservation} from "../../utils/restcalls/announcement";
 
 function AnnouncementModal({announcement, reservations, showModal, handleModalToggle}) {
     const [selectedDays, setSelectedDays] = useState([]);
@@ -25,33 +26,40 @@ function AnnouncementModal({announcement, reservations, showModal, handleModalTo
         //console.log(selectedDays);
         const reservation = {
             announcementId: announcement.id,
-            selectedDates: selectedDates
+            selectedDates: selectedDates,
+            specialistUsername: announcement.specialistUsername,
         }
 
         //console.log(reservation);
 
-        try {
-            const token = localStorage.getItem("token");
-            const response = await fetch("reservations", {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify(reservation)
-            });
+        createReservation(reservation).then(data => {
+            setSuccess("Reservations added successfully")
+        }).catch(error => {
+           setError("An error occurred. Please try again.");
+        });
 
-            if (response.ok) {
-                setSuccess("Reservations added successfully");
-            } else {
-                setError("An error occurred. Please try again.");
-            }
-            console.log(JSON.stringify(reservation));
-
-        } catch (error) {
-            setError("An error occurred. Please try again.");
-        }
+        // try {
+        //     const token = localStorage.getItem("token");
+        //     const response = await fetch("reservations", {
+        //         method: "POST",
+        //         headers: {
+        //             Accept: "application/json",
+        //             "Content-Type": "application/json",
+        //             Authorization: `Bearer ${token}`
+        //         },
+        //         body: JSON.stringify(reservation)
+        //     });
+        //
+        //     if (response.ok) {
+        //         setSuccess("Reservations added successfully");
+        //     } else {
+        //         setError("An error occurred. Please try again.");
+        //     }
+        //     console.log(JSON.stringify(reservation));
+        //
+        // } catch (error) {
+        //     setError("An error occurred. Please try again.");
+        // }
 
 
     };
@@ -84,8 +92,10 @@ function AnnouncementModal({announcement, reservations, showModal, handleModalTo
             </Modal.Header>
             <Modal.Body>
                 <div>
-                    <p>Owner: <span className="owner-link" onClick={handleOwnerClick}>{announcement.owner}</span></p>
+                    <p>Owner: <span className="owner-link" onClick={handleOwnerClick}>{announcement.specialistName}</span></p>
                 </div>
+                <p>Specialist location: {announcement.specialistLocation}</p>
+                <p>Phone number : {announcement.specialistPhoneNumber}</p>
                 <p>Description: {announcement.description}</p>
                 <p>Current rating: {announcement.rate}/5 &#x2605;</p>
                 <p>
