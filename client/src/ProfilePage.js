@@ -43,22 +43,13 @@ const ProfilePage = () => {
     }
 
     const loadRecentlyVisitedAnnouncements = () => {
-        const url = `users/recently-visited-announcements`;
-        fetch(url, {
-            method: 'GET',
-                headers: {
-                Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: localStorage.getItem("token"),
-            },
+        getRecentlyVisitedAnnouncements().then(data => {
+            setRecentlyVisitedAnnouncements(data);
+        }).catch((error) => {
+          console.error("Error fetching recently visited announcements:", error);
         })
-            .then((response) => response.json())
-            .then((data) => {
-                setRecentlyVisitedAnnouncements(data);
-            })
-            .catch((error) => {
-                console.error("Error fetching announcements:", error);
-            });
+
+
     };
 
     useEffect(() => {

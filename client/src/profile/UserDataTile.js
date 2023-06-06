@@ -136,7 +136,7 @@ const UserDataTile = ({ token, updatePersonalInfoFunc, getPersonalInfoFunc }) =>
                                         <Form.Label>Phone Number</Form.Label>
                                         <InputGroup>
                                             <PhoneInput
-                                                country={'ro'} // Set the default country
+                                                country={'ro'}
                                                 value={profileForm.phoneNumber}
                                                 onChange={(value) =>
                                                     handleUpdate({ target: { name: 'phoneNumber', value } })

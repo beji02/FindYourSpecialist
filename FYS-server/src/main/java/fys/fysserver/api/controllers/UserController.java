@@ -5,9 +5,7 @@ import fys.fysserver.api.dtos.users.*;
 import fys.fysserver.api.exceptions.ValidationException;
 import fys.fysserver.api.security.jwt.JwtUtils;
 import fys.fysserver.api.services.UserService;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureException;
+import fys.fysserver.api.utils.HeadersUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +38,8 @@ public class UserController {
             @RequestHeader("Authorization") String authorizationHeader
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            username = jwtUtils.getUsernameFromJwtToken(username);
 
             UserDto user = userService.findUserByUsername(username);
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -54,7 +53,8 @@ public class UserController {
             @RequestHeader("Authorization") String authorizationHeader
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            username = jwtUtils.getUsernameFromJwtToken(username);
 
             SpecialistDto specialistDto = userService.findSpecialistByUsername(username);
 
@@ -69,7 +69,8 @@ public class UserController {
             @RequestHeader("Authorization") String authorizationHeader
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            username = jwtUtils.getUsernameFromJwtToken(username);
 
             userService.upgradeUserToSpecialist(username);
 
@@ -85,7 +86,8 @@ public class UserController {
             @RequestBody UserDto updatedUserDto
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            username = jwtUtils.getUsernameFromJwtToken(username);
             UserDto userDto = userService.updateUser(username, updatedUserDto);
 
             return new ResponseEntity<>(userDto, HttpStatus.OK);
@@ -101,7 +103,8 @@ public class UserController {
             @RequestBody SpecialistDto updatedSpecialistDto
     ) {
         try {
-            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            username = jwtUtils.getUsernameFromJwtToken(username);
             SpecialistDto specialistDto = userService.updateSpecialist(username, updatedSpecialistDto);
 
             return new ResponseEntity<>(specialistDto, HttpStatus.OK);
@@ -110,17 +113,36 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/recently-visited-announcements")
+    @GetMapping("/user/recently-visited-announcements")
     public ResponseEntity<?> getRecentlyVisitedAnnouncements(
             @RequestHeader("Authorization") String authorizationHeader
     ) {
-        String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+        String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+        username = jwtUtils.getUsernameFromJwtToken(username);
 
         List<AnnouncementDto> recentlyVisitedAnnouncements =
                 userService.getRecentlyVisitedAnnouncements(username);
 
         return new ResponseEntity<>(recentlyVisitedAnnouncements, HttpStatus.OK);
     }
+
+    @PostMapping("/user/recently-visited-announcements")
+    public ResponseEntity<?> addRecentlyVisitedAnnouncements(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @RequestBody RecentlyAnnouncementDto recentlyAnnouncementDto
+    ) {
+        try {
+            System.out.println("announcementId: " + recentlyAnnouncementDto.getAnnouncementId());
+            String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader);
+            username = jwtUtils.getUsernameFromJwtToken(username);
+
+            userService.addRecentlyVisitedAnnouncement(username, recentlyAnnouncementDto.getAnnouncementId());
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody NewLoginDto newLoginDto) {
@@ -141,15 +163,6 @@ public class UserController {
         }
         catch(ValidationException e){
             return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    private String extractUsernameFromAuthorizationHeader(String authorizationHeader) {
-        try{
-            String token = authorizationHeader.substring(7);
-            return jwtUtils.getUsernameFromJwtToken(token);
-        }catch(Exception ignored) {
-            return null;
         }
     }
 }

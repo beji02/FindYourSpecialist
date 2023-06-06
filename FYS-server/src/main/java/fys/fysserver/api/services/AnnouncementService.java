@@ -226,7 +226,7 @@ public class AnnouncementService {
 
         System.out.println("addAnnouncement: " + username + " " + title + " " + description + " " + fieldId + " " + workDays.toString());
 
-        // get specialist
+        // get user
         User user = usersRepository.findByUsername(username);
         if (!(user instanceof Specialist)) throw new ValidationException("username is invalid");
         Specialist specialist = (Specialist) user;
@@ -519,6 +519,16 @@ public class AnnouncementService {
 
         // delete announcement
         announcementsRepository.remove(announcement);
+    }
+
+    /**
+     * get announcement by id
+     * @param id id of the announcement
+     * @return announcement
+     */
+    public Announcement findAnnouncementById(Integer id) throws ValidationException {
+        if(id == null || id <= 0) throw new ValidationException("id is invalid");
+        return announcementsRepository.findById(id);
     }
 }
 
