@@ -37,3 +37,12 @@ export function createReservation(reservation) {
     let request = new Request(FYS_BASE_URL + "reservations", init);
     return processEmptyRequest(request);
 }
+
+export function deleteMyAnnouncement(announcementId) {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    let init = createRequest(undefined, "DELETE");
+    let request = new Request(FYS_BASE_URL + "my-announcements/" + announcementId, init);
+    return processEmptyRequest(request);
+}

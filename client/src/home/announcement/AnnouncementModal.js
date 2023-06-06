@@ -1,7 +1,7 @@
 import {Modal} from "react-bootstrap";
 import {Calendar, DateObject} from "react-multi-date-picker";
 import React, {useEffect, useState} from "react";
-import {createReservation} from "../../utils/restcalls/announcement";
+import {createReservation, deleteMyAnnouncement} from "../../utils/restcalls/announcement";
 import { useContext } from "react";
 import AnnouncementContext from "./AnnouncementContext";
 
@@ -12,7 +12,8 @@ function AnnouncementModal({announcement, reservations, showModal, handleModalTo
     const [success, setSuccess] = useState("");
 
     const handleDeleteClick = () => {
-        // ... rest of the code
+        deleteMyAnnouncement(announcement.id).then(console.log("deleted"));//.catch(setError("Error deleting announcement"));
+        handleModalToggle();
     };
 
     const handleScheduleClick = async () => {

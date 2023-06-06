@@ -34,6 +34,7 @@ public class User extends Identifiable<Integer> {
             joinColumns=@JoinColumn(name="user_id"),
             foreignKey=@ForeignKey(name="fk_user_recently_visited_announcements")
     )
+
     @MapKeyJoinColumn(name="announcement_id")
     @Column(name="timestamp")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)

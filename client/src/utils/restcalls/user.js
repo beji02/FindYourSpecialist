@@ -70,7 +70,7 @@ export function addRecentlyVisitedAnnouncement(announcementId) {
 
     let init = createRequest({announcementId: announcementId}, "POST");
     let request = new Request(FYS_BASE_URL + "users/recently-visited-announcements", init);
-    return processRequest(request);
+    return processEmptyRequest(request);
 }
 
 export function getRecentlyVisitedAnnouncements() {

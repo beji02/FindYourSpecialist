@@ -12,13 +12,15 @@ function AnnouncementCard({announcement}) {
 
     const handleModalToggle = () => {
         setShowModal(!showModal);
-        addRecentlyVisitedAnnouncement(announcement.id)
-            .then(r => console.log("Added recently visited announcement"))
-            .catch(e => console.log("Failed to add recently visited announcement"));
+        if (showModal) {
+            addRecentlyVisitedAnnouncement(announcement.id)
+                .then(r => console.log("Added recently visited announcement"))
+                .catch(e => console.log("Failed to add recently visited announcement"));
+        }
     };
 
     useEffect(() => {
-        if(showModal === true)
+        if (showModal === true)
             loadReservations();
     }, [showModal]);
 
