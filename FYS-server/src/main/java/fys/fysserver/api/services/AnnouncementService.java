@@ -437,7 +437,7 @@ public class AnnouncementService {
         // build the DTO
         List<ScheduledReservationDto> scheduledReservationDtos = new ArrayList<>();
         reservations.forEach(reservation -> {
-            scheduledReservationDtos.add(DtoBuilder.buildScheduledReservationDto(reservation));
+            scheduledReservationDtos.add(DtoUtils.buildScheduledReservationDto(reservation));
         });
 
         return scheduledReservationDtos;
@@ -486,7 +486,7 @@ public class AnnouncementService {
         // build the DTO
         List<MyReservationDto> myReservationDtos = new ArrayList<>();
         reservations.forEach(reservation -> {
-            myReservationDtos.add(DtoBuilder.buildMyReservationDto(reservation));
+            myReservationDtos.add(DtoUtils.buildMyReservationDto(reservation));
         });
 
         return myReservationDtos;

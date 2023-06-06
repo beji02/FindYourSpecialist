@@ -7,7 +7,7 @@ import BecomeSpecialistButton from "./profile/BecomeSpecialistButton";
 import { isSpecialist as checkIsSpecialist } from "./utils/roles";
 import SpecialistDataTile from "./profile/SpecialistDataTile";
 import AnnouncementsTile from "./home/announcement/AnnouncementsTile";
-import {updateWorkInfo, getWorkInfo, upgradeToSpecialist, updatePersonalInfo, getPersonalInfo} from "./utils/restcalls/user";
+import {updateWorkInfo, getWorkInfo, upgradeToSpecialist, updatePersonalInfo, getPersonalInfo, getRecentlyVisitedAnnouncements} from "./utils/restcalls/user";
 import {isLogged} from "./utils/utils";
 import MySchedule from "./myschedule/MySchedule";
 
