@@ -43,6 +43,17 @@ public class NewAnnouncementDto {
     public void setWorkDays(Set<LocalDate> workDays) {
         this.workDays = workDays;
     }
+
+
+    @Override
+    public String toString() {
+        return "NewAnnouncementDto{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", fieldId=" + fieldId +
+                ", workDays=" + workDays +
+                '}';
+    }
 }
 
 

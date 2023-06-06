@@ -10,8 +10,11 @@ import fys.fysserver.api.dtos.*;
 import fys.fysserver.api.dtos.announcements.AnnouncementDto;
 import fys.fysserver.api.dtos.users.*;
 import fys.fysserver.api.exceptions.ValidationException;
+import fys.fysserver.api.security.jwt.AuthTokenFilter;
 import fys.fysserver.api.security.jwt.JwtUtils;
 import fys.fysserver.api.security.services.UserDetailsImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +32,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private UsersRepository usersRepository;
     private AnnouncementsRepository announcementsRepository;
     private AuthenticationManager authenticationManager;
@@ -36,8 +40,10 @@ public class UserService {
 
     private JwtUtils jwtUtils;
 
+    @Autowired
     public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
+        logger.info("UsersRepository set");
     }
 
     public void setAnnouncementsRepository(AnnouncementsRepository announcementsRepository) {
@@ -47,18 +53,23 @@ public class UserService {
     @Autowired
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+        logger.info("AuthenticationManager set");
     }
+
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+        logger.info("PasswordEncoder set");
     }
+
     @Autowired
     public void setJwtUtils(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
+        logger.info("JwtUtils set");
     }
 
-
     public UserService() {
+        logger.info("UserService created");
     }
 
 
@@ -69,11 +80,10 @@ public class UserService {
      * @throws ValidationException if username is invalid
      */
     public UserDto findUserByUsername(String username) throws ValidationException {
-        System.out.println("findUserByUsername: " + username);
+        logger.info("findUserByUsername: " + username);
 
-        // get user
         User user = usersRepository.findByUsername(username);
-        if(user == null) throw new ValidationException("Username is invalid");
+        if (user == null) throw new ValidationException("Username is invalid");
 
         // build user DTO
         UserDto userDto = DtoUtils.buildUserDTO(user);
@@ -89,10 +99,11 @@ public class UserService {
      * @throws ValidationException if username is invalid
      */
     public UserDto updateUser(String username, UserDto updatedUserDto) throws ValidationException {
+        logger.info("updateUser: " + username);
 
         // get user
         User user = usersRepository.findByUsername(username);
-        if(user == null) throw new ValidationException("Username is invalid");
+        if (user == null) throw new ValidationException("Username is invalid");
 
         // update user
         user.setFirstName(updatedUserDto.getFirstName());
@@ -103,7 +114,7 @@ public class UserService {
 
         // save user
         usersRepository.modify(user);
-        System.out.println("updateUser: " + user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
+        logger.info("User updated: " + user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
 
         // build user DTO
         UserDto userDto = DtoUtils.buildUserDTO(user);
@@ -119,10 +130,11 @@ public class UserService {
      * @throws ValidationException if username is not a specialist's username
      */
     public SpecialistDto updateSpecialist(String username, SpecialistDto updatedSpecialistDto) throws ValidationException {
+        logger.info("updateSpecialist: " + username);
 
         // get specialist
         Specialist specialist = usersRepository.findSpecialistByUsername(username);
-        if(specialist == null) throw new ValidationException("Username is invalid");
+        if (specialist == null) throw new ValidationException("Username is invalid");
 
         // update specialist
         specialist.setLocation(updatedSpecialistDto.getLocation());
@@ -145,11 +157,11 @@ public class UserService {
      * @throws ValidationException if username is not a specialist's username
      */
     public SpecialistDto findSpecialistByUsername(String username) throws ValidationException {
-        System.out.println("findSpecialistByUsername: " + username);
+        logger.info("findSpecialistByUsername: " + username);
 
         // get specialist
         Specialist specialist = usersRepository.findSpecialistByUsername(username);
-        if(specialist == null) throw new ValidationException("Username is invalid");
+        if (specialist == null) throw new ValidationException("Username is invalid");
 
         SpecialistDto specialistDto = DtoUtils.buildSpecialistDTO(specialist);
 
@@ -162,11 +174,12 @@ public class UserService {
      * @throws ValidationException if username is invalid or user is already a specialist
      */
     public void upgradeUserToSpecialist(String username) throws ValidationException {
+        logger.info("upgradeUserToSpecialist: " + username);
 
         // get user
         User user = usersRepository.findByUsername(username);
-        if(user == null) throw new ValidationException("Username is invalid");
-        if(user instanceof Specialist) throw new ValidationException("Already specialist");
+        if (user == null) throw new ValidationException("Username is invalid");
+        if (user instanceof Specialist) throw new ValidationException("Already a specialist");
 
         // upgrade user to specialist
         usersRepository.upgradeToSpecialist(user);
@@ -178,9 +191,10 @@ public class UserService {
      * @return list of recently visited announcements in DTO format
      */
     public List<AnnouncementDto> getRecentlyVisitedAnnouncements(String username) {
-        // ger user
+        logger.info("getRecentlyVisitedAnnouncements: " + username);
+
         User user = usersRepository.findByUsername(username);
-        if(user == null) return new ArrayList<>();
+        if (user == null) return new ArrayList<>();
 
         // get recently visited announcements
         List<Announcement> announcements = (List<Announcement>) user.getRecentlyVisitedAnnouncements();
@@ -203,7 +217,9 @@ public class UserService {
      * @throws ValidationException if username or password are invalid
      */
     public LoginDto login(NewLoginDto newLoginDto) throws ValidationException {
-        try{
+        logger.info("login: " + newLoginDto.getUsername());
+
+        try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     newLoginDto.getUsername(), newLoginDto.getPassword())
             );
@@ -217,8 +233,7 @@ public class UserService {
             //build login DTO
             LoginDto loginDto = DtoUtils.buildLoginDTO(userDetails, jwt, roles);
             return loginDto;
-        }
-        catch (AuthenticationException e){
+        } catch (AuthenticationException e) {
             throw new ValidationException("Invalid username or password");
         }
     }
@@ -230,11 +245,11 @@ public class UserService {
      * @throws ValidationException if username is already taken
      */
     public UserDto register(NewRegistrationDto newRegistrationDto) throws ValidationException {
-        System.out.println("register: " + newRegistrationDto.getUsername() + " " + newRegistrationDto.getPassword() + " " + newRegistrationDto.getEmail());
+        logger.info("register: " + newRegistrationDto.getUsername() + " " + newRegistrationDto.getEmail());
 
         // check if username is already taken
         User user = usersRepository.findByUsername(newRegistrationDto.getUsername());
-        if(user != null) throw new ValidationException("Username is already taken");
+        if (user != null) throw new ValidationException("Username is already taken");
 
         // build a new user
         user = new User();
