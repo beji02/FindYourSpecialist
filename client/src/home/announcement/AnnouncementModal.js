@@ -43,7 +43,8 @@ function AnnouncementModal({announcement, reservations, showModal, handleModalTo
             });
 
             if (response.ok) {
-                setSuccess("Reservations added successfully");
+                //setSuccess("Reservations added successfully");
+                handleModalToggle();
             } else {
                 setError("An error occurred. Please try again.");
             }
@@ -52,8 +53,6 @@ function AnnouncementModal({announcement, reservations, showModal, handleModalTo
         } catch (error) {
             setError("An error occurred. Please try again.");
         }
-
-
     };
 
     const handleOwnerClick = () => {
