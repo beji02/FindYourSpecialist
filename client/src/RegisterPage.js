@@ -3,8 +3,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import 'react-phone-input-2/lib/style.css'
 import "./style/RegisterPage.css";
+import {register} from "./utils/restcalls/user";
+import {useNavigate} from "react-router-dom";
 
 function RegisterPage() {
+    const navigate = useNavigate();
     const [registerForm, setRegisterForm] = useState({
         username: "",
         email: "",
@@ -19,6 +22,25 @@ function RegisterPage() {
         let value = event.target.value;
         setRegisterForm({ ...registerForm, [name]: value });
     };
+
+    const handleRegister = async (event) => {
+        event.preventDefault();
+        if (
+            registerForm.username === "" ||
+            registerForm.email === "" ||
+            registerForm.password === "" ||
+            registerForm.confirmPassword === ""
+        ) {
+            setError("Please fill all the details");
+        } else if (registerForm.password !== registerForm.confirmPassword) {
+            setError("Passwords do not match");
+        } else {
+            registerForm.confirmPassword = undefined;
+            register(registerForm).then(data => {
+                navigate('/login');
+            }).catch(error => setError("Invalid credentials"));
+        }
+    }
 
     return (
         <div className="page-container">
@@ -76,36 +98,7 @@ function RegisterPage() {
                             variant="primary"
                             type="submit"
                             className="register-button"
-                            onClick={async (event) => {
-                                event.preventDefault();
-                                if (
-                                    registerForm.username === "" ||
-                                    registerForm.email === "" ||
-                                    registerForm.password === "" ||
-                                    registerForm.confirmPassword === ""
-                                ) {
-                                    setError("Please fill all the details");
-                                } else if (registerForm.password !== registerForm.confirmPassword) {
-                                    setError("Passwords do not match");
-                                } else {
-                                    await fetch("register", {
-                                        method: "POST",
-                                        headers: {
-                                            Accept: "application/json",
-                                            "Content-Type": "application/json",
-                                        },
-                                        body: JSON.stringify(registerForm),
-                                    }).then((response) => {
-                                        if (response.status === 200) {
-                                            window.location.href = "/login";
-                                        } else {
-                                            console.log(response);
-                                            setError("Failed to register");
-                                        }
-                                    });
-                                }
-                            }}
-                        >
+                            onClick={handleRegister}>
                             Register
                         </Button>
                         <p className="mt-3">

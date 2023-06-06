@@ -2,6 +2,9 @@ import Container from "react-bootstrap/Container";
 import React, {useEffect, useState} from "react";
 import AnnouncementsPage from "../AnnouncementsPage";
 import { useNavigate } from "react-router-dom";
+import CustomNavbar from "../generics/CustomNavbar";
+import {isLogged} from "../utils/utils";
+import {isSpecialist} from "../utils/roles";
 
 function HomePage() {
     const navigate = useNavigate();
@@ -14,9 +17,6 @@ function HomePage() {
     useEffect(() => {
         const token = localStorage.getItem("token");
         console.log(token);
-        if (!token) {
-            navigate('/login');
-        }
     });
 
     const loadAnnouncements = () => {
@@ -44,6 +44,7 @@ function HomePage() {
 
     return (
         <Container>
+            <CustomNavbar isSpecialist={isSpecialist(localStorage.getItem("roles"))}/>
             <AnnouncementsPage includeToken={true} page={0}/>
         </Container>
     );

@@ -42,24 +42,26 @@ public class Announcement extends Identifiable<Integer> {
         this.field = field;
     }
 
-    public Announcement(Integer integer, Float rate, String description, String title, LocalDate startDate, LocalDate endDate, Specialist specialist, Field field) {
-        super(integer);
+    public Announcement(Float rate, String description, String title, LocalDate startDate, LocalDate endDate) {
+        super(null);
         this.rate = rate;
         this.description = description;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.specialist = specialist;
+    }
+
+    public Announcement(String title, String description, Field field, Set<LocalDate> workDays) {
+        super(null);
+        this.title = title;
+        this.description = description;
         this.field = field;
     }
 
-    public Announcement(Integer integer, Float rate, String description, String title, LocalDate startDate, LocalDate endDate) {
-        super(integer);
-        this.rate = rate;
-        this.description = description;
+    public Announcement(String title, String description, Field field) {
         this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.description = description;
+        this.field = field;
     }
 
     public Field getField() {

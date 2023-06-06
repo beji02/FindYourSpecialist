@@ -9,11 +9,11 @@
     <context:component-scan base-package="fys.fyspersistence.users" />
     <context:component-scan base-package="fys.fyspersistence.announcements" />
 
-    <bean id="userService" class="fys.fysserver.api.service.UserService">
+    <bean id="userService" class="fys.fysserver.api.services.UserService">
         <property name="usersRepository" ref="usersRepository" />
     </bean>
 
-    <bean id="userController" class="fys.fysserver.api.controller.UserController">
+    <bean id="userController" class="fys.fysserver.api.controllers.UserController">
         <property name="userService" ref="userService" />
     </bean>
 
@@ -21,12 +21,12 @@
         <property name="usersRepository" ref="usersRepository" />
     </bean>
 
-    <bean id="announcementService" class="fys.fysserver.api.service.AnnouncementService">
+    <bean id="announcementService" class="fys.fysserver.api.services.AnnouncementService">
         <property name="announcementsRepository" ref="announcementsRepository" />
         <property name="usersRepository" ref="usersRepository" />
     </bean>
 
-    <bean id="announcementController" class="fys.fysserver.api.controller.AnnouncementController">
+    <bean id="announcementController" class="fys.fysserver.api.controllers.AnnouncementController">
         <property name="announcementService" ref="announcementService" />
     </bean>
 

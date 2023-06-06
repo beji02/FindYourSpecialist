@@ -1,8 +1,8 @@
 import {Modal} from "react-bootstrap";
 import {Calendar, DateObject} from "react-multi-date-picker";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
-function AnnouncementModal({announcement, showModal, handleModalToggle}) {
+function AnnouncementModal({announcement, reservations, showModal, handleModalToggle}) {
     const [selectedDays, setSelectedDays] = useState([]);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -64,12 +64,12 @@ function AnnouncementModal({announcement, showModal, handleModalToggle}) {
         let actualDate = new Date(date.toString());
         actualDate.setHours(0, 0, 0, 0);
 
-        // check that announcement.reservations has a reservation with the same date and not a user
-        for (let i = 0; i < announcement.reservations.length; i++) {
-            let reservationDate = new Date(announcement.reservations[i].date);
+        // check that reservations has a reservation with the same date and not a user
+        for (let i = 0; i < reservations.length; i++) {
+            let reservationDate = new Date(reservations[i].date);
             reservationDate.setHours(0, 0, 0, 0);
 
-            if (actualDate.getTime() === reservationDate.getTime() && announcement.reservations[i].user === null) {
+            if (actualDate.getTime() === reservationDate.getTime() && reservations[i].isReserved === false) {
                 return true;
             }
         }

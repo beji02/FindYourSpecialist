@@ -1,26 +1,34 @@
 package fys.fysmodel;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import static java.lang.Math.max;
+
 @Entity
-@Table(name="specialists")
+@Table(name = "specialists")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Specialist extends User {
     private Integer area;
     private String location;
     private String description;
 
-    public Specialist() {}
+    public Specialist() {
+    }
 
     public static Specialist build(User user) {
-        return new Specialist(user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getBirthDate(), user.getPhoneNumber(), user.getOptionalDescription(), 0, "", "");
+        Specialist specialist = new Specialist(user.getUsername(), user.getPassword(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getBirthDate(), user.getPhoneNumber(), user.getOptionalDescription(), 0, "", "");
+        specialist.setRecentlyVisitedAnnouncements(user.getRecentlyVisitedAnnouncementsMap());
+
+        return specialist;
     }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -38,6 +46,13 @@ public class Specialist extends User {
 
     public Specialist(String username, String password, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String optionalDescription, Integer area, String location, String description) {
         super(username, password, firstName, lastName, birthDate, phoneNumber, optionalDescription);
+        this.area = area;
+        this.location = location;
+        this.description = description;
+    }
+
+    public Specialist(String username, String password, String email, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String optionalDescription, Integer area, String location, String description) {
+        super(username, password, email, firstName, lastName, birthDate, phoneNumber, optionalDescription);
         this.area = area;
         this.location = location;
         this.description = description;
@@ -75,7 +90,6 @@ public class Specialist extends User {
         this.ratingsSpecialist = ratingsSpecialist;
     }
 
-    @JsonManagedReference
     public Set<Announcement> getAnnouncements() {
         return announcements;
     }
@@ -122,9 +136,14 @@ public class Specialist extends User {
 
     public Float getRating() {
         Float rating = 0f;
+
         for (Rating r : this.ratingsSpecialist) {
             rating += r.getScore();
         }
-        return rating / this.ratingsSpecialist.size();
+        return rating / max(this.ratingsSpecialist.size(), 1);
+    }
+
+    public User getUser() {
+        return this;
     }
 }

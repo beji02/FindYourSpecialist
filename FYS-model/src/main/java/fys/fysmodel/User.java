@@ -1,6 +1,7 @@
 package fys.fysmodel;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User extends Identifiable<Integer> {
     @Column(unique = true)
@@ -27,23 +28,27 @@ public class User extends Identifiable<Integer> {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Rating> ratingsUser = new HashSet<>();
 
-    // new fields
-
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name="user_recently_visited_announcements", joinColumns=@JoinColumn(name="user_id"))
+    @CollectionTable(
+            name="user_recently_visited_announcements",
+            joinColumns=@JoinColumn(name="user_id"),
+            foreignKey=@ForeignKey(name="fk_user_recently_visited_announcements")
+    )
     @MapKeyJoinColumn(name="announcement_id")
     @Column(name="timestamp")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements = new HashMap<>();
-    @CollectionTable(name="user_favorite_specialists", joinColumns=@JoinColumn(name="user_id"))
+    @CollectionTable(name = "user_favorite_specialists", joinColumns = @JoinColumn(name = "user_id"))
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Specialist> favoriteSpecialists = new HashSet<>();
-    @CollectionTable(name="user_favorite_announcements", joinColumns=@JoinColumn(name="user_id"))
+    @CollectionTable(name = "user_favorite_announcements", joinColumns = @JoinColumn(name = "user_id"))
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Announcement> favoriteAnnouncements = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Message> messages = new HashSet<>();
 
-    public User() {}
+    public User() {
+    }
 
     public User(String username, String password, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String optionalDescription) {
         this.username = username;
@@ -53,6 +58,11 @@ public class User extends Identifiable<Integer> {
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.optionalDescription = optionalDescription;
+    }
+
+    public User(String username, String password, String email, String firstName, String lastName, LocalDate birthDate, String phoneNumber, String optionalDescription) {
+        this(username, password, firstName, lastName, birthDate, phoneNumber, optionalDescription);
+        this.email = email;
     }
 
     public String getUsername() {
@@ -208,8 +218,13 @@ public class User extends Identifiable<Integer> {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
     }
+
     public void setRecentlyVisitedAnnouncements(Map<Announcement, LocalDateTime> recentlyVisitedAnnouncements) {
         this.recentlyVisitedAnnouncements = recentlyVisitedAnnouncements;
+    }
+
+    public Map<Announcement, LocalDateTime> getRecentlyVisitedAnnouncementsMap() {
+        return recentlyVisitedAnnouncements;
     }
 
     public String getEmail() {
@@ -220,8 +235,6 @@ public class User extends Identifiable<Integer> {
         this.email = email;
     }
 
-
-    @JsonBackReference
     public Set<Reservation> getMyReservations() {
         return myReservations;
     }

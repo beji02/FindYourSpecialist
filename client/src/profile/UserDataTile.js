@@ -5,7 +5,7 @@ import PhoneInput from 'react-phone-input-2';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const UserDataTile = ({ token }) => {
+const UserDataTile = ({ token, updatePersonalInfoFunc, getPersonalInfoFunc }) => {
     const [profileForm, setProfileForm] = useState({
         firstName: '',
         lastName: '',
@@ -31,61 +31,27 @@ const UserDataTile = ({ token }) => {
 
         console.log(profileForm.updateType);
 
-        try {
-            fetch('user', {
-                method: 'PUT',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: localStorage.getItem('token'),
-                },
-                body: JSON.stringify(profileForm),
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        setSuccess('Profile updated successfully');
-                    } else {
-                        setError('Invalid credentials');
-                    }
-                })
-                .catch((error) => {
-                    setError('An error occurred. Please try again.');
-                });
-        } catch (error) {
+        updatePersonalInfoFunc(profileForm).then(data => {
+            setSuccess('Profile updated successfully');
+        }).catch(error => {
             setError('An error occurred. Please try again.');
-        }
+        })
     };
 
     useEffect(() => {
-        try {
-            fetch('user', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: token,
-                },
-            })
-                .then((response) => {
-                    if (response.status == 200) {
-                        return response.json();
-                    }
-                    throw new Error('Something went wrong');
-                })
-                .then((data) => {
-                    setProfileForm({
-                        firstName: data.firstName,
-                        lastName: data.lastName,
-                        username: data.username,
-                        email: data.email,
-                        phoneNumber: data.phoneNumber,
-                        birthDate: data.birthDate ? new Date(data.birthDate) : null,
-                        updateType: 'UPDATE_USER',
-                    });
+        getPersonalInfoFunc()
+            .then((data) => {
+                setProfileForm({
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    username: data.username,
+                    email: data.email,
+                    phoneNumber: data.phoneNumber,
+                    birthDate: data.birthDate ? new Date(data.birthDate) : null,
                 });
-        } catch (error) {
+            }).catch((error) => {
             setError('An error occurred. Please try again.');
-        }
+        });
     }, []);
 
     const CustomDatePickerInput = ({ value, onClick }) => (
@@ -154,6 +120,7 @@ const UserDataTile = ({ token }) => {
                                         <Form.Label>Date of Birth</Form.Label>
                                         <br />
                                         <DatePicker
+                                            value={profileForm.birthDate}
                                             selected={profileForm.birthDate}
                                             onChange={(date) =>
                                                 setProfileForm({ ...profileForm, birthDate: date })

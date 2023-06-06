@@ -1,16 +1,22 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Card, Col, Row} from "react-bootstrap";
 import AnnouncementModal from "./AnnouncementModal";
 import "../../style/AnnouncementCard.css"; // Import the CSS file for custom styling
 
 function AnnouncementCard({announcement}) {
-    const [isFavorite, setIsFavorite] = useState(announcement.favorite);
+    const [isFavorite, setIsFavorite] = useState(announcement.isFavorite);
     const [showModal, setShowModal] = useState(false);
     const heartTitle = isFavorite ? 'Remove from favorites' : 'Add to favorites';
+    const [reservations, setReservations] = useState([]);
 
     const handleModalToggle = () => {
         setShowModal(!showModal);
     };
+
+    useEffect(() => {
+        if(showModal === true)
+            loadReservations();
+    }, [showModal]);
 
     const handleFavoriteClick = () => {
         const requestOptions = {
@@ -41,6 +47,20 @@ function AnnouncementCard({announcement}) {
 
         setIsFavorite(!isFavorite);
     };
+
+
+    const loadReservations = async () => {
+        // fetch reservations for announcementId
+        const url = `announcements/${announcement.id}/reservations`;
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+                setReservations(data);
+            })
+            .catch((error) => {
+                console.error("Error fetching reservations:", error);
+            });
+    }
 
     return (
         <>
@@ -77,6 +97,7 @@ function AnnouncementCard({announcement}) {
             </Card>
             <AnnouncementModal
                 announcement={announcement}
+                reservations={reservations}
                 showModal={showModal}
                 handleModalToggle={handleModalToggle}
             />

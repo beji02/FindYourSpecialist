@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "reservations")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Reservation extends Identifiable<Integer>{
+public class Reservation extends Identifiable<Integer> {
     @ManyToOne
     @JoinColumn(name = "announcement_id")
     private Announcement announcement;
@@ -16,10 +17,14 @@ public class Reservation extends Identifiable<Integer>{
     private User user;
     private LocalDate date;
 
+    public Reservation() {
+    }
 
-    public Reservation() {}
+    public Reservation(LocalDate date) {
+        super(null);
+        this.date = date;
+    }
 
-    @JsonBackReference
     public Announcement getAnnouncement() {
         return announcement;
     }
@@ -35,10 +40,32 @@ public class Reservation extends Identifiable<Integer>{
     public void setUser(User user) {
         this.user = user;
     }
+
     public LocalDate getDate() {
         return date;
     }
+
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Reservation that)) return false;
+        if (!super.equals(o)) return false;
+
+        if (!Objects.equals(announcement, that.announcement)) return false;
+        if (!Objects.equals(user, that.user)) return false;
+        return Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (announcement != null ? announcement.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        return result;
     }
 }

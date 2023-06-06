@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, Button, Form, InputGroup } from 'react-bootstrap';
+import { Row, Col, Card, Button, Form } from 'react-bootstrap';
 import 'react-phone-input-2/lib/style.css';
-import PhoneInput from 'react-phone-input-2';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { LoadScript, Autocomplete } from '@react-google-maps/api';
+import { MAPS_API_KEY } from '../utils/constants'
+import {updatePersonalInfo} from "../utils/restcalls/user";
 
-//AIzaSyBZCn63RlKrEgWS1TJdfE-L_DGUWYLDDt0 -- google maps api key
-
-const SpecialistDataTile = ({ token }) => {
+const SpecialistDataTile = ({ token, updateWorkInfoFunc, getWorkInfoFunc }) => {
     const [specialistForm, setSpecialistForm] = useState({
         location: '',
         description: '',
     });
 
+    const [autocomplete, setAutocomplete] = useState(null);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
@@ -23,61 +23,34 @@ const SpecialistDataTile = ({ token }) => {
         setSpecialistForm({ ...specialistForm, [name]: value });
     };
 
-    const handleSave = (event) => {
-        event.preventDefault();
-
-        try {
-            fetch('specialist', {
-                method: 'PUT',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: localStorage.getItem('token'),
-                },
-                body: JSON.stringify(specialistForm),
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        setSuccess('Profile updated successfully');
-                    } else {
-                        setError('Invalid credentials');
-                    }
-                })
-                .catch((error) => {
-                    setError('An error occurred. Please try again.');
-                });
-        } catch (error) {
-            setError('An error occurred. Please try again.');
+    const handlePlaceSelect = () => {
+        if (autocomplete !== null) {
+            const place = autocomplete.getPlace();
+            const location = place.formatted_address;
+            setSpecialistForm({ ...specialistForm, location });
         }
     };
 
-    const [phone, setPhone] = useState('');
+    const handleSave = (event) => {
+        event.preventDefault();
+
+        updateWorkInfoFunc(specialistForm).then(data => {
+            setSuccess('Profile updated successfully');
+        }).catch(error => {
+            setError('An error occurred. Please try again.');
+        })
+    };
 
     useEffect(() => {
-        try {
-            fetch('specialist', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: token,
-                },
-            })
-                .then((response) => {
-                    if (response.status == 200) {
-                        return response.json();
-                    }
-                    throw new Error('Something went wrong');
-                })
-                .then((data) => {
-                    setSpecialistForm({
-                        location: data.location,
-                        description: data.description,
-                    });
+        getWorkInfoFunc()
+            .then((data) => {
+                setSpecialistForm({
+                    location: data.location,
+                    description: data.description,
                 });
-        } catch (error) {
+            }).catch((error) => {
             setError('An error occurred. Please try again.');
-        }
+        });
     }, []);
 
     return (
@@ -91,13 +64,20 @@ const SpecialistDataTile = ({ token }) => {
                         <Form>
                             <Form.Group controlId="location">
                                 <Form.Label>Location</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="location"
-                                    onChange={handleUpdate}
-                                    value={specialistForm.location}
-                                    placeholder="Enter your location"
-                                />
+                                <LoadScript googleMapsApiKey={MAPS_API_KEY} libraries={['places']}>
+                                    <Autocomplete
+                                        onLoad={(autocomplete) => setAutocomplete(autocomplete)}
+                                        onPlaceChanged={handlePlaceSelect}
+                                    >
+                                        <Form.Control
+                                            type="text"
+                                            name="location"
+                                            onChange={handleUpdate}
+                                            value={specialistForm.location}
+                                            placeholder="Enter your location"
+                                        />
+                                    </Autocomplete>
+                                </LoadScript>
                             </Form.Group>
                             <Form.Group controlId="description">
                                 <Form.Label>Description</Form.Label>
