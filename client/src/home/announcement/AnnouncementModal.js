@@ -1,11 +1,18 @@
 import {Modal} from "react-bootstrap";
 import {Calendar, DateObject} from "react-multi-date-picker";
 import React, {useEffect, useState} from "react";
+import { useContext } from "react";
+import AnnouncementContext from "./AnnouncementContext";
 
 function AnnouncementModal({announcement, reservations, showModal, handleModalToggle}) {
+    const isRenderedInMyAnnouncement = useContext(AnnouncementContext);
     const [selectedDays, setSelectedDays] = useState([]);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+
+    const handleDeleteClick = () => {
+        // ... rest of the code
+    };
 
     const handleScheduleClick = async () => {
         if (selectedDays.length === 0) {
@@ -110,6 +117,7 @@ function AnnouncementModal({announcement, reservations, showModal, handleModalTo
                 {success && <p className="text-success">{success}</p>}
             </Modal.Body>
             <Modal.Footer>
+                {isRenderedInMyAnnouncement && <button className="btn btn-danger" onClick={handleDeleteClick}>Delete</button>}
                 <button className="btn btn-primary" onClick={handleScheduleClick}>
                     Schedule
                 </button>
