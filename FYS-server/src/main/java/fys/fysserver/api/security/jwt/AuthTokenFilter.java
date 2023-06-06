@@ -1,6 +1,9 @@
 package fys.fysserver.api.security.jwt;
 
+import fys.fysserver.api.controllers.AnnouncementController;
 import fys.fysserver.api.security.services.UserDetailsServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,19 +19,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
+    private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
+
     private JwtUtils jwtUtils;
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     public void setJwtUtils(JwtUtils jwtUtils) {
-        System.out.println("AuthTokenFilter jwtUtils");
+        logger.info("AuthTokenFilter jwtUtils");
 
         this.jwtUtils = jwtUtils;
     }
 
     @Autowired
     public void setUserDetailsService(UserDetailsServiceImpl userDetailsService) {
-        System.out.println("AuthTokenFilter userDetailsService");
+        logger.info("AuthTokenFilter userDetailsService");
 
         this.userDetailsService = userDetailsService;
     }

@@ -3,6 +3,8 @@ package fys.fysserver.api.security.jwt;
 import fys.fysserver.api.security.services.UserDetailsImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -11,6 +13,8 @@ import java.util.Date;
 
 @Component
 public class JwtUtils {
+    private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
+
     @Value("${fys.app.jwtSecret}")
     private String jwtSecret;
 
@@ -37,7 +41,7 @@ public class JwtUtils {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch(Exception e) {
-            System.out.println(e);
+            logger.info(e.toString());
         }
 
         return false;

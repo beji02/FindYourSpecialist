@@ -6,6 +6,9 @@ import fys.fyspersistence.users.UsersRepository;
 import fys.fysserver.api.dtos.*;
 import fys.fysserver.api.dtos.announcements.*;
 import fys.fysserver.api.exceptions.ValidationException;
+import fys.fysserver.api.security.jwt.AuthTokenFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,18 +16,23 @@ import java.util.*;
 
 @Service
 public class AnnouncementService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
+
     private AnnouncementsRepository announcementsRepository;
     private UsersRepository usersRepository;
 
     public void setAnnouncementsRepository(AnnouncementsRepository announcementsRepository) {
+        logger.info("setAnnoucnementsRepository");
         this.announcementsRepository = announcementsRepository;
     }
 
     public void setUsersRepository(UsersRepository usersRepository) {
+        logger.info("setUsersRepository");
         this.usersRepository = usersRepository;
     }
 
     public AnnouncementService() {
+        logger.info("announcementService instantiated");
     }
 
     /**
@@ -135,6 +143,7 @@ public class AnnouncementService {
             String pageSize
     ) throws ValidationException
     {
+        logger.info("Getting announcements for username: " + username);
         // get the specialist
         User user = usersRepository.findByUsername(username);
         if (!(user instanceof Specialist)) throw new ValidationException("username is invalid");
@@ -152,7 +161,7 @@ public class AnnouncementService {
                     announcementDtos.add(DtoBuilder.buildAnnouncementDTO(announcement, isFavourite));
                 }
         );
-
+        logger.info("Returning announcement DTOs: " + announcementDtos.size());
         return announcementDtos;
     }
 
@@ -173,6 +182,7 @@ public class AnnouncementService {
             String pageNumber,
             String pageSize
     ) {
+        logger.info("Getting announcements for username: " + username);
         // get user
         User user = usersRepository.findByUsername(username);
 
@@ -187,7 +197,7 @@ public class AnnouncementService {
             Boolean isFavourite = (user != null) && user.getFavoriteAnnouncements().contains(announcement);
             announcementDtos.add(DtoBuilder.buildAnnouncementDTO(announcement, isFavourite));
         });
-
+        logger.info("Returning announcement DTOs: " + announcementDtos.size());
         return announcementDtos;
     }
 
@@ -196,11 +206,12 @@ public class AnnouncementService {
      * @return list of fields
      */
     public List<FieldDto> getAnnouncementFields() {
+        logger.info("Getting announcement fields");
         Iterable<Field> fields = announcementsRepository.findAllFields();
 
         List<FieldDto> fieldsDTO = new ArrayList<>();
         fields.forEach(field -> fieldsDTO.add(DtoBuilder.buildFieldDTO(field)));
-
+        logger.info("Returning field DTOs: " + fieldsDTO.size());
         return fieldsDTO;
     }
 
@@ -218,13 +229,13 @@ public class AnnouncementService {
             NewAnnouncementDto newAnnouncementDto
     ) throws ValidationException
     {
+        logger.info("Adding announcement: " + username + " " + newAnnouncementDto);
         // load details of newAnnouncementDto
         String title = newAnnouncementDto.getTitle();
         String description = newAnnouncementDto.getDescription();
         Integer fieldId = newAnnouncementDto.getFieldId();
         Set<LocalDate> workDays = newAnnouncementDto.getWorkDays();
 
-        System.out.println("addAnnouncement: " + username + " " + title + " " + description + " " + fieldId + " " + workDays.toString());
 
         // get specialist
         User user = usersRepository.findByUsername(username);
@@ -270,7 +281,7 @@ public class AnnouncementService {
             Integer announcementId
     ) throws ValidationException
     {
-        System.out.println("addAnnouncementToFavourites: " + username + " " + announcementId);
+        logger.info("Adding announcement to favourites: " + username + " " + announcementId);
 
         // get user
         User user = usersRepository.findByUsername(username);
@@ -297,7 +308,7 @@ public class AnnouncementService {
             Integer announcementId
     ) throws ValidationException
     {
-        System.out.println("removeAnnouncementFromFavourites: " + username + " " + announcementId);
+        logger.info("Removing announcement from favourites: " + username + " " + announcementId);
 
         // get user
         User user = usersRepository.findByUsername(username);
@@ -322,7 +333,7 @@ public class AnnouncementService {
             String username
     ) throws ValidationException
     {
-        System.out.println("getFavouriteAnnouncements: " + username);
+        logger.info("Getting favourite announcements: " + username);
 
         // get user
         User user = usersRepository.findByUsername(username);
@@ -352,6 +363,7 @@ public class AnnouncementService {
             NewReservationDto newReservationDTO
     ) throws ValidationException
     {
+        logger.info("Adding reservation: " + username + " " + newReservationDTO.getAnnouncementId());
         // get user
         User user = usersRepository.findByUsername(username);
         if(user == null) throw new ValidationException("username is invalid");
@@ -378,6 +390,7 @@ public class AnnouncementService {
      * @throws ValidationException if announcementId is invalid
      */
     public List<ReservationDto> getAnnouncementReservations(Integer announcementId) throws ValidationException {
+        logger.info("Getting announcement reservations: " + announcementId);
         // get announcement
         Announcement announcement = announcementsRepository.findById(announcementId);
         if(announcement == null) throw new ValidationException("announcementId is invalid");
@@ -402,6 +415,7 @@ public class AnnouncementService {
      * @throws ValidationException if username is not a specialist's username
      */
     public List<ScheduledReservationDto> getMySchedule(String username) throws ValidationException {
+        logger.info("Getting specialist's schedule: " + username);
         // get specialist
         User user = usersRepository.findByUsername(username);
         if (!(user instanceof Specialist)) throw new ValidationException("username is invalid");
@@ -433,6 +447,7 @@ public class AnnouncementService {
      * scheduleId is not a valid scheduled reservation id
      */
     public void deleteSchedule(String username, Integer scheduleId) throws ValidationException {
+        logger.info("Deleting schedule: " + username + " " + scheduleId);
         // get specialist
         User user = usersRepository.findByUsername(username);
         if (!(user instanceof Specialist)) throw new ValidationException("username is invalid");

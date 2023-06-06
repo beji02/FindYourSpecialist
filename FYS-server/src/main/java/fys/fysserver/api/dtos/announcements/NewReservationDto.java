@@ -7,6 +7,9 @@ public class NewReservationDto {
     Integer announcementId;
     Set<LocalDate> selectedDates;
 
+    public NewReservationDto() {
+    }
+
     public NewReservationDto(Integer announcementId, Set<LocalDate> selectedDates) {
         this.announcementId = announcementId;
         this.selectedDates = selectedDates;
@@ -26,5 +29,13 @@ public class NewReservationDto {
 
     public void setSelectedDates(Set<LocalDate> selectedDates) {
         this.selectedDates = selectedDates;
+    }
+
+    @Override
+    public String toString() {
+        return "NewReservationDto{" +
+                "announcementId=" + announcementId +
+                ", selectedDates=" + selectedDates +
+                '}';
     }
 }

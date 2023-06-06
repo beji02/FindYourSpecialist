@@ -8,8 +8,11 @@ import fys.fysserver.api.dtos.*;
 import fys.fysserver.api.dtos.announcements.AnnouncementDto;
 import fys.fysserver.api.dtos.users.*;
 import fys.fysserver.api.exceptions.ValidationException;
+import fys.fysserver.api.security.jwt.AuthTokenFilter;
 import fys.fysserver.api.security.jwt.JwtUtils;
 import fys.fysserver.api.security.services.UserDetailsImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,164 +29,122 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private UsersRepository usersRepository;
     private AuthenticationManager authenticationManager;
     private PasswordEncoder passwordEncoder;
 
     private JwtUtils jwtUtils;
 
+    @Autowired
     public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
+        logger.info("UsersRepository set");
     }
 
     @Autowired
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+        logger.info("AuthenticationManager set");
     }
+
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+        logger.info("PasswordEncoder set");
     }
+
     @Autowired
     public void setJwtUtils(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
+        logger.info("JwtUtils set");
     }
-
 
     public UserService() {
+        logger.info("UserService created");
     }
 
-
-    /**
-     * Get user by username
-     * @param username username of the user
-     * @return user in dto format
-     * @throws ValidationException if username is invalid
-     */
     public UserDto findUserByUsername(String username) throws ValidationException {
-        System.out.println("findUserByUsername: " + username);
+        logger.info("findUserByUsername: " + username);
 
-        // get user
         User user = usersRepository.findByUsername(username);
-        if(user == null) throw new ValidationException("Username is invalid");
+        if (user == null) throw new ValidationException("Username is invalid");
 
-        // build user DTO
         UserDto userDto = DtoBuilder.buildUserDTO(user);
 
         return userDto;
     }
 
-    /**
-     * update user details
-     * @param username username of the user
-     * @param updatedUserDto new details in DTO format
-     * @return updated user in DTO format
-     * @throws ValidationException if username is invalid
-     */
     public UserDto updateUser(String username, UserDto updatedUserDto) throws ValidationException {
+        logger.info("updateUser: " + username);
 
-        // get user
         User user = usersRepository.findByUsername(username);
-        if(user == null) throw new ValidationException("Username is invalid");
+        if (user == null) throw new ValidationException("Username is invalid");
 
-        // update user
         user.setFirstName(updatedUserDto.getFirstName());
         user.setLastName(updatedUserDto.getLastName());
         user.setPhoneNumber(updatedUserDto.getPhoneNumber());
         user.setEmail(updatedUserDto.getEmail());
         user.setBirthDate(updatedUserDto.getBirthDate());
 
-        // save user
         usersRepository.modify(user);
-        System.out.println("updateUser: " + user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
+        logger.info("User updated: " + user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
 
-        // build user DTO
         UserDto userDto = DtoBuilder.buildUserDTO(user);
 
         return userDto;
     }
 
-    /**
-     * update specialist details
-     * @param username username of the specialist
-     * @param updatedSpecialistDto new details in DTO format
-     * @return updated specialist in DTO format
-     * @throws ValidationException if username is not a specialist's username
-     */
     public SpecialistDto updateSpecialist(String username, SpecialistDto updatedSpecialistDto) throws ValidationException {
+        logger.info("updateSpecialist: " + username);
 
-        // get specialist
         Specialist specialist = usersRepository.findSpecialistByUsername(username);
-        if(specialist == null) throw new ValidationException("Username is invalid");
+        if (specialist == null) throw new ValidationException("Username is invalid");
 
-        // update specialist
         specialist.setLocation(updatedSpecialistDto.getLocation());
         specialist.setDescription(updatedSpecialistDto.getDescription());
 
-        // save specialist
-        System.out.println("updateUser: " + specialist.getUsername() + " " + specialist.getEmail());
         usersRepository.modify(specialist);
 
-        // build specialist DTO
         SpecialistDto specialistDto = DtoBuilder.buildSpecialistDTO(specialist);
 
         return specialistDto;
     }
 
-    /**
-     * get the specialist by username
-     * @param username username of the specialist
-     * @return specialist in DTO format
-     * @throws ValidationException if username is not a specialist's username
-     */
     public SpecialistDto findSpecialistByUsername(String username) throws ValidationException {
-        System.out.println("findSpecialistByUsername: " + username);
+        logger.info("findSpecialistByUsername: " + username);
 
-        // get specialist
         Specialist specialist = usersRepository.findSpecialistByUsername(username);
-        if(specialist == null) throw new ValidationException("Username is invalid");
+        if (specialist == null) throw new ValidationException("Username is invalid");
 
         SpecialistDto specialistDto = DtoBuilder.buildSpecialistDTO(specialist);
 
         return specialistDto;
     }
 
-    /**
-     * upgrade status of user to specialist
-     * @param username username of the user
-     * @throws ValidationException if username is invalid or user is already a specialist
-     */
     public void upgradeUserToSpecialist(String username) throws ValidationException {
+        logger.info("upgradeUserToSpecialist: " + username);
 
-        // get user
         User user = usersRepository.findByUsername(username);
-        if(user == null) throw new ValidationException("Username is invalid");
-        if(user instanceof Specialist) throw new ValidationException("Already specialist");
+        if (user == null) throw new ValidationException("Username is invalid");
+        if (user instanceof Specialist) throw new ValidationException("Already a specialist");
 
-        // upgrade user to specialist
         usersRepository.upgradeToSpecialist(user);
     }
 
-    /**
-     * get a list of recently visited announcements of a user
-     * @param username username of user
-     * @return list of recently visited announcements in DTO format
-     */
     public List<AnnouncementDto> getRecentlyVisitedAnnouncements(String username) {
-        // ger user
-        User user = usersRepository.findByUsername(username);
-        if(user == null) return new ArrayList<>();
+        logger.info("getRecentlyVisitedAnnouncements: " + username);
 
-        // get recently visited announcements
+        User user = usersRepository.findByUsername(username);
+        if (user == null) return new ArrayList<>();
+
         List<Announcement> announcements = (List<Announcement>) user.getRecentlyVisitedAnnouncements();
 
-        // build announcement DTOs
         List<AnnouncementDto> announcementDtos = new ArrayList<>();
         announcements.forEach(announcement -> {
-                    Boolean isFavourite = user.getFavoriteAnnouncements().contains(announcement);
-                    announcementDtos.add(DtoBuilder.buildAnnouncementDTO(announcement, isFavourite));
-                }
-        );
+            Boolean isFavourite = user.getFavoriteAnnouncements().contains(announcement);
+            announcementDtos.add(DtoBuilder.buildAnnouncementDTO(announcement, isFavourite));
+        });
 
         return announcementDtos;
     }
@@ -195,7 +156,9 @@ public class UserService {
      * @throws ValidationException if username or password are invalid
      */
     public LoginDto login(NewLoginDto newLoginDto) throws ValidationException {
-        try{
+        logger.info("login: " + newLoginDto.getUsername());
+
+        try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     newLoginDto.getUsername(), newLoginDto.getPassword())
             );
@@ -206,29 +169,19 @@ public class UserService {
             List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                     .collect(Collectors.toList());
 
-            //build login DTO
             LoginDto loginDto = DtoBuilder.buildLoginDTO(userDetails, jwt, roles);
             return loginDto;
-        }
-        catch (AuthenticationException e){
+        } catch (AuthenticationException e) {
             throw new ValidationException("Invalid username or password");
         }
     }
 
-    /**
-     * register a new user using username, password and mail
-     * @param newRegistrationDto username, password and mail in DTO format
-     * @return new user in DTO format
-     * @throws ValidationException if username is already taken
-     */
     public UserDto register(NewRegistrationDto newRegistrationDto) throws ValidationException {
-        System.out.println("register: " + newRegistrationDto.getUsername() + " " + newRegistrationDto.getPassword() + " " + newRegistrationDto.getEmail());
+        logger.info("register: " + newRegistrationDto.getUsername() + " " + newRegistrationDto.getEmail());
 
-        // check if username is already taken
         User user = usersRepository.findByUsername(newRegistrationDto.getUsername());
-        if(user != null) throw new ValidationException("Username is already taken");
+        if (user != null) throw new ValidationException("Username is already taken");
 
-        // build a new user
         user = new User();
         user.setUsername(newRegistrationDto.getUsername());
         user.setPassword(passwordEncoder.encode(newRegistrationDto.getPassword()));
@@ -236,7 +189,6 @@ public class UserService {
 
         usersRepository.add(user);
 
-        // build user DTO
         UserDto userDto = DtoBuilder.buildUserDTO(user);
         return userDto;
     }

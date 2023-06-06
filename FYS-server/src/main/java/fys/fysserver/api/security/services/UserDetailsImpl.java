@@ -2,6 +2,8 @@ package fys.fysserver.api.security.services;
 
 import fys.fysmodel.Specialist;
 import fys.fysmodel.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class UserDetailsImpl implements UserDetails {
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsImpl.class);
     private static final long serialVersionUID = 1L;
 
     private Integer id;
@@ -29,19 +32,23 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities;
-        if(user instanceof Specialist) {
+        if (user instanceof Specialist) {
             authorities = List.of(new SimpleGrantedAuthority("ROLE_SPECIALIST"));
         } else {
             authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
         }
 
-        return new UserDetailsImpl(
+        UserDetailsImpl userDetails = new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
                 user.getEmail(),
                 authorities
         );
+
+        logger.info("Building UserDetailsImpl for user: {}", userDetails.getUsername());
+
+        return userDetails;
     }
 
     @Override
