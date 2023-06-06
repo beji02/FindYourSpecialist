@@ -527,5 +527,30 @@ public class AnnouncementService {
         reservation.setUser(null);
         announcementsRepository.modifyReservation(reservation);
     }
+
+
+    /**
+     * deleting a specialist's announcement
+     * @param username username of specialist
+     * @param announcementId announcement id
+     * @throws ValidationException if username is not a specialist's username or
+     * announcementId is not a valid announcement id
+     */
+    public void deleteAnnouncement(String username, Integer announcementId) throws ValidationException {
+        logger.info("Deleting announcement: " + username + " " + announcementId);
+        // get specialist
+        User user = usersRepository.findByUsername(username);
+        if (!(user instanceof Specialist)) throw new ValidationException("username is invalid");
+        Specialist specialist = (Specialist) user;
+
+        //get announcement
+        Announcement announcement = specialist.getAnnouncements().stream()
+                .filter(announcement1 -> announcement1.getId().equals(announcementId))
+                .findFirst()
+                .orElse(null);
+        if(announcement == null) throw new ValidationException("announcementId is invalid");
+
+        announcementsRepository.remove(announcement);
+    }
 }
 
