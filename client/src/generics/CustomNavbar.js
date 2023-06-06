@@ -37,6 +37,10 @@ function CustomNavbar({isSpecialist}) {
         navigate('/notifications')
     }
 
+    const handleMyAnnouncementsClick = () => {
+        navigate('/myannouncements');
+    }
+
     return (
         <Navbar bg="light" expand="lg">
             <Container>
@@ -48,7 +52,7 @@ function CustomNavbar({isSpecialist}) {
                     <Nav className="me-auto">
                         <Nav.Link href="/home">Home</Nav.Link>
                         {logged && isSpecialist && <Nav.Link href="/addannouncement">Add your announcement</Nav.Link>}
-                        {logged && <Nav.Link onClick={handleProfileClick}>Profile</Nav.Link>}
+                        {logged && isSpecialist && <Nav.Link onClick={handleMyAnnouncementsClick}>My announcements</Nav.Link>}
                         {logged && isSpecialist && <Nav.Link onClick={handleNotificationsClick}>Notifications</Nav.Link>}
                     </Nav>
                     <Nav className="ml-auto">
