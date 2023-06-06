@@ -271,6 +271,24 @@ public class AnnouncementController {
         }
     }
 
+    @DeleteMapping("/my-announcements/{announcementId}")
+    public ResponseEntity<?> deleteAnnouncement(
+            @RequestHeader("Authorization") String authorizationHeader,
+            @PathVariable Integer announcementId
+    ) {
+        try {
+            String username = extractUsernameFromAuthorizationHeader(authorizationHeader);
+
+            announcementService.deleteAnnouncement(username, announcementId);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        catch (ValidationException e) {
+            return new ResponseEntity<>(
+                    e.toString(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
 
     private String extractUsernameFromAuthorizationHeader(String authorizationHeader) {
         try{

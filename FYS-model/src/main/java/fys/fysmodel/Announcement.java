@@ -112,7 +112,6 @@ public class Announcement extends Identifiable<Integer> {
         this.endDate = endDate;
     }
 
-    @JsonBackReference
     public Specialist getSpecialist() {
         return specialist;
     }
