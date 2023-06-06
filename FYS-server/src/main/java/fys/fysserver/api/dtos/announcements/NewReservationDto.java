@@ -6,10 +6,12 @@ import java.util.Set;
 public class NewReservationDto {
     Integer announcementId;
     Set<LocalDate> selectedDates;
+    String specialistUsername;
 
-    public NewReservationDto(Integer announcementId, Set<LocalDate> selectedDates) {
+    public NewReservationDto(Integer announcementId, Set<LocalDate> selectedDates, String specialistUsername) {
         this.announcementId = announcementId;
         this.selectedDates = selectedDates;
+        this.specialistUsername = specialistUsername;
     }
 
     public Integer getAnnouncementId() {
@@ -26,5 +28,13 @@ public class NewReservationDto {
 
     public void setSelectedDates(Set<LocalDate> selectedDates) {
         this.selectedDates = selectedDates;
+    }
+
+    public String getSpecialistUsername() {
+        return specialistUsername;
+    }
+
+    public void setSpecialistUsername(String specialistUsername) {
+        this.specialistUsername = specialistUsername;
     }
 }

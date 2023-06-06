@@ -13,13 +13,15 @@ function AnnouncementsTile({ title, announcements }) {
                             {announcements.length === 0 ? (
                                 <p className="text-center text-muted">No announcements available.</p>
                             ) : (
-                                <Row>
+                                <>
                                     {announcements.map((announcement) => (
-                                        <Col key={announcement.id} md={4} className="mb-3">
-                                            <AnnouncementCard announcement={announcement} />
-                                        </Col>
+                                        <Row key={announcement.id} className="mb-3">
+                                            <Col>
+                                                <AnnouncementCard announcement={announcement} />
+                                            </Col>
+                                        </Row>
                                     ))}
-                                </Row>
+                                </>
                             )}
                         </Card.Body>
                     </Card>

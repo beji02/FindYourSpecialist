@@ -11,6 +11,7 @@ public class AnnouncementDto {
     private Float specialistRating;
     private String specialistPhoneNumber;
     private String specialistLocation;
+    private String specialistUsername;
 
     public AnnouncementDto(Announcement announcement, Boolean isFavorite) {
         this.id = announcement.getId();
@@ -21,6 +22,7 @@ public class AnnouncementDto {
         this.specialistRating = announcement.getSpecialist().getRating();
         this.specialistPhoneNumber = announcement.getSpecialist().getUser().getPhoneNumber();
         this.specialistLocation = announcement.getSpecialist().getLocation();
+        this.specialistUsername = announcement.getSpecialist().getUser().getUsername();
     }
 
     public Integer getId() {
@@ -61,5 +63,13 @@ public class AnnouncementDto {
 
     public void setSpecialistLocation(String specialistLocation) {
         this.specialistLocation = specialistLocation;
+    }
+
+    public String getSpecialistUsername() {
+        return specialistUsername;
+    }
+
+    public void setSpecialistUsername(String specialistUsername) {
+        this.specialistUsername = specialistUsername;
     }
 }

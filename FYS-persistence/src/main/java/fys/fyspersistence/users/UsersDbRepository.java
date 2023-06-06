@@ -1,5 +1,6 @@
 package fys.fyspersistence.users;
 
+import fys.fysmodel.Notification;
 import fys.fysmodel.Specialist;
 import fys.fysmodel.User;
 import fys.fyspersistence.exceptions.NonexistentEntityException;
@@ -9,9 +10,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Comparator;
+import java.util.Set;
 
+import java.util.Collections;
 import java.util.List;
 
 @Transactional
@@ -199,4 +202,39 @@ public class UsersDbRepository implements UsersRepository {
             }
         }
     }
+
+    @Override
+    public Iterable<Notification> findNotificationsByUsername(String username) {
+        logger.traceEntry("Finding notifications by username: " + username);
+        Session session = sessionFactory.getCurrentSession();
+        List<Notification> notifications = session.createQuery(
+                        "SELECT n FROM User u JOIN u.notifications n WHERE u.username = :username ORDER BY n.date DESC",
+                        Notification.class
+                )
+                .setParameter("username", username)
+                .getResultList();
+
+        logger.traceExit("Notifications found");
+        return notifications;
+    }
+
+
+    @Override
+    public Notification findNotificationById(Integer notificationId) {
+        logger.traceEntry("Finding notification by ID: " + notificationId);
+        Session session = sessionFactory.getCurrentSession();
+
+        Notification notification = session.createQuery("from Notification n where n.id = :notificationId", Notification.class)
+                .setParameter("notificationId", notificationId)
+                .uniqueResult();
+
+        if (notification == null) {
+            logger.traceExit("Notification not found");
+        } else {
+            logger.traceExit("Notification found");
+        }
+
+        return notification;
+    }
+
 }

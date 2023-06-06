@@ -149,7 +149,7 @@ public class AnnouncementService {
         List<AnnouncementDto> announcementDtos = new ArrayList<>();
         announcements.forEach(announcement -> {
                     Boolean isFavourite = specialist.getFavoriteAnnouncements().contains(announcement);
-                    announcementDtos.add(DtoBuilder.buildAnnouncementDTO(announcement, isFavourite));
+                    announcementDtos.add(DtoUtils.buildAnnouncementDTO(announcement, isFavourite));
                 }
         );
 
@@ -185,7 +185,7 @@ public class AnnouncementService {
         List<AnnouncementDto> announcementDtos = new ArrayList<>();
         announcements.forEach(announcement -> {
             Boolean isFavourite = (user != null) && user.getFavoriteAnnouncements().contains(announcement);
-            announcementDtos.add(DtoBuilder.buildAnnouncementDTO(announcement, isFavourite));
+            announcementDtos.add(DtoUtils.buildAnnouncementDTO(announcement, isFavourite));
         });
 
         return announcementDtos;
@@ -199,7 +199,7 @@ public class AnnouncementService {
         Iterable<Field> fields = announcementsRepository.findAllFields();
 
         List<FieldDto> fieldsDTO = new ArrayList<>();
-        fields.forEach(field -> fieldsDTO.add(DtoBuilder.buildFieldDTO(field)));
+        fields.forEach(field -> fieldsDTO.add(DtoUtils.buildFieldDTO(field)));
 
         return fieldsDTO;
     }
@@ -253,7 +253,7 @@ public class AnnouncementService {
         usersRepository.modify(specialist);
 
         // build the DTO
-        AnnouncementDto announcementDto = DtoBuilder.buildAnnouncementDTO(announcement, false);
+        AnnouncementDto announcementDto = DtoUtils.buildAnnouncementDTO(announcement, false);
 
         return announcementDto;
     }
@@ -334,7 +334,7 @@ public class AnnouncementService {
         // build the DTOs
         List<AnnouncementDto> announcementDtos = new ArrayList<>();
         favoriteAnnouncements.forEach(announcement -> {
-            announcementDtos.add(DtoBuilder.buildAnnouncementDTO(announcement, true));
+            announcementDtos.add(DtoUtils.buildAnnouncementDTO(announcement, true));
         });
 
         return announcementDtos;
@@ -369,6 +369,25 @@ public class AnnouncementService {
             });
         });
         announcementsRepository.modify(announcement);
+        addNotification(announcement.getSpecialist().getUsername(), user, newReservationDTO, announcement);
+    }
+
+    /**
+     * add a notification to a specialist
+     * @param specialistUsername username of the specialist
+     * @param user user that made the reservation
+     * @param newReservationDTO reservation in DTO format
+     * @param announcement announcement that was reserved
+     */
+    private void addNotification(String specialistUsername, User user, NewReservationDto newReservationDTO, Announcement announcement) {
+        Specialist specialist = (Specialist) usersRepository.findByUsername(specialistUsername);
+        Notification notification = new Notification(
+                "New reservation by " + user.getFirstName() + " " + user.getLastName(),
+                "You have a new reservation for " + announcement.getTitle() + " on " + newReservationDTO.getSelectedDates().toString()
+        );
+
+        specialist.addNotification(notification);
+        usersRepository.modify(specialist);
     }
 
     /**
@@ -388,7 +407,7 @@ public class AnnouncementService {
         // build the DTO
         List<ReservationDto> reservationDtos = new ArrayList<>();
         reservations.forEach(reservation -> {
-            reservationDtos.add(DtoBuilder.buildReservationDTO(reservation));
+            reservationDtos.add(DtoUtils.buildReservationDTO(reservation));
         });
 
         return reservationDtos;
