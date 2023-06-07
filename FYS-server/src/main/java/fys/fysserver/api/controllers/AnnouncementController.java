@@ -1,5 +1,7 @@
 package fys.fysserver.api.controllers;
 
+import fys.fysmodel.Notification;
+import fys.fysserver.api.dtos.DtoUtils;
 import fys.fysserver.api.dtos.announcements.AnnouncementDto;
 import fys.fysserver.api.dtos.announcements.NewAnnouncementDto;
 import fys.fysserver.api.dtos.announcements.NewReservationDto;
@@ -8,16 +10,35 @@ import fys.fysserver.api.security.jwt.JwtUtils;
 import fys.fysserver.api.services.AnnouncementService;
 import fys.fysserver.api.utils.HeadersUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.core.MessageSendingOperations;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 public class AnnouncementController {
     private JwtUtils jwtUtils;
-
     private AnnouncementService announcementService;
+    private MessageSendingOperations<String> messagingTemplate;
+    private SimpUserRegistry userRegistry;
+
+    @Autowired
+    public AnnouncementController(
+            JwtUtils jwtUtils,
+            AnnouncementService announcementService,
+            @Qualifier("brokerMessagingTemplate") MessageSendingOperations<String> messagingTemplate,
+            SimpUserRegistry userRegistry
+    ) {
+        this.jwtUtils = jwtUtils;
+        this.announcementService = announcementService;
+        this.messagingTemplate = messagingTemplate;
+        this.userRegistry = userRegistry;
+    }
+
 
     public AnnouncementController() {
     }
@@ -90,23 +111,29 @@ public class AnnouncementController {
     @PostMapping("/reservations")
     public ResponseEntity<?> addReservations(
             @RequestHeader("Authorization") String authorizationHeader,
-            @RequestBody NewReservationDto newReservationDTO
+            @RequestBody NewReservationDto newReservationDto
     ) {
         try {
             String username = HeadersUtils.extractTokenFromAuthorizationHeader(authorizationHeader, jwtUtils);
-            announcementService.addReservation(username, newReservationDTO);
+            Notification notification = announcementService.addReservation(username, newReservationDto);
 
-            return new ResponseEntity<>(
-                    HttpStatus.OK
-            );
-        }
-        catch (ValidationException e) {
-            return new ResponseEntity<>(
-                    e.toString(),
-                    HttpStatus.BAD_REQUEST
-            );
+            try {
+                if (messagingTemplate instanceof SimpMessagingTemplate) {
+                    SimpMessagingTemplate simpMessagingTemplate = (SimpMessagingTemplate) messagingTemplate;
+                    if (userRegistry.getUser(username) != null) {
+                        simpMessagingTemplate.convertAndSendToUser(username, "/topic/reservation", DtoUtils.buildNotificationDTO(notification));
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ValidationException e) {
+            return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
+
 
     @GetMapping("/fields")
     public ResponseEntity<?> getAnnouncementFields() {

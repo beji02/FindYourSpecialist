@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.6.3'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'org.graalvm.buildtools.native' version '0.9.20'
 }
 
@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.springframework.session:spring-session-core'
 
     implementation 'org.hibernate:hibernate-core:5.5.7.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
@@ -40,6 +41,7 @@ dependencies {
     implementation 'org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final'
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation group: 'org.springframework', name: 'spring-messaging', version: '6.0.9'
 
     implementation project(':FYS-model')
     implementation project(':FYS-persistence')

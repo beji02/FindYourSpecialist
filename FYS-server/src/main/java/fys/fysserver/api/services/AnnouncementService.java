@@ -9,6 +9,8 @@ import fys.fysserver.api.exceptions.ValidationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -347,7 +349,7 @@ public class AnnouncementService {
      * @throws ValidationException if username is invalid or
      * announcementId is invalid
      */
-    public void addReservation(
+    public Notification addReservation(
             String username,
             NewReservationDto newReservationDTO
     ) throws ValidationException
@@ -369,7 +371,7 @@ public class AnnouncementService {
             });
         });
         announcementsRepository.modify(announcement);
-        addNotification(announcement.getSpecialist().getUsername(), user, newReservationDTO, announcement);
+        return addNotification(announcement.getSpecialist().getUsername(), user, newReservationDTO, announcement);
     }
 
     /**
@@ -379,15 +381,20 @@ public class AnnouncementService {
      * @param newReservationDTO reservation in DTO format
      * @param announcement announcement that was reserved
      */
-    private void addNotification(String specialistUsername, User user, NewReservationDto newReservationDTO, Announcement announcement) {
+    private Notification addNotification(String specialistUsername, User user, NewReservationDto newReservationDTO, Announcement announcement) {
         Specialist specialist = (Specialist) usersRepository.findByUsername(specialistUsername);
+        String userName = "Anonymous";
+        if (user.getFirstName() != null && user.getLastName() != null) {
+            userName = user.getFirstName() + " " + user.getLastName();
+        }
         Notification notification = new Notification(
-                "New reservation by " + user.getFirstName() + " " + user.getLastName(),
+                "New reservation by " + userName + " - " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),
                 "You have a new reservation for " + announcement.getTitle() + " on " + newReservationDTO.getSelectedDates().toString()
         );
 
         specialist.addNotification(notification);
         usersRepository.modify(specialist);
+        return notification;
     }
 
     /**

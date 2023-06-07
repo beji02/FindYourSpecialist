@@ -33,35 +33,13 @@ function AnnouncementModal({announcement, reservations, showModal, handleModalTo
         //console.log(reservation);
 
         createReservation(reservation).then(data => {
-            setSuccess("Reservations added successfully")
+            setSuccess("Reservations added successfully");
         }).catch(error => {
            setError("An error occurred. Please try again.");
         });
 
-        // try {
-        //     const token = localStorage.getItem("token");
-        //     const response = await fetch("reservations", {
-        //         method: "POST",
-        //         headers: {
-        //             Accept: "application/json",
-        //             "Content-Type": "application/json",
-        //             Authorization: `Bearer ${token}`
-        //         },
-        //         body: JSON.stringify(reservation)
-        //     });
-        //
-        //     if (response.ok) {
-        //         setSuccess("Reservations added successfully");
-        //     } else {
-        //         setError("An error occurred. Please try again.");
-        //     }
-        //     console.log(JSON.stringify(reservation));
-        //
-        // } catch (error) {
-        //     setError("An error occurred. Please try again.");
-        // }
-
-
+        //close the modal
+        handleModalToggle();
     };
 
     const handleOwnerClick = () => {

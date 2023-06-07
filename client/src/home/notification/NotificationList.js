@@ -14,7 +14,7 @@ function NotificationList({ notifications }) {
                         <p className="text-center text-muted">No notifications available.</p>
                     ) : (
                         notifications.map((notification) => (
-                            <NotificationCard key={notification.title} notification={notification} />
+                            <NotificationCard key={notification.id} notification={notification} />
                         ))
                     )}
                 </Col>

@@ -20,8 +20,6 @@ public class Notification extends Identifiable<Integer> {
         this.read = false;
     }
 
-
-
     public Notification(String title, String text) {
         this.title = title;
         this.text = text;
